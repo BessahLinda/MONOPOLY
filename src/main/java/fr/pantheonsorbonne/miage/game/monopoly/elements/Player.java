@@ -80,7 +80,7 @@ public class Player {
     private void sale() {
     }
 
-    private void addMoney(int m) {
+    public void addMoney(int m) {
         this.money += m;
     }
 
