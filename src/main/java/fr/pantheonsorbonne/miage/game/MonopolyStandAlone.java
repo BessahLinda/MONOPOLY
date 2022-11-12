@@ -12,15 +12,12 @@ public class MonopolyStandAlone {
 
         do{
             for(Player player : players){
-
-            
-            //Player currentPlayer = players.get(player.getPosition());
-            if(!player.bankrupt()){
-                game.nextTour(player);
-                //players.add(currentPlayer);
-            }else{
-                System.out.println("players"+ player.getName() + "is bankrupt");
-            }
+                if(!player.bankrupt()){
+                    game.nextTour(player);
+                }else{
+                    System.out.println("players"+ player.getName() + "is bankrupt");
+                    players.remove(player);
+                }
             }
         }while (players.size()> 1);
     }

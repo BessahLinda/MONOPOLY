@@ -11,6 +11,7 @@ import fr.pantheonsorbonne.miage.game.monopoly.elements.SpaceCity;
 import fr.pantheonsorbonne.miage.game.monopoly.elements.SpaceJail;
 import fr.pantheonsorbonne.miage.game.monopoly.elements.SpacePublicService;
 import fr.pantheonsorbonne.miage.game.monopoly.elements.SpaceStation;
+import fr.pantheonsorbonne.miage.game.monopoly.elements.SpaceTax;
 
 
 public class Game {
@@ -33,7 +34,7 @@ public class Game {
         board.add(new SpaceCity("Boulevard de Bellvile",1,marron,60, new int[] {2,10,30,90,160,250}));
         board.add(new SpaceChance("Chance", 2));
         board.add(new SpaceCity("Rue Lecourbe",3,marron,60,new int[]{4,20,60,180,320,450}));
-        // Impot ?
+        board.add(new SpaceTax("Impôts sur les revenus",4,200));
         board.add(new SpaceStation("Gare Montparnasse", 5));
         board.add(new SpaceCity("Rue de Vaugirard",6,bleuClair,100,new int[] {6,30,90,270,400,550}));
         board.add(new SpaceChance("Chance", 7));
@@ -67,7 +68,8 @@ public class Game {
         board.add(new SpaceStation("Gare Saint-Lazare", 35));
         board.add(new SpaceChance("Chance", 36));
         board.add(new SpaceCity("Avenue des Champs-Elysées",37,bleu,350, new int[] {35,175,500,1100,1300,1500}));
-        board.add(new SpaceCity("Rue de la Paix",38,bleu,400,new int[] {50,200,600,1400,1700,2000}));
+        board.add(new SpaceTax("Taxe de luxe",4,100));
+        board.add(new SpaceCity("Rue de la Paix",39,bleu,400,new int[] {50,200,600,1400,1700,2000}));
 
         this.players =players;
         // when we buy a house 1)call change owner fonction from SpaceCity 2) add city to Player property
@@ -86,15 +88,15 @@ public class Game {
                 currentPlayer.setInJail(true);
                 currentPlayer.setPosition(SpaceJail.jailLocationIndex);
             }
-        } /**else if (playerSpaceAfterMove instanceof LocationTaxAdmin) {
-            LocationTaxAdmin playerSpaceAfterMove1 = (LocationTaxAdmin) playerSpaceAfterMove;
-            currentPlayer.setCash(currentPlayer.getCash()-playerSpaceAfterMove1.getTaxPrice());
-            System.out.println(currentPlayer.getName()+" paid " + playerSpaceAfterMove1.getTaxPrice()
-                    +"$ You now have "+ player.getCash());
+        } else if (playerSpaceAfterMove instanceof SpaceTax) {
+            SpaceTax playerSpaceAfterMove1 = (SpaceTax) playerSpaceAfterMove;
+            currentPlayer.payTax(playerSpaceAfterMove1);
+            System.out.println(currentPlayer.getName()+" paid " + playerSpaceAfterMove1.getTax()
+                    +"$ You now have "+ currentPlayer.getMoney());
         } else if (playerSpaceAfterMove instanceof SpaceChance) {
             SpaceChance playerSpaceAfterMove1 = (SpaceChance) playerSpaceAfterMove;
-            playerSpaceAfterMove1.imFeelingLucky(player,locations);
-    } **/else if (playerSpaceAfterMove instanceof SpaceCity){
+            playerSpaceAfterMove1.imFeelingLucky(currentPlayer, this);
+        } else if (playerSpaceAfterMove instanceof SpaceCity){
             SpaceCity playerSpaceAfterMove1 = (SpaceCity) playerSpaceAfterMove;
             if (playerSpaceAfterMove1.isSpaceOwned()) {
                 currentPlayer.payRent((SpaceCity) playerSpaceAfterMove);
@@ -105,7 +107,10 @@ public class Game {
         System.out.println("\n**********************\n");
     }
 
-
+    private void goToJail(Player p, SpaceJail s){
+        p.setInJail(true);
+        p.setPosition(SpaceJail.jailLocationIndex);  
+    }
     
 }        
 

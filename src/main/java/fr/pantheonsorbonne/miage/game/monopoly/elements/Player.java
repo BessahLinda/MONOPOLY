@@ -8,6 +8,7 @@ public class Player {
     private int money = 1500;
     private int position = 0;   
     private int prisonDuration; 
+    private boolean isInJail = false;
 
     private ArrayList<SpaceCity> property = new ArrayList<>();
 
@@ -63,9 +64,12 @@ public class Player {
     
     }
 
-    
+    public void goToJail(){
+        setInJail(true);
+    }
 
-    public void setInJail(boolean b) {
+    public void setInJail(boolean inJail) {
+        isInJail = inJail;
     }
 
     public void payRent(SpaceCity s) {
@@ -76,6 +80,22 @@ public class Player {
             sale();
         }
     }
+
+    public void payTax(SpaceTax s){
+        if(checkBalance(s.getTax())){
+            withdrawMoney(s.getTax());
+        }else{
+            sale();
+        }
+    }
+
+    public void payChance(int rndPrice) {
+        if(checkBalance(rndPrice)){
+            withdrawMoney(rndPrice);
+        }else{
+            sale();
+        }
+	}
 
     private void sale() {
     }
@@ -99,5 +119,7 @@ public class Player {
     public int getMoney() {
         return this.money;
     }
+
+	
 
 }
