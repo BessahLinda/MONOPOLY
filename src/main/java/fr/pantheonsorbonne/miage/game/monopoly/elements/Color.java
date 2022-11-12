@@ -27,11 +27,11 @@ public class Color {
 
     public boolean isOwner(Player colorMonopolist){
         for (SpaceCity s : spaces){
-            if(s.getOwner()== colorMonopolist){
-                return true;
+            if(s.getOwner() != colorMonopolist){
+                return false;
             }
         }
-        return false;
+        return true;
     }
 
     public int getHousePrice(){

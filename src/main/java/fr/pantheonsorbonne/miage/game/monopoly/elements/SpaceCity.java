@@ -19,25 +19,17 @@ public class SpaceCity extends Space {
 
     }
 
-    public void setOwner(Player p){
-        this.owner = p;
-    }
-
-    public boolean isSpaceOwned() {
-        return this.owner != null;
-    }
-
     public void setCurrentRentPrice(){
         if(this.nbHouse == 4){
-            this.currentRentPrice = rentPrice[5];
-        } else if(this.nbHouse == 3){
             this.currentRentPrice = rentPrice[4];
-        }else if(this.nbHouse == 2){
+        } else if(this.nbHouse == 3){
             this.currentRentPrice = rentPrice[3];
-        }else if(this.nbHouse == 1){
+        }else if(this.nbHouse == 2){
             this.currentRentPrice = rentPrice[2];
-        }else if(this.color.isColorOwned()){
+        }else if(this.nbHouse == 1){
             this.currentRentPrice = rentPrice[1];
+        }else if(this.color.isColorOwned()){
+            this.currentRentPrice = rentPrice[0]*2;
         }else{
             this.currentRentPrice = rentPrice[0];
         }
@@ -62,6 +54,18 @@ public class SpaceCity extends Space {
 
     public Color getColor(){
         return color;
+    }
+
+    public void setOwner(Player p){
+        this.owner = p;
+    }
+
+    public boolean isSpaceOwned() {
+        return this.owner != null;
+    }
+
+    public void buildHouse(int nbHouse){
+        this.nbHouse += nbHouse;
     }
 }
 

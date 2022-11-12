@@ -65,8 +65,20 @@ public class Player {
     }
 
     public void goToJail(){
-        setInJail(true);
+        this.setInJail(true);
+        this.setPosition(10);
     }
+
+    public void goOutJail(int price) {
+        this.isInJail = false;
+        this.prisonDuration = 0;
+        withdrawMoney(price);
+	}
+    
+    public void goOutJail() {
+        this.isInJail = false;
+        this.prisonDuration = 0;
+	}
 
     public void setInJail(boolean inJail) {
         isInJail = inJail;
@@ -120,6 +132,13 @@ public class Player {
         return this.money;
     }
 
+    public int getPrisonDuration(){
+        return this.prisonDuration;
+    }
+
+    public boolean isInJail(){
+        return this.isInJail;
+    }
 	
 
 }

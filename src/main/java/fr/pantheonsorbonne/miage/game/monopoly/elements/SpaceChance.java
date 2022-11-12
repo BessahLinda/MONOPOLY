@@ -15,15 +15,15 @@ public class SpaceChance extends Space{
     }
 
     public void imFeelingLucky(Player player, Game game) {
-        int ret = (int)((Math.random() * 2));
+        int ret = (int)((Math.random() * 1));
         switch (ret) {
             case 0:
                 luckyChangeCash(player);
                 break;
-            case 1:
+            /**case 1:
                 luckyTakePlayerToTheJail(player);
-                break;
-            case 2:
+                break;**/
+            case 1:
                 luckyTakePlayerToAnotherLocation(player, game);
                 break;
                 default:

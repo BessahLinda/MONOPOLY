@@ -16,6 +16,14 @@ public  class Dice {
         return(dice1+dice2);
     }
 
+    public boolean isDouble(){
+        if(dice1==dice2){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
     public int generateRandomVal1(){
         this.dice1= (int) ((Math.random() * 6) + 1);
         return this.dice1;

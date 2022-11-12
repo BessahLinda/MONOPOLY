@@ -6,6 +6,7 @@ import fr.pantheonsorbonne.miage.game.monopoly.elements.Color;
 import fr.pantheonsorbonne.miage.game.monopoly.elements.Player;
 import fr.pantheonsorbonne.miage.game.monopoly.elements.Space;
 import fr.pantheonsorbonne.miage.game.monopoly.elements.SpaceCity;
+import fr.pantheonsorbonne.miage.game.monopoly.elements.SpaceJail;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -75,6 +76,25 @@ class PlayerTest {
         Player p2 = new Player("Yewon");
         p2.payRent(s);
         assertEquals(p.getMoney(), (1500-s.getPrice()+s.getCurrentRentPrice()));
+    }
+
+    @Test
+    public void testGoToJail(){
+        Player p = new Player("Linda");
+        p.goToJail();
+        assertEquals(p.isInJail(), true);
+        assertEquals(p.getPosition(), 10);
+        
+
+    }
+
+    @Test 
+    public void testGoOutJail(){
+        Player p = new Player("Linda");
+        p.goToJail();
+        p.goOutJail(50  );
+        assertEquals(p.isInJail(), false);
+        assertEquals(p.getMoney(),1500-50); 
     }
 
 }

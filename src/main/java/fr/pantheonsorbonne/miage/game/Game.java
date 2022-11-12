@@ -78,6 +78,8 @@ public class Game {
     
 
 	public void nextTour(Player currentPlayer) {
+
+        if(currentPlayer.isInJail()){}
         currentPlayer.setPosition( d.generateRandomVal2());
         Space playerSpaceAfterMove = board.get(currentPlayer.getPosition());
         System.out.println(currentPlayer.getName() +" are now on " + playerSpaceAfterMove.getName().toUpperCase() );
@@ -85,8 +87,7 @@ public class Game {
         if (playerSpaceAfterMove instanceof SpaceJail) {
             SpaceJail playerSpaceAfterMove1 = (SpaceJail) playerSpaceAfterMove;
             if (playerSpaceAfterMove1.getType() != 0) { // it means this block is goToJail so block the player and take him to the jail
-                currentPlayer.setInJail(true);
-                currentPlayer.setPosition(SpaceJail.jailLocationIndex);
+                currentPlayer.goToJail();
             }
         } else if (playerSpaceAfterMove instanceof SpaceTax) {
             SpaceTax playerSpaceAfterMove1 = (SpaceTax) playerSpaceAfterMove;
@@ -107,9 +108,15 @@ public class Game {
         System.out.println("\n**********************\n");
     }
 
-    private void goToJail(Player p, SpaceJail s){
-        p.setInJail(true);
-        p.setPosition(SpaceJail.jailLocationIndex);  
+    public void playerInJail(Player p){
+        d.generateRandomVal2();
+        if(d.isDouble()){
+            p.goOutJail();
+            nextTour(p);
+        }else if(p.getPrisonDuration()==3){
+            p.goOutJail(50);
+            nextTour(p);
+        }
     }
     
 }        
