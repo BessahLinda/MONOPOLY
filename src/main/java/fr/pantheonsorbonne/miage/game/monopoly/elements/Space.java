@@ -1,8 +1,9 @@
 package fr.pantheonsorbonne.miage.game.monopoly.elements;
 
 public class Space {
-    private String name;
-    private int index;
+
+    private final String name;
+    private final int index;
 
     public Space(String name, int index){
         this.name = name;

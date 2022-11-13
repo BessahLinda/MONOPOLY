@@ -7,6 +7,7 @@ import fr.pantheonsorbonne.miage.game.monopoly.elements.Player;
 import fr.pantheonsorbonne.miage.game.monopoly.elements.Space;
 import fr.pantheonsorbonne.miage.game.monopoly.elements.SpaceCity;
 import fr.pantheonsorbonne.miage.game.monopoly.elements.SpaceJail;
+import fr.pantheonsorbonne.miage.game.monopoly.elements.SpaceTax;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -95,6 +96,14 @@ class PlayerTest {
         p.goOutJail(50  );
         assertEquals(p.isInJail(), false);
         assertEquals(p.getMoney(),1500-50); 
+    }
+
+    @Test
+    public void payTaxTest(){
+        SpaceTax s = new SpaceTax("impot", 0, 100);
+        Player p = new Player("Linda");
+        p.payTax(s);
+        assertEquals(p.getMoney(), 1500-100);
     }
 
 }

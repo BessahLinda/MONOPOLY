@@ -1,7 +1,8 @@
 package fr.pantheonsorbonne.miage.game.monopoly.elements;
 
 public abstract class  SpaceSpecial extends Space {
-    protected static Player owner; 
+
+    protected Player owner; 
     protected int price ;
     private int rentPrice;
 

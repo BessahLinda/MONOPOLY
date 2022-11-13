@@ -12,6 +12,8 @@ public class MonopolyStandAlone {
 
         do{
             for(Player player : players){
+                game.askBuild(player);
+                
                 if(player.isInJail()){
                     game.playerInJail(player);
                 }

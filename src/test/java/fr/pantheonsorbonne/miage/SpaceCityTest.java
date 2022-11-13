@@ -18,10 +18,12 @@ class SpaceCityTest {
         Player p = new Player("Linda");
         assertEquals(s.getCurrentRentPrice(),2);
         p.buyLand(s);
-        marron.setPlayer(p );
+        marron.setColorMonopolist(p );
         s.setCurrentRentPrice();
         assertEquals(s.getCurrentRentPrice(), 4);
         s.buildHouse(3);
+        s.setCurrentRentPrice();
+        assertEquals(s.getCurrentRentPrice(), 90);
     }
     
 }

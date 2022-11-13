@@ -79,6 +79,7 @@ public class Game {
 
 	public void nextTour(Player currentPlayer) {
 
+        
         if(currentPlayer.isInJail()){}
         currentPlayer.setPosition( d.generateRandomVal2());
         Space playerSpaceAfterMove = board.get(currentPlayer.getPosition());
@@ -107,6 +108,12 @@ public class Game {
         }
         System.out.println("\n**********************\n");
     }
+
+    public void askBuild(Player currentPlayer) {
+        currentPlayer.buyHouse();
+    }
+
+
 
     public void playerInJail(Player p){
         d.generateRandomVal2();

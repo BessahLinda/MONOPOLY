@@ -3,10 +3,10 @@ package fr.pantheonsorbonne.miage.game.monopoly.elements;
 public class SpaceCity extends Space {
 
     private Player owner; 
-    private Color color;
-    private int price;
+    private final Color color;
+    private final int price;
     private int currentRentPrice;
-    private int[] rentPrice;
+    private final int[] rentPrice;
     private int nbHouse = 0; 
 
     public SpaceCity(String name, int index,Color color,int price, int[] rentPrice) {
@@ -36,6 +36,14 @@ public class SpaceCity extends Space {
         
     }
 
+    public boolean isSpaceOwned() {
+        return this.owner != null;
+    }
+
+    public void buildHouse(int nbHouse){
+        this.nbHouse += nbHouse;
+    }
+    
     public int getCurrentRentPrice(){
         return this.currentRentPrice;
     }
@@ -60,12 +68,5 @@ public class SpaceCity extends Space {
         this.owner = p;
     }
 
-    public boolean isSpaceOwned() {
-        return this.owner != null;
-    }
-
-    public void buildHouse(int nbHouse){
-        this.nbHouse += nbHouse;
-    }
 }
 

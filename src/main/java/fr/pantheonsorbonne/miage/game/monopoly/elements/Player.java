@@ -4,12 +4,11 @@ import java.util.ArrayList;
 
 public class Player {
 
-    private String name;
+    private final String name;
     private int money = 1500;
     private int position = 0;   
     private int prisonDuration; 
     private boolean isInJail = false;
-
     private ArrayList<SpaceCity> property = new ArrayList<>();
 
     public Player(String name){
@@ -44,7 +43,7 @@ public class Player {
     }
 
     public void buyHouse(){
-        
+        //s.setCurrentRentPrice();
     }
 
     public void buyLand(SpaceCity s){
@@ -52,7 +51,7 @@ public class Player {
             withdrawMoney(s.getPrice());
             s.setOwner(this);
             property.add(s);
-            s.getColor().setPlayer(this);
+            s.getColor().setColorMonopolist(this);
         } 
     }
 

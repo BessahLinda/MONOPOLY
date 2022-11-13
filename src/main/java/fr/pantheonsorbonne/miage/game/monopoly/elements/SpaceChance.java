@@ -7,11 +7,11 @@ import fr.pantheonsorbonne.miage.game.Game;
 
 public class SpaceChance extends Space{
 
-    private int prices[] = {-500,-400,-300,-200,-100,100,200,300,400,500};
+    private final int prices[] = {-500,-400,-300,-200,-100,100,200,300,400,500};
 
     public SpaceChance(String name, int index) {
         super(name, index);
-        //TODO Auto-generated constructor stub
+        
     }
 
     public void imFeelingLucky(Player player, Game game) {
@@ -35,11 +35,11 @@ public class SpaceChance extends Space{
         game.nextTour(player);
     }
 
-    private void luckyTakePlayerToTheJail(Player player) {
+    /**private void luckyTakePlayerToTheJail(Player player) {
         System.out.println("Lucky card : You are in jail now.");
         player.setInJail(true);
         player.setPosition(SpaceJail.jailLocationIndex);
-    }
+    }**/
 
     private void luckyChangeCash(Player player) {
         int rndIndex = new Random().nextInt(prices.length);

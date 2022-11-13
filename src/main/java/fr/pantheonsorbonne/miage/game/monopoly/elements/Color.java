@@ -7,9 +7,9 @@ public class Color {
 
     
     private Player colorMonopolist;
-    private String name;
-    private int housePrice;
-    private List<SpaceCity> spaces = new ArrayList<>();
+    private final String name;
+    private final int housePrice;
+    private List<SpaceCity> spaces = new ArrayList<>(2);
 
     public Color(String name, int housePrice){
         this.name = name;
@@ -17,15 +17,15 @@ public class Color {
     }
 
     
-    public void setPlayer(Player colorMonopolist){
-        if(isOwner(colorMonopolist)){
+    public void setColorMonopolist(Player colorMonopolist){
+        if(isColorMonopolist(colorMonopolist)){
             this.colorMonopolist=colorMonopolist;
         }else{
             this.colorMonopolist = null;
         }   
     }
 
-    public boolean isOwner(Player colorMonopolist){
+    public boolean isColorMonopolist(Player colorMonopolist){
         for (SpaceCity s : spaces){
             if(s.getOwner() != colorMonopolist){
                 return false;
@@ -44,6 +44,10 @@ public class Color {
 
     public List getSpaces(){
         return this.spaces;
+    }
+
+    public Player getColorMonopolist(){
+        return this.colorMonopolist;
     }
 
 }
