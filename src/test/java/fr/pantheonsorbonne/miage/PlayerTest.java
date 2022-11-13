@@ -14,17 +14,24 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class PlayerTest {
 
     @Test
-    public void testSetPosition() {
+    public void testAdvance() {
         Player p = new Player("Linda");
-        p.setPosition(7);
+        p.advance(7);
         assertEquals(p.getPosition(), 7);
-        p.setPosition(38);
+        p.advance(38);
         assertEquals(p.getPosition(),5);
         assertEquals(p.getMoney(), 1700);
+
         Player p2 = new Player("Yewon");
-        p2.setPosition(44);
+        p2.advance(44);
         assertEquals(p2.getPosition(),4);
         assertEquals(p2.getMoney(), 1700);
+        
+        Player p3 = new Player("Linda");
+        p3.advance(32);
+        assertEquals(p3.getPosition(),32);
+        p3.advance(8);
+        assertEquals(p3.getPosition(), 0);
     }
 
     @Test

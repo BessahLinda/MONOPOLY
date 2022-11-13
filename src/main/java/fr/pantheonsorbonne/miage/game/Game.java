@@ -2,6 +2,8 @@ package fr.pantheonsorbonne.miage.game;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.text.html.HTMLDocument.Iterator;
+
 import fr.pantheonsorbonne.miage.game.monopoly.elements.Color;
 import fr.pantheonsorbonne.miage.game.monopoly.elements.Dice;
 import fr.pantheonsorbonne.miage.game.monopoly.elements.Player;
@@ -81,7 +83,7 @@ public class Game {
 
         
         if(currentPlayer.isInJail()){}
-        currentPlayer.setPosition( d.generateRandomVal2());
+        currentPlayer.advance( d.generateRandomVal2());
         Space playerSpaceAfterMove = board.get(currentPlayer.getPosition());
         System.out.println(currentPlayer.getName() +" are now on " + playerSpaceAfterMove.getName().toUpperCase() );
 
@@ -100,10 +102,10 @@ public class Game {
             playerSpaceAfterMove1.imFeelingLucky(currentPlayer, this);
         } else if (playerSpaceAfterMove instanceof SpaceCity){
             SpaceCity playerSpaceAfterMove1 = (SpaceCity) playerSpaceAfterMove;
-            if (playerSpaceAfterMove1.isSpaceOwned()) {
-                currentPlayer.payRent((SpaceCity) playerSpaceAfterMove);
-            } else {
+            if (!playerSpaceAfterMove1.isSpaceOwned()) {
                 currentPlayer.buyLand(playerSpaceAfterMove1);
+            } else if (playerSpaceAfterMove1.getOwner()!=currentPlayer){
+                currentPlayer.payRent((SpaceCity) playerSpaceAfterMove);
             }
         }
         System.out.println("\n**********************\n");
@@ -123,7 +125,14 @@ public class Game {
         }else if(p.getPrisonDuration()==3){
             p.goOutJail(50);
             nextTour(p);
+        }else if(p.getPrisonDuration()<3){
+            p.setPrisonDuration();
         }
+    }
+
+    
+    public void remove(Player p){
+        
     }
     
 }        

@@ -16,8 +16,8 @@ public class Player {
         
     }
 
-    public void setPosition(int diceResult){
-        if ((this.position + diceResult) > 40){
+    public void advance(int diceResult){
+        if ((this.position + diceResult) >= 40){
             this.position = (this.position +diceResult) % 40;
             money += 200;
         }else
@@ -65,7 +65,7 @@ public class Player {
 
     public void goToJail(){
         this.setInJail(true);
-        this.setPosition(10);
+        this.advance(10);
     }
 
     public void goOutJail(int price) {
@@ -138,6 +138,9 @@ public class Player {
     public boolean isInJail(){
         return this.isInJail;
     }
-	
+
+    public void setPrisonDuration(){
+        this.prisonDuration +=1;
+    }
 
 }
