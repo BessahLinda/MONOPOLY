@@ -45,7 +45,7 @@ class PlayerTest {
     public void testBuyLand() {
         Player p = new Player("Linda");
         Color marron = new Color("marron",50);
-        SpaceCity s =new SpaceCity("Boulevard de Bellvile",1,marron,60, new int[] {2,10,30,90,160,250});
+        SpaceCity s =new SpaceCity("Boulevard de Bellvile",1,60,marron, new int[] {2,10,30,90,160,250});
         p.buyLand(s);
         assertEquals(s.getOwner(), p);
         assertEquals(p.getMoney(), 1500-60);
@@ -79,7 +79,7 @@ class PlayerTest {
     public void testPayRent(){
         Player p = new Player("Linda");
         Color marron = new Color("marron",50);
-        SpaceCity s =new SpaceCity("Boulevard de Bellvile",1,marron,60, new int[] {2,10,30,90,160,250});
+        SpaceCity s =new SpaceCity("Boulevard de Bellvile",1,60,marron, new int[] {2,10,30,90,160,250});
         p.buyLand(s);
         Player p2 = new Player("Yewon");
         p2.payRent(s);

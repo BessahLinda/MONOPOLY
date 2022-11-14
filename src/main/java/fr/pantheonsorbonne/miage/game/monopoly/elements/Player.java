@@ -9,7 +9,8 @@ public class Player {
     private int position = 0;   
     private int prisonDuration; 
     private boolean isInJail = false;
-    private ArrayList<SpaceCity> property = new ArrayList<>();
+    private ArrayList<SpaceToBuy> property = new ArrayList<>();
+    //private ArrayList<SpaceToBuy> publicServiceAndStations = new ArrayList<>();
 
     public Player(String name){
         this.name = name;
@@ -27,8 +28,8 @@ public class Player {
     public int getAsset(){ //game over condtion : asset < 0
         int asset = 0;
         
-        for(SpaceCity s : property ){
-            asset += s.getColor().getHousePrice()*s.getNbHouse() + s.getPrice() + money;
+        for(SpaceToBuy s : property ){
+            //asset += s.getColor().getHousePrice()*s.getNbHouse() + s.getPrice() + money;
         }
         return asset;
     }
@@ -46,14 +47,26 @@ public class Player {
         //s.setCurrentRentPrice();
     }
 
-    public void buyLand(SpaceCity s){
+    public void buyLand(SpaceToBuy s){
+        if (checkBalance(s.getPrice())){
+            withdrawMoney(s.getPrice());
+            s.setOwner(this);
+            property.add(s);
+            if(s instanceof SpaceCity){
+                SpaceCity spaceCity = (SpaceCity)s;
+                spaceCity.getColor().setColorMonopolist(this);
+            }  
+        } 
+    }
+
+    /**public void buySpecialSpace(SpaceToBuy s){
         if (checkBalance(s.getPrice())){
             withdrawMoney(s.getPrice());
             s.setOwner(this);
             property.add(s);
             s.getColor().setColorMonopolist(this);
         } 
-    }
+    }**/
 
     public boolean bankrupt(){
         if (this.money < 0){
@@ -65,7 +78,7 @@ public class Player {
 
     public void goToJail(){
         this.setInJail(true);
-        this.advance(10);
+        this.position = 10;
     }
 
     public void goOutJail(int price) {
