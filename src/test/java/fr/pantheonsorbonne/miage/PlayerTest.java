@@ -10,6 +10,7 @@ import fr.pantheonsorbonne.miage.game.monopoly.elements.SpaceJail;
 import fr.pantheonsorbonne.miage.game.monopoly.elements.SpaceTax;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 class PlayerTest {
 
@@ -44,12 +45,22 @@ class PlayerTest {
     @Test
     public void testBuyLand() {
         Player p = new Player("Linda");
-        Color marron = new Color("marron",50);
-        SpaceCity s =new SpaceCity("Boulevard de Bellvile",1,60,marron, new int[] {2,10,30,90,160,250});
-        p.buyLand(s);
+        Color bleuClair = new Color("bleuClair",50);
+        SpaceCity s = new SpaceCity("Rue de Vaugirard",6,100,bleuClair,new int[] {6,30,90,270,400,550});
+        SpaceCity s1 =new SpaceCity("Rue de Courcelles",8,100,bleuClair, new int[] {6,30,90,270,400,550});
+        SpaceCity s2 =new SpaceCity("Avenue de la République",9,120,bleuClair,new int[] {8,40,100,300,450,600});
+        p.buyLand(s);p.buyLand(s2);
         assertEquals(s.getOwner(), p);
-        assertEquals(p.checkBalance(), 1500-60);
-        assertEquals( marron.getSpaces().get(0),s); 
+        assertEquals(s2.getOwner(), p);
+        assertEquals(bleuClair.getColorMonopolist(), null);
+        assertEquals(p.checkBalance(), 1500-100-120);
+        assertEquals(s.getCurrentRentPrice(), 6);
+
+        p.buyLand(s1);
+        assertEquals(bleuClair.getColorMonopolist(), p);
+        assertEquals(s.getCurrentRentPrice(), 12);
+        assertEquals(s2.getCurrentRentPrice(), 16);
+        //assertEquals( marron.getSpaces().get(0),s); 
 
     } 
 

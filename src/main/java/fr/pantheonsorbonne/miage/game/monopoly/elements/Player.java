@@ -56,6 +56,7 @@ public class Player {
             if(s instanceof SpaceCity){
                 SpaceCity spaceCity = (SpaceCity)s;
                 spaceCity.getColor().setColorMonopolist(this);
+                setRentOfProperties(spaceCity);
             }  
         } 
     }
@@ -123,6 +124,14 @@ public class Player {
 	}
 
     
+    private void setRentOfProperties(SpaceCity spaceCity){
+        for(SpaceToBuy sp : property ){
+            if(((SpaceCity) sp).getColor()==spaceCity.getColor()){
+                sp.setCurrentRentPrice();
+            }
+            
+        }
+    }
 
     private void sale() {
     }
