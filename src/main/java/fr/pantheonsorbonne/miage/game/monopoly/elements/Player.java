@@ -1,6 +1,7 @@
 package fr.pantheonsorbonne.miage.game.monopoly.elements;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class Player {
 
@@ -9,7 +10,8 @@ public class Player {
     private int position = 0;   
     private int prisonDuration; 
     private boolean isInJail = false;
-    private ArrayList<SpaceToBuy> property = new ArrayList<>();
+    private ArrayList<SpaceCity> property = new ArrayList<>();
+    // private ArrayList<SpaceToBuy> property = new ArrayList<>();
     //private ArrayList<SpaceToBuy> publicServiceAndStations = new ArrayList<>();
 
     public Player(String name){
@@ -25,16 +27,16 @@ public class Player {
             this.position += diceResult;      
     }
 
-    public int getAsset(){ //game over condtion : asset < 0
+    public int getAsset(){ 
         int asset = 0;
         
-        for(SpaceToBuy s : property ){
-            //asset += s.getColor().getHousePrice()*s.getNbHouse() + s.getPrice() + money;
+        for(SpaceCity s : this.property ){
+            asset += s.getColor().getHousePrice()*s.getNbHouse() + s.getPrice() + money;
         }
         return asset;
     }
 
-    public boolean checkBalance(int price){
+    public boolean isAffordable(int price){
         if (this.money - price < 0){
             return false;
         }else {
@@ -43,12 +45,19 @@ public class Player {
         
     }
 
+    public int checkBalance(){
+        return money;
+     }
+
     public void buyHouse(){
         //s.setCurrentRentPrice();
+        //buildHouse on space city
     }
 
-    public void buyLand(SpaceToBuy s){
-        if (checkBalance(s.getPrice())){
+
+
+    public void buyLand(SpaceCity s){
+        if (isAffordable(s.getPrice())){
             withdrawMoney(s.getPrice());
             s.setOwner(this);
             property.add(s);
@@ -68,8 +77,8 @@ public class Player {
         } 
     }**/
 
-    public boolean bankrupt(){
-        if (this.money < 0){
+    public boolean isBankrupt(){
+        if (getAsset() < 0){
             return true;
         }else
             return false;
@@ -97,34 +106,91 @@ public class Player {
     }
 
     public void payRent(SpaceCity s) {
-        if(checkBalance(s.getCurrentRentPrice())){
+        if(isAffordable(s.getCurrentRentPrice())){
             withdrawMoney(s.getCurrentRentPrice());
-            s.getOwner().addMoney(s.getCurrentRentPrice());
+            s.getOwner().earnMoney(s.getCurrentRentPrice());
         }else{
-            sale();
+            sellProperty(s.getCurrentRentPrice());
+            withdrawMoney(s.getCurrentRentPrice());
+            s.getOwner().earnMoney(s.getCurrentRentPrice());
         }
     }
 
     public void payTax(SpaceTax s){
-        if(checkBalance(s.getTax())){
+        if(isAffordable(s.getTax())){
             withdrawMoney(s.getTax());
         }else{
-            sale();
+            sellProperty(s.getTax());
+            withdrawMoney(s.getTax());
         }
     }
 
-    public void payChance(int rndPrice) {
-        if(checkBalance(rndPrice)){
-            withdrawMoney(rndPrice);
+    public void payChance(int rnPrice) {
+        if(isAffordable(rnPrice)){
+            withdrawMoney(rnPrice);
         }else{
-            sale();
+            sellProperty(rnPrice);
+            withdrawMoney(rnPrice);
         }
 	}
 
-    private void sale() {
+    private void sellProperty(int price) {
+
+        ArrayList<SpaceCity> priority = new ArrayList<>();
+        ArrayList<SpaceCity> priorityColor = new ArrayList<>();
+
+
+        for(SpaceCity s : property){
+            if(s.getColor().isColorOwned()){
+                priorityColor.add(s);
+            }
+            else{
+                priority.add(s);
+            }
+        }
+
+        int indexMin = 0;
+        for(int i =0; i < priorityColor.size(); i++){
+            for(int j=i+1; j< priorityColor.size(); j++){
+                if(priorityColor.get(indexMin).getCurrentRentPrice()>priorityColor.get(j).getCurrentRentPrice()){
+                    indexMin = j;
+                }
+            }   
+            SpaceCity tmp = priorityColor.get(i);
+            priorityColor.set(i,priorityColor.get(indexMin));
+            priorityColor.set(indexMin,tmp);
+        }
+        // gotta test !
+
+        indexMin = 0;
+        for(int i =0; i < priorityColor.size(); i++){
+            for(int j=i+1; j< priorityColor.size(); j++){
+                if(priorityColor.get(indexMin).getCurrentRentPrice()>priorityColor.get(j).getCurrentRentPrice()){
+                    indexMin = j;
+                }
+            }
+            SpaceCity tmp = priority.get(i);
+            priority.set(i,priority.get(indexMin));
+            priority.set(indexMin,tmp);
+        }
+
+        // gotta test !
+
+
+        priority.addAll(priorityColor);
+        
+        int index = 0;
+        while(price < this.checkBalance()){
+            //noooo sell maison one by one
+            this.earnMoney(priority.get(index).getCurrentResellPrice());
+            priority.get(index).setOwner(null);
+
+            index++;
+        }
+
     }
 
-    public void addMoney(int m) {
+    public void earnMoney(int m) {
         this.money += m;
     }
 
@@ -138,10 +204,6 @@ public class Player {
 
     public int getPosition(){
         return this.position;
-    }
-
-    public int getMoney() {
-        return this.money;
     }
 
     public int getPrisonDuration(){

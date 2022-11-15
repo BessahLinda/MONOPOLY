@@ -21,7 +21,7 @@ public class MonopolyStandAlone {
                 if(players.get(i).isInJail()){
                     game.playerInJail(players.get(i));
                 }
-                else if(!players.get(i).bankrupt()){
+                else if(!players.get(i).isBankrupt()){
                     game.nextTour(players.get(i));
                 }else{
                     System.out.println("player "+ players.get(i).getName() + " is bankrupt");

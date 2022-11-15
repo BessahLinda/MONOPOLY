@@ -2,9 +2,11 @@ package fr.pantheonsorbonne.miage.game.monopoly.elements;
 
 public class SpaceCity extends SpaceToBuy {
 
-    
+    private Player owner; 
     private final Color color;
+    private int price;
     private final int[] rentPrice;
+    private int currentRentPrice;
     private int nbHouse = 0; 
 
     public SpaceCity(String name, int index,int price,Color color, int[] rentPrice) {
@@ -13,8 +15,17 @@ public class SpaceCity extends SpaceToBuy {
         this.rentPrice = rentPrice;
         currentRentPrice = rentPrice[0];
         color.getSpaces().add(this);
-
     }
+
+    
+    public void setOwner(Player p){
+        this.owner = p;
+    }
+
+    public boolean isSpaceOwned() {
+        return this.owner != null;
+    }
+
 
     public void setCurrentRentPrice(){
         if(this.nbHouse == 4){
@@ -25,11 +36,17 @@ public class SpaceCity extends SpaceToBuy {
             this.currentRentPrice = rentPrice[2];
         }else if(this.nbHouse == 1){
             this.currentRentPrice = rentPrice[1];
-        }else if(this.color.isColorOwned()){
-            this.currentRentPrice = rentPrice[0]*2;
         }else{
             this.currentRentPrice = rentPrice[0];
-        }    
+        }
+        if(this.color.isColorOwned()){
+            this.currentRentPrice = this.currentRentPrice*2; 
+        }
+    }
+
+    @Override
+    public int getCurrentRentPrice(){
+        return this.currentRentPrice;
     }
 
     public void buildHouse(int nbHouse){
@@ -42,6 +59,14 @@ public class SpaceCity extends SpaceToBuy {
 
     public Color getColor(){
         return color;
+    }
+
+    public Player getOwner(){
+        return this.owner;
+    }
+
+    public int getCurrentResellPrice(){
+        return (int)((price+nbHouse*this.color.getHousePrice())*0.75);
     }
 
 }
