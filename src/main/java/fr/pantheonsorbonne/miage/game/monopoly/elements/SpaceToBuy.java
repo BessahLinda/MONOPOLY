@@ -2,8 +2,8 @@ package fr.pantheonsorbonne.miage.game.monopoly.elements;
 
 public abstract class  SpaceToBuy extends Space {
 
-    private Player owner; 
-    private int price ;
+    protected Player owner; 
+    protected int price ;
     protected int currentRentPrice;
 
     public SpaceToBuy(String name, int index,int price) {
@@ -27,5 +27,9 @@ public abstract class  SpaceToBuy extends Space {
     public boolean isSpaceOwned() {
         return this.owner != null;
     }
+
+    public abstract int getCurrentResellPrice();
+
+    public abstract void setCurrentRentPrice();
 
 }

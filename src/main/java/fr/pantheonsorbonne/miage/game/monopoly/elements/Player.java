@@ -29,12 +29,13 @@ public class Player {
         int asset = 0;
         
         for(SpaceToBuy s : property ){
-            //asset += s.getColor().getHousePrice()*s.getNbHouse() + s.getPrice() + money;
+            SpaceCity spaceCity = (SpaceCity)s;
+            asset += spaceCity.getColor().getHousePrice()*spaceCity.getNbHouse() + s.getPrice() + money;
         }
         return asset;
     }
 
-    public boolean checkBalance(int price){
+    public boolean isAffordable(int price){
         if (this.money - price < 0){
             return false;
         }else {
@@ -48,7 +49,7 @@ public class Player {
     }
 
     public void buyLand(SpaceToBuy s){
-        if (checkBalance(s.getPrice())){
+        if (isAffordable(s.getPrice())){
             withdrawMoney(s.getPrice());
             s.setOwner(this);
             property.add(s);
@@ -60,7 +61,7 @@ public class Player {
     }
 
     /**public void buySpecialSpace(SpaceToBuy s){
-        if (checkBalance(s.getPrice())){
+        if (isAffordable(s.getPrice())){
             withdrawMoney(s.getPrice());
             s.setOwner(this);
             property.add(s);
@@ -68,7 +69,7 @@ public class Player {
         } 
     }**/
 
-    public boolean bankrupt(){
+    public boolean isBankrupt(){
         if (this.money < 0){
             return true;
         }else
@@ -96,17 +97,17 @@ public class Player {
         isInJail = inJail;
     }
 
-    public void payRent(SpaceCity s) {
-        if(checkBalance(s.getCurrentRentPrice())){
+    public void payRent(SpaceToBuy s) {
+        if(isAffordable(s.getCurrentRentPrice())){
             withdrawMoney(s.getCurrentRentPrice());
-            s.getOwner().addMoney(s.getCurrentRentPrice());
+            s.getOwner().earnMoney(s.getCurrentRentPrice());
         }else{
             sale();
         }
     }
 
     public void payTax(SpaceTax s){
-        if(checkBalance(s.getTax())){
+        if(isAffordable(s.getTax())){
             withdrawMoney(s.getTax());
         }else{
             sale();
@@ -114,17 +115,19 @@ public class Player {
     }
 
     public void payChance(int rndPrice) {
-        if(checkBalance(rndPrice)){
+        if(isAffordable(rndPrice)){
             withdrawMoney(rndPrice);
         }else{
             sale();
         }
 	}
 
+    
+
     private void sale() {
     }
 
-    public void addMoney(int m) {
+    public void earnMoney(int m) {
         this.money += m;
     }
 
@@ -140,7 +143,7 @@ public class Player {
         return this.position;
     }
 
-    public int getMoney() {
+    public int checkBalance() {
         return this.money;
     }
 

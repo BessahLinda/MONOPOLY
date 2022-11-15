@@ -16,6 +16,7 @@ public class SpaceCity extends SpaceToBuy {
 
     }
 
+    @Override
     public void setCurrentRentPrice(){
         if(this.nbHouse == 4){
             this.currentRentPrice = rentPrice[4];
@@ -44,5 +45,8 @@ public class SpaceCity extends SpaceToBuy {
         return color;
     }
 
+    public int getCurrentResellPrice(){
+        return (int)((this.price +nbHouse*this.color.getHousePrice())*0.75);
+    }
 }
 

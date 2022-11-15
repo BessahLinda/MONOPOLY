@@ -20,12 +20,12 @@ class PlayerTest {
         assertEquals(p.getPosition(), 7);
         p.advance(38);
         assertEquals(p.getPosition(),5);
-        assertEquals(p.getMoney(), 1700);
+        assertEquals(p.checkBalance(), 1700);
 
         Player p2 = new Player("Yewon");
         p2.advance(44);
         assertEquals(p2.getPosition(),4);
-        assertEquals(p2.getMoney(), 1700);
+        assertEquals(p2.checkBalance(), 1700);
         
         Player p3 = new Player("Linda");
         p3.advance(32);
@@ -37,8 +37,8 @@ class PlayerTest {
     @Test
     public void testCheckBalance() {
         Player p = new Player("Linda");
-        assertEquals(p.checkBalance(200),true);
-        assertEquals(p.checkBalance(2003),false);
+        assertEquals(p.isAffordable(200),true);
+        assertEquals(p.isAffordable(2003),false);
     }    
     
     @Test
@@ -48,7 +48,7 @@ class PlayerTest {
         SpaceCity s =new SpaceCity("Boulevard de Bellvile",1,60,marron, new int[] {2,10,30,90,160,250});
         p.buyLand(s);
         assertEquals(s.getOwner(), p);
-        assertEquals(p.getMoney(), 1500-60);
+        assertEquals(p.checkBalance(), 1500-60);
         assertEquals( marron.getSpaces().get(0),s); 
 
     } 
@@ -57,22 +57,22 @@ class PlayerTest {
     public void testWithdrawMoney() {
         Player p = new Player("Linda");
         p.withdrawMoney(600);
-        assertEquals(p.getMoney(), 1500-600);
+        assertEquals(p.checkBalance(), 1500-600);
     }
 
     @Test
     public void testAddMoney() {
         Player p = new Player("Linda");
-        p.addMoney(600);
-        assertEquals(p.getMoney(), 1500+600);
+        p.earnMoney(600);
+        assertEquals(p.checkBalance(), 1500+600);
     }
 
     @Test
     public void testBankrupt() {
         Player p = new Player("Linda");
-        assertEquals(p.bankrupt(),false);
+        assertEquals(p.isBankrupt(),false);
         p.withdrawMoney(1600);
-        assertEquals(p.bankrupt(),true);
+        assertEquals(p.isBankrupt(),true);
     }  
     
     @Test
@@ -83,7 +83,7 @@ class PlayerTest {
         p.buyLand(s);
         Player p2 = new Player("Yewon");
         p2.payRent(s);
-        assertEquals(p.getMoney(), (1500-s.getPrice()+s.getCurrentRentPrice()));
+        assertEquals(p.checkBalance(), (1500-s.getPrice()+s.getCurrentRentPrice()));
     }
 
     @Test
@@ -102,7 +102,7 @@ class PlayerTest {
         p.goToJail();
         p.goOutJail(50  );
         assertEquals(p.isInJail(), false);
-        assertEquals(p.getMoney(),1500-50); 
+        assertEquals(p.checkBalance(),1500-50); 
     }
 
     @Test
@@ -110,7 +110,7 @@ class PlayerTest {
         SpaceTax s = new SpaceTax("impot", 0, 100);
         Player p = new Player("Linda");
         p.payTax(s);
-        assertEquals(p.getMoney(), 1500-100);
+        assertEquals(p.checkBalance(), 1500-100);
     }
 
 }

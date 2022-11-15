@@ -9,7 +9,7 @@ public class Color {
     private Player colorMonopolist;
     private final String name;
     private final int housePrice;
-    private List<SpaceCity> spaces = new ArrayList<>(2);
+    private List<SpaceCity> spaces = new ArrayList<>();
 
     public Color(String name, int housePrice){
         this.name = name;

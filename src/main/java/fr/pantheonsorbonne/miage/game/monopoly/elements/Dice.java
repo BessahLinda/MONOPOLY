@@ -6,7 +6,7 @@ public  class Dice {
     private int dice1;
     private int dice2;
     
-    public int generateRandomVal2(){
+    public int rollDices(){
         this.dice1= (int) ((Math.random() * 6) + 1);
         this.dice2 = (int) ((Math.random() * 6) + 1);
         return(dice1+dice2);
@@ -20,7 +20,7 @@ public  class Dice {
         }
     }
 
-    public int generateRandomVal1(){
+    public int rollDice(){
         this.dice1= (int) ((Math.random() * 6) + 1);
         return this.dice1;
     }

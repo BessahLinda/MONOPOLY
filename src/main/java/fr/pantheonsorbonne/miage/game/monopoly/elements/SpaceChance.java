@@ -45,7 +45,7 @@ public class SpaceChance extends Space{
         int rndIndex = new Random().nextInt(prices.length);
         int rndPrice = prices[rndIndex];
         if(rndPrice < 0) {
-            player.addMoney(rndPrice);
+            player.earnMoney(rndPrice);
             System.out.println("You take a lucky card and your cash has been decreased by "
                     + rndPrice + "$");
         } else {
