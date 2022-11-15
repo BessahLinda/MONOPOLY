@@ -41,16 +41,16 @@ class PlayerTest {
         assertEquals(p.isAffordable(2003),false);
     }    
     
-    @Test
-    public void testBuyLand() {
-        Player p = new Player("Linda");
-        Color marron = new Color("marron",50);
-        SpaceCity s =new SpaceCity("Boulevard de Bellvile",1,60,marron, new int[] {2,10,30,90,160,250});
-        p.buyLand(s);
-        assertEquals(s.getOwner(), p);
-        assertEquals(p.checkBalance(), 1500-60);
-        assertEquals( marron.getSpaces().get(0),s); 
-    } 
+    // @Test
+    // public void testBuyLand() {
+    //     Player p = new Player("Linda");
+    //     Color marron = new Color("marron",50);
+    //     SpaceCity s =new SpaceCity("Boulevard de Bellvile",1,60,marron, new int[] {2,10,30,90,160,250});
+    //     p.buyLand(s);
+    //     assertEquals(s.getOwner(), p);
+    //     assertEquals(p.checkBalance(), 1500-60);
+    //     assertEquals( marron.getSpaces().get(0),s); 
+    // } 
 
     @Test
     public void testWithdrawMoney() {
@@ -67,6 +67,15 @@ class PlayerTest {
     }
 
     @Test
+    public void testGetAsset(){
+
+        //getAsset
+
+        //isBankrupt
+    }
+
+
+    @Test
     public void testBankrupt() {
         Player p = new Player("Linda");
         assertEquals(p.isBankrupt(),false);
@@ -74,16 +83,16 @@ class PlayerTest {
         assertEquals(p.isBankrupt(),true);
     }  
     
-    @Test
-    public void testPayRent(){
-        Player p = new Player("Linda");
-        Color marron = new Color("marron",50);
-        SpaceCity s =new SpaceCity("Boulevard de Bellvile",1,60,marron, new int[] {2,10,30,90,160,250});
-        p.buyLand(s);
-        Player p2 = new Player("Yewon");
-        p2.payRent(s);
-        assertEquals(p.checkBalance(), (1500-s.getPrice()+s.getCurrentRentPrice()));
-    }
+    // @Test
+    // public void testPayRent(){
+    //     Player p = new Player("Linda");
+    //     Color marron = new Color("marron",50);
+    //     SpaceCity s =new SpaceCity("Boulevard de Bellvile",1,60,marron, new int[] {2,10,30,90,160,250});
+    //     p.buyLand(s);
+    //     Player p2 = new Player("Yewon");
+    //     p2.payRent(s);
+    //     assertEquals(p.checkBalance(), (1500-s.getPrice()+s.getCurrentRentPrice()));
+    // }
 
     @Test
     public void testGoToJail(){

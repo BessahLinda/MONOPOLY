@@ -9,7 +9,7 @@ public class SpaceCity extends SpaceToBuy {
     private int currentRentPrice;
     private int nbHouse = 0; 
 
-    public SpaceCity(String name, int index,int price,Color color, int[] rentPrice) {
+    public SpaceCity(String name, int index,Color color, int price, int[] rentPrice) {
         super(name, index, price);
         this.color = color;
         this.rentPrice = rentPrice;
@@ -65,9 +65,16 @@ public class SpaceCity extends SpaceToBuy {
         return this.owner;
     }
 
+    
+
     public int getCurrentResellPrice(){
         return (int)((price+nbHouse*this.color.getHousePrice())*0.75);
     }
 
+    // public SpaceCity getSpacecityInfoByIndex(int index){
+        
+    ///???
+    // }
 }
+
 

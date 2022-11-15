@@ -49,9 +49,13 @@ public class Player {
         return money;
      }
 
-    public void buyHouse(){
+    public void buyHouse(Space s){
         //s.setCurrentRentPrice();
         //buildHouse on space city
+
+
+        
+        
     }
 
 

@@ -13,4 +13,9 @@ public class Space {
     public String getName(){
         return this.name;
     }
+
+    
+    public int getIndex(){
+        return this.index;
+    }
 }
