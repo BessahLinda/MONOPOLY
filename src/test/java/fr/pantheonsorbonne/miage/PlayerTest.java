@@ -7,7 +7,10 @@ import fr.pantheonsorbonne.miage.game.monopoly.elements.Player;
 import fr.pantheonsorbonne.miage.game.monopoly.elements.Space;
 import fr.pantheonsorbonne.miage.game.monopoly.elements.SpaceCity;
 import fr.pantheonsorbonne.miage.game.monopoly.elements.SpaceJail;
+import fr.pantheonsorbonne.miage.game.monopoly.elements.SpacePublicService;
+import fr.pantheonsorbonne.miage.game.monopoly.elements.SpaceStation;
 import fr.pantheonsorbonne.miage.game.monopoly.elements.SpaceTax;
+import fr.pantheonsorbonne.miage.game.monopoly.elements.SpaceToBuy;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -43,7 +46,7 @@ class PlayerTest {
     }    
     
     @Test
-    public void testBuyLand() {
+    public void testBuyCity() {
         Player p = new Player("Linda");
         Color bleuClair = new Color("bleuClair",50);
         SpaceCity s = new SpaceCity("Rue de Vaugirard",6,100,bleuClair,new int[] {6,30,90,270,400,550});
@@ -87,7 +90,7 @@ class PlayerTest {
     }  
     
     @Test
-    public void testPayRent(){
+    public void testPayRentCity(){
         Player p = new Player("Linda");
         Color marron = new Color("marron",50);
         SpaceCity s =new SpaceCity("Boulevard de Bellvile",1,60,marron, new int[] {2,10,30,90,160,250});
@@ -122,6 +125,58 @@ class PlayerTest {
         Player p = new Player("Linda");
         p.payTax(s);
         assertEquals(p.checkBalance(), 1500-100);
+    }
+
+    @Test
+    public void buyStation(){
+        SpaceToBuy s = new SpaceStation("Gare Saint-Lazare", 35,200);
+        Player p = new Player("Linda");
+        p.buyLand(s);
+        assertEquals(s.getOwner(), p);
+        assertEquals(p.checkBalance(), 1500-200);
+        assertEquals(s.getCurrentRentPrice(), 25);
+        assertEquals(p.getNbStation(), 1);
+
+        SpaceToBuy s1 = new SpaceStation("Gare de Lyon", 15,200);
+        p.buyLand(s1);
+
+        assertEquals(p.checkBalance(), 1500-400);
+        assertEquals(p.getNbStation(), 2);
+        assertEquals(s.getCurrentRentPrice(), 50);
+        assertEquals(s1.getCurrentRentPrice(), 50);
+    }
+
+    @Test
+    public void buyServicePublic(){
+        SpaceToBuy s = new SpacePublicService("Compagine de distribution des eaux", 28,150);
+        Player p = new Player("Linda");
+        p.buyLand(s);
+        assertEquals(s.getOwner(), p);
+        assertEquals(p.checkBalance(), 1500-150);
+        s.getCurrentRentPrice();
+        assertEquals(p.getNbServicePublic(), 1);
+
+        SpaceToBuy s1 = new SpacePublicService("Compagine de distribution d'éléctricité", 12,150);
+        p.buyLand(s1);
+
+        assertEquals(p.checkBalance(), 1500-300);
+        assertEquals(p.getNbServicePublic(), 2);
+        //assertEquals(s.getCurrentRentPrice(), 50);
+        //assertEquals(s1.getCurrentRentPrice(), 50);
+    }
+
+    @Test
+    public void testPayRentStation(){
+        Player p = new Player("Linda");
+        SpaceToBuy s = new SpaceStation("Gare Saint-Lazare", 35,200);
+        p.buyLand(s);
+        Player p2 = new Player("Yewon");
+        p2.payRent(s);
+        assertEquals(p.checkBalance(), (1500-s.getPrice()+s.getCurrentRentPrice()));
+        SpaceToBuy s1 = new SpaceStation("Gare de Lyon", 15,200);
+        p.buyLand(s1);
+        p2.payRent(s1);
+        assertEquals(p2.checkBalance(), 1500-25-50);
     }
 
 }

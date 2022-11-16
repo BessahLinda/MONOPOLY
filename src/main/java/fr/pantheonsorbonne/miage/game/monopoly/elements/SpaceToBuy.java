@@ -21,9 +21,11 @@ public abstract class  SpaceToBuy extends Space {
     public void setOwner(Player player) {
         this.owner =player;
     }
+
     public int getCurrentRentPrice(){
         return this.currentRentPrice;
     }
+    
     public boolean isSpaceOwned() {
         return this.owner != null;
     }

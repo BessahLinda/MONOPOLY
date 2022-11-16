@@ -12,6 +12,7 @@ import fr.pantheonsorbonne.miage.game.monopoly.elements.SpaceJail;
 import fr.pantheonsorbonne.miage.game.monopoly.elements.SpacePublicService;
 import fr.pantheonsorbonne.miage.game.monopoly.elements.SpaceStation;
 import fr.pantheonsorbonne.miage.game.monopoly.elements.SpaceTax;
+import fr.pantheonsorbonne.miage.game.monopoly.elements.SpaceToBuy;
 
 
 public class Game {
@@ -131,7 +132,7 @@ public class Game {
     }
 
     private void onSpaceCity(Space playerAfterMove, Player player){
-        SpaceCity space = (SpaceCity) playerAfterMove;
+        SpaceToBuy space = (SpaceToBuy) playerAfterMove;
         if (!space.isSpaceOwned()) {
             player.buyLand(space);
         } else if (space.getOwner()!=player){

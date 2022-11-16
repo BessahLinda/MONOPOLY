@@ -8,14 +8,21 @@ public class SpacePublicService extends SpaceToBuy {
 
     @Override
     public void setCurrentRentPrice() {
-        // TODO Auto-generated method stub
-        
+        if(this.owner.getNbServicePublic() ==2){
+            this.currentRentPrice =  (int) ((Math.random() * 6) + 1) * 10;
+        }  
     }
 
     @Override
     public int getCurrentResellPrice() {
         // TODO Auto-generated method stub
         return 0;
+    }
+
+    @Override
+    public int getCurrentRentPrice(){
+        return (int) ((Math.random() * 6) + 1) * 4;
+
     }
 
 

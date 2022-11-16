@@ -56,8 +56,9 @@ public class Player {
             if(s instanceof SpaceCity){
                 SpaceCity spaceCity = (SpaceCity)s;
                 spaceCity.getColor().setColorMonopolist(this);
-                setRentOfProperties(spaceCity);
+                
             }  
+            setRentOfProperties();
         } 
     }
 
@@ -124,11 +125,11 @@ public class Player {
 	}
 
     
-    private void setRentOfProperties(SpaceCity spaceCity){
+    private void setRentOfProperties(){
         for(SpaceToBuy sp : property ){
-            if(((SpaceCity) sp).getColor()==spaceCity.getColor()){
+            //if(((SpaceCity) sp).getColor()==spaceCity.getColor()){
                 sp.setCurrentRentPrice();
-            }
+            //}
             
         }
     }
@@ -164,8 +165,28 @@ public class Player {
         return this.isInJail;
     }
 
-    public void setPrisonDuration(){
+    private void setPrisonDuration(){
         this.prisonDuration +=1;
+    }
+
+    public int getNbStation() {
+        int nb = 0;
+        for(SpaceToBuy sp : property ){
+            if (sp instanceof SpaceStation){
+                nb +=1;
+            }    
+        }
+        return nb;
+    }
+
+    public int getNbServicePublic(){
+        int nb = 0;
+        for(SpaceToBuy sp : property ){
+            if (sp instanceof SpacePublicService){
+                nb +=1;
+            }    
+        }
+        return nb;
     }
 
 }
