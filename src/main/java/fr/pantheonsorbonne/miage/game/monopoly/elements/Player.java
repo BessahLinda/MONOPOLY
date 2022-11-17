@@ -121,7 +121,7 @@ public class Player {
         if(isAffordable(rndPrice)){
             withdrawMoney(rndPrice);
         }else{
-            sellProperty();
+           // sellProperty();
         }
 	}
 

@@ -80,6 +80,7 @@ public class Game {
 
 	public void nextTour(Player player) {
 
+        player.buyHouse();
         player.advance( d.rollDices());
         Space playerSpaceAfterMove = board.get(player.getPosition());
         System.out.println(player.getName() +" are now on " + playerSpaceAfterMove.getName().toUpperCase() );
@@ -99,11 +100,6 @@ public class Game {
 
         System.out.println("\n**********************\n");
     }
-
-    public void askBuild(Player player) {
-        player.buyHouse();
-    }
-
 
 
     public void playerInJail(Player p){
