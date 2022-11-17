@@ -20,10 +20,10 @@ public  class Dice {
         }
     }
 
-    public int rollDice(){
+    /*public int rollDice(){
         this.dice1= (int) ((Math.random() * 6) + 1);
         return this.dice1;
-    }
+    }*/
     
 
 

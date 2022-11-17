@@ -45,6 +45,7 @@ public class SpaceCity extends SpaceToBuy {
         return color;
     }
 
+    @Override
     public int getCurrentResellPrice(){
         return (int)((this.price +nbHouse*this.color.getHousePrice())*0.75);
     }

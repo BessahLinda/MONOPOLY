@@ -26,4 +26,5 @@ class SpaceCityTest {
         assertEquals(s.getCurrentRentPrice(), 90);
     }
     
+    
 }

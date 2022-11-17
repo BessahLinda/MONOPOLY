@@ -91,7 +91,7 @@ public class Game {
             onSpaceTax(playerSpaceAfterMove, player);
 
         } else if (playerSpaceAfterMove instanceof SpaceChance) {
-            onSpaceChance(playerSpaceAfterMove, player);;
+            onSpaceChance(playerSpaceAfterMove, player);
 
         } else if (playerSpaceAfterMove instanceof SpaceCity){
             onSpaceCity(playerSpaceAfterMove, player);

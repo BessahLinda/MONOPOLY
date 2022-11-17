@@ -30,7 +30,9 @@ public abstract class  SpaceToBuy extends Space {
         return this.owner != null;
     }
 
-    public abstract int getCurrentResellPrice();
+    public int getCurrentResellPrice(){
+        return (int) ( this.price * 0.75) ;
+    }
 
     public abstract void setCurrentRentPrice();
 

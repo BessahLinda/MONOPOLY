@@ -12,13 +12,5 @@ public class SpaceStation extends SpaceToBuy {
     public void setCurrentRentPrice() {
         this.currentRentPrice = this.owner.getNbStation() * 25;        
     }
-
-    @Override
-    public int getCurrentResellPrice() {
-        // TODO Auto-generated method stub
-        return 0;
-    }
-
-    
-    
+ 
 }

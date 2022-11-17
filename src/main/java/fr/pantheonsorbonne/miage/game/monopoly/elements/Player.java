@@ -45,6 +45,7 @@ public class Player {
     }
 
     public void buyHouse(){
+        
         //s.setCurrentRentPrice();
     }
 
@@ -104,7 +105,7 @@ public class Player {
             withdrawMoney(s.getCurrentRentPrice());
             s.getOwner().earnMoney(s.getCurrentRentPrice());
         }else{
-            sale();
+            //sellProperty();
         }
     }
 
@@ -112,7 +113,7 @@ public class Player {
         if(isAffordable(s.getTax())){
             withdrawMoney(s.getTax());
         }else{
-            sale();
+            //sellProperty();
         }
     }
 
@@ -120,7 +121,7 @@ public class Player {
         if(isAffordable(rndPrice)){
             withdrawMoney(rndPrice);
         }else{
-            sale();
+            sellProperty();
         }
 	}
 
@@ -134,7 +135,59 @@ public class Player {
         }
     }
 
-    private void sale() {
+    private void sellProperty() {  
+        ArrayList<SpaceToBuy> priority = new ArrayList<>();
+        ArrayList<SpaceCity> priorityColor = new ArrayList<>();
+
+
+        for(SpaceToBuy s : property){
+
+            if(((SpaceCity) s).getColor().isColorOwned()){
+                priorityColor.add((SpaceCity) s);
+            }
+            else{
+                priority.add(s);
+            }
+        }
+
+        int indexMin = 0;
+        for(int i =0; i < priorityColor.size(); i++){
+            for(int j=i+1; j< priorityColor.size(); j++){
+                if(priorityColor.get(indexMin).getCurrentRentPrice()>priorityColor.get(j).getCurrentRentPrice()){
+                    indexMin = j;
+                }
+            }   
+            SpaceCity tmp = priorityColor.get(i);
+            priorityColor.set(i,priorityColor.get(indexMin));
+            priorityColor.set(indexMin,tmp);
+        }
+        // gotta test !
+
+        indexMin = 0;
+        for(int i =0; i < priorityColor.size(); i++){
+            for(int j=i+1; j< priorityColor.size(); j++){
+                if(priorityColor.get(indexMin).getCurrentRentPrice()>priorityColor.get(j).getCurrentRentPrice()){
+                    indexMin = j;
+                }
+            }
+            SpaceToBuy tmp = priority.get(i);
+            priority.set(i,priority.get(indexMin));
+            priority.set(indexMin,tmp);
+        }
+
+        // gotta test !
+
+
+        priority.addAll(priorityColor);
+
+        int index = 0;
+        while(priority.get(index).getPrice() < this.checkBalance()){
+            //noooo sell maison one by one
+            this.earnMoney(priority.get(index).getCurrentResellPrice());
+            priority.get(index).setOwner(null);
+
+            index++;
+        }
     }
 
     public void earnMoney(int m) {
@@ -165,7 +218,7 @@ public class Player {
         return this.isInJail;
     }
 
-    private void setPrisonDuration(){
+    public void setPrisonDuration(){
         this.prisonDuration +=1;
     }
 
