@@ -13,7 +13,6 @@ public class SpaceCity extends SpaceToBuy {
         this.rentPrice = rentPrice;
         currentRentPrice = rentPrice[0];
         color.getSpaces().add(this);
-
     }
 
     @Override
@@ -35,6 +34,10 @@ public class SpaceCity extends SpaceToBuy {
 
     public void buildHouse(int nbHouse){
         this.nbHouse += nbHouse;
+    }
+
+    public void deconstructHouse(){
+        this.nbHouse --;
     }
     
     public int getNbHouse() {

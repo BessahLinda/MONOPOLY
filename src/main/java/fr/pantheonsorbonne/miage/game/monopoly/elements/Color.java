@@ -6,7 +6,7 @@ import java.util.List;
 public class Color {
 
     
-    private Player colorMonopolist;
+    private Player colorMonopolist; //guess we can remove this and replace by spaces 
     private final String name;
     private final int housePrice;
     private List<SpaceCity> spaces = new ArrayList<>();
@@ -17,15 +17,29 @@ public class Color {
     }
 
     
-    public void setColorMonopolist(Player colorMonopolist){
+    public void setColorMonopolist(Player colorMonopolist){ 
         if(isColorMonopolist(colorMonopolist)){
-            this.colorMonopolist=colorMonopolist;
+            this.colorMonopolist=colorMonopolist; //set colorist dans color // on peut enlever cette partie 
+
+            ArrayList<SpaceCity> priorityList = new ArrayList<>(); // + la fonctionne qui ajout une liste de colorSet dans player
+            int maxind = 0;
+            for(int i = 1; i<spaces.size() ; i++){
+                priorityList.add(spaces.get(i));
+                if(spaces.get(i).getPrice()>spaces.get(maxind).getPrice()){
+                    maxind = i;
+                }
+            }
+            SpaceCity tmp = priorityList.get(0); //sorted descending order
+            priorityList.set(0,priorityList.get(maxind));
+            priorityList.set(maxind,tmp);
+            colorMonopolist.setColorsetProperty(priorityList);
+
         }else{
             this.colorMonopolist = null;
         }   
     }
 
-    public boolean isColorMonopolist(Player colorMonopolist){
+    public boolean isColorMonopolist(Player colorMonopolist){ //on peut merger dans setColor 
         for (SpaceCity s : spaces){
             if(s.getOwner() != colorMonopolist){
                 return false;
@@ -48,6 +62,10 @@ public class Color {
 
     public Player getColorMonopolist(){
         return this.colorMonopolist;
+    }
+
+    public String getColorName(){
+        return this.name;
     }
 
 }

@@ -2,9 +2,9 @@ package fr.pantheonsorbonne.miage.game;
 
 import fr.pantheonsorbonne.miage.Facade;
 import fr.pantheonsorbonne.miage.PlayerFacade;
-import fr.pantheonsorbonne.miage.game.monopoly.FullBoardException;
-import fr.pantheonsorbonne.miage.game.monopoly.TicTacToe;
-import fr.pantheonsorbonne.miage.game.monopoly.TicTacToeImpl;
+// import fr.pantheonsorbonne.miage.game.monopoly.FullBoardException;
+// import fr.pantheonsorbonne.miage.game.monopoly.TicTacToe;
+// import fr.pantheonsorbonne.miage.game.monopoly.TicTacToeImpl;
 import fr.pantheonsorbonne.miage.model.Game;
 import fr.pantheonsorbonne.miage.model.GameCommand;
 

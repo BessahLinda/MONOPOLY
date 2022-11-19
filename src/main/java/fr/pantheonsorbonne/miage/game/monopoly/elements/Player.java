@@ -10,7 +10,7 @@ public class Player {
     private int prisonDuration; 
     private boolean isInJail = false;
     private ArrayList<SpaceToBuy> property = new ArrayList<>();
-    //private ArrayList<SpaceToBuy> publicServiceAndStations = new ArrayList<>();
+    private ArrayList<SpaceCity> colorsetProperty = new ArrayList<>();
 
     public Player(String name){
         this.name = name;
@@ -26,58 +26,108 @@ public class Player {
     }
 
     public int getAsset(){ //game over condtion : asset < 0
-        int asset = 0;
-        
+        int asset = money;
         for(SpaceToBuy s : property ){
-            SpaceCity spaceCity = (SpaceCity)s;
-            asset += spaceCity.getColor().getHousePrice()*spaceCity.getNbHouse() + s.getPrice() + money;
+            if(s instanceof SpaceCity){
+                SpaceCity spaceCity = (SpaceCity)s;
+                asset += spaceCity.getColor().getHousePrice()*spaceCity.getNbHouse()*0.75 + spaceCity.getPrice()*0.75;
+            }
+            else{
+                asset += s.getPrice()*0.75;
+            }
         }
         return asset;
     }
 
-    public boolean isAffordable(int price){
-        if (this.money - price < 0){
-            return false;
-        }else {
-            return true;
-        }
-        
+    // check if I can pay the toll fee
+    public boolean hasEnoughAsset(int payment){
+        return getAsset()<payment;
     }
 
-    public void buyHouse(){
-        
-        //s.setCurrentRentPrice();
+    // check if I can buy 
+    public boolean isAffordable(int price){
+        return this.money > price;
+    }
+
+    public boolean canBuyHouse(){
+        if(colorsetProperty.isEmpty()){
+            return false;
+        }
+        return true;
+    }
+
+    public void buildHouse(){
+
+        if(canBuyHouse()){
+            //buy less then 3 houses in every city
+            if(!allCitiesOwnMaison()){  //marron , bleu , orange 
+                for(SpaceCity city: colorsetProperty){
+                    if(money<500){
+                        break;
+                    }
+                    if(city.getColor().getColorName().equals("marron")||city.getColor().getColorName().equals("bleuClair")){ //priority x
+                        return;
+                    }
+                    //since colorsetProperty is already sorted, the most important city comes first
+                    else if(city.getColor().getColorName().equals("orange")||city.getColor().getColorName().equals("rouge")||city.getColor().getColorName().equals("jeune")||city.getColor().getColorName().equals("rose")){  //priority 1
+                        while(money>800){ 
+                                if(city.getNbHouse()<3){
+                                    city.buildHouse(1);
+                                    this.withdrawMoney(city.getColor().getHousePrice());
+                                }
+                        }
+                    }    
+                    else if(city.getColor().getColorName().equals("bleu")){ //priority 2
+                        while(money>800){
+                                if(city.getName().equals("Rue de la Paix")){
+                                    if(city.getNbHouse()<3){
+                                        city.buildHouse(1);
+                                        this.withdrawMoney(city.getColor().getHousePrice());
+                                    }
+                                }
+                        }
+                    }
+                    else if(city.getColor().getColorName().equals("vert")){ //priority 3
+                        // while(money>800){
+                        //     if(city.getName().equals("Rue de la Paix")){
+                        //         if(city.getNbHouse()<3){
+                        //             city.buildHouse(1);
+                        //             this.withdrawMoney(city.getColor().getHousePrice());
+                        //         }
+                        //     }
+                        // }
+                    }
+                }
+            }
+        }
+    }
+
+    public boolean allCitiesOwnMaison(){
+        for (SpaceCity s: colorsetProperty){
+            if(s.getNbHouse()<1){
+                return false;
+            }
+        }
+        return true;
     }
 
     public void buyLand(SpaceToBuy s){
-        if (isAffordable(s.getPrice())){
+        if (money>400){
             withdrawMoney(s.getPrice());
             s.setOwner(this);
             property.add(s);
             if(s instanceof SpaceCity){
-                SpaceCity spaceCity = (SpaceCity)s;
-                spaceCity.getColor().setColorMonopolist(this);
-                
-            }  
+               SpaceCity sc = (SpaceCity)s;
+                if(sc.getColor().isColorMonopolist(this)){
+                    sc.getColor().setColorMonopolist(this);
+                }
+            }
             setRentOfProperties();
         } 
     }
 
-    /**public void buySpecialSpace(SpaceToBuy s){
-        if (isAffordable(s.getPrice())){
-            withdrawMoney(s.getPrice());
-            s.setOwner(this);
-            property.add(s);
-            s.getColor().setColorMonopolist(this);
-        } 
-    }**/
-
     public boolean isBankrupt(){
-        if (this.money < 0){
-            return true;
-        }else
-            return false;
-    
+        return getAsset()< 0;
     }
 
     public void goToJail(){
@@ -105,7 +155,7 @@ public class Player {
             withdrawMoney(s.getCurrentRentPrice());
             s.getOwner().earnMoney(s.getCurrentRentPrice());
         }else{
-            //sellProperty();
+            sellProperty(s.getCurrentRentPrice());
         }
     }
 
@@ -113,7 +163,7 @@ public class Player {
         if(isAffordable(s.getTax())){
             withdrawMoney(s.getTax());
         }else{
-            //sellProperty();
+            sellProperty(s.getTax());
         }
     }
 
@@ -121,48 +171,65 @@ public class Player {
         if(isAffordable(rndPrice)){
             withdrawMoney(rndPrice);
         }else{
-           // sellProperty();
+            sellProperty(rndPrice);
         }
 	}
 
     
     private void setRentOfProperties(){
         for(SpaceToBuy sp : property ){
-            //if(((SpaceCity) sp).getColor()==spaceCity.getColor()){
-                sp.setCurrentRentPrice();
-            //}
-            
+            sp.setCurrentRentPrice();
         }
     }
 
-    private void sellProperty() {  
+    private void sellProperty(int payment) {  
+
+            if(getAsset() < payment){
+                property.clear();
+                colorsetProperty.clear();
+                this.money = -10000000;
+            }    
+
         ArrayList<SpaceToBuy> priority = new ArrayList<>();
-        ArrayList<SpaceCity> priorityColor = new ArrayList<>();
+        ArrayList<SpaceToBuy> priorityColor = new ArrayList<>();
+        ArrayList<SpaceToBuy> prioritySpecial = new ArrayList<>();
 
 
         for(SpaceToBuy s : property){
 
             if(((SpaceCity) s).getColor().isColorOwned()){
-                priorityColor.add((SpaceCity) s);
+                priorityColor.add(s);
+            }
+            else if(s instanceof SpaceStation || s instanceof SpacePublicService){
+                prioritySpecial.add(s);
             }
             else{
                 priority.add(s);
             }
         }
 
+        //sorting Color + optimser plus
         int indexMin = 0;
-        for(int i =0; i < priorityColor.size(); i++){
+        for(int i =0; i < priorityColor.size(); i++){ 
             for(int j=i+1; j< priorityColor.size(); j++){
                 if(priorityColor.get(indexMin).getCurrentRentPrice()>priorityColor.get(j).getCurrentRentPrice()){
                     indexMin = j;
                 }
             }   
-            SpaceCity tmp = priorityColor.get(i);
+            SpaceToBuy tmp = priorityColor.get(i);
             priorityColor.set(i,priorityColor.get(indexMin));
-            priorityColor.set(indexMin,tmp);
+            priorityColor.set(indexMin,tmp); 
         }
-        // gotta test !
 
+        //sorting public sation and public service (Space Station has higher value than Public service)
+        for(SpaceToBuy s : prioritySpecial){
+            if(s instanceof SpacePublicService){
+                prioritySpecial.remove(s);
+                prioritySpecial.add(0,s);
+            }
+        }
+
+        //sorting space without owning color set
         indexMin = 0;
         for(int i =0; i < priorityColor.size(); i++){
             for(int j=i+1; j< priorityColor.size(); j++){
@@ -175,18 +242,47 @@ public class Player {
             priority.set(indexMin,tmp);
         }
 
-        // gotta test !
-
-
         priority.addAll(priorityColor);
+        priority.addAll(prioritySpecial);
 
         int index = 0;
-        while(priority.get(index).getPrice() < this.checkBalance()){
-            //noooo sell maison one by one
-            this.earnMoney(priority.get(index).getCurrentResellPrice());
-            priority.get(index).setOwner(null);
+        while( payment > this.checkBalance()){
+            if(priority.get(index) instanceof SpaceCity){
+                SpaceCity currentCity = (SpaceCity) priority.get(index);
+                if(currentCity.getNbHouse()!=0){
+                    this.earnMoney((int)(currentCity.getColor().getHousePrice()*0.75));
+                    currentCity.deconstructHouse();
+                }
+                else{
+                    if(currentCity.getColor().getColorMonopolist()==null){
+                        this.earnMoney(priority.get(index).getCurrentResellPrice());
+                        priority.get(index).setOwner(null);
+                        index++;
+                    }
+                    else{
+                        index++;
+                    }
+                }
+            }
+            else{
+                this.earnMoney(priority.get(index).getCurrentResellPrice());
+                priority.get(index).setOwner(null);
+                index++; //color monopolist change status
+            }
 
-            index++;
+            
+            if(index>=priority.size()){ // optimser plus , also think about when we update currentRent, currentResell price
+                for(SpaceToBuy s : priority){
+                    if(s instanceof SpaceCity){
+                        SpaceCity currentCity = (SpaceCity) s;
+                        if(currentCity.owner == this){
+                            this.earnMoney((int)(currentCity.getPrice()*0.75));
+                            s.setOwner(null);
+                            break;
+                        }
+                    }    
+                }
+            }
         }
     }
 
@@ -240,6 +336,10 @@ public class Player {
             }    
         }
         return nb;
+    }
+
+    public void setColorsetProperty(ArrayList<SpaceCity> colorset){
+        this.colorsetProperty.addAll(colorset);//gotta do more optiaml 
     }
 
 }

@@ -80,7 +80,6 @@ public class Game {
 
 	public void nextTour(Player player) {
 
-        player.buyHouse();
         player.advance( d.rollDices());
         Space playerSpaceAfterMove = board.get(player.getPosition());
         System.out.println(player.getName() +" are now on " + playerSpaceAfterMove.getName().toUpperCase() );
@@ -119,6 +118,7 @@ public class Game {
     private void onSpaceTax(Space playerAfterMove, Player player){
         SpaceTax space = (SpaceTax) playerAfterMove;
         player.payTax(space);
+        
         System.out.println(player.getName()+" paid " + space.getTax() +"$ You now have "+ player.checkBalance());     
     }
 
@@ -145,4 +145,4 @@ public class Game {
     
 }        
 
-	
+
