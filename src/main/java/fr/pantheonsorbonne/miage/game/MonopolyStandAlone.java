@@ -20,7 +20,7 @@ public class MonopolyStandAlone {
                 else{
                     game.nextTour(players.get(i)); 
                 }
-
+                
                 if(players.get(i).isBankrupt()){
                     System.out.println(players.get(i).getName()+" doesn't have enough money to pay. You are retired from the game");     
                     players.remove(players.get(i));

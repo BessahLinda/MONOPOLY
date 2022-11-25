@@ -133,6 +133,7 @@ public class Game {
             player.buyLand(space);
         } else if (space.getOwner()!=player){
             player.payRent(space);
+            System.out.println(player.getName() + " paid " + space.getCurrentRentPrice() + " for " + space.getOwner().getName());
         }
     }
 

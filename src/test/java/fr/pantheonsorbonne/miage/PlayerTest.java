@@ -4,16 +4,13 @@ import org.junit.jupiter.api.Test;
 
 import fr.pantheonsorbonne.miage.game.monopoly.elements.Color;
 import fr.pantheonsorbonne.miage.game.monopoly.elements.Player;
-import fr.pantheonsorbonne.miage.game.monopoly.elements.Space;
 import fr.pantheonsorbonne.miage.game.monopoly.elements.SpaceCity;
-import fr.pantheonsorbonne.miage.game.monopoly.elements.SpaceJail;
 import fr.pantheonsorbonne.miage.game.monopoly.elements.SpacePublicService;
 import fr.pantheonsorbonne.miage.game.monopoly.elements.SpaceStation;
 import fr.pantheonsorbonne.miage.game.monopoly.elements.SpaceTax;
 import fr.pantheonsorbonne.miage.game.monopoly.elements.SpaceToBuy;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
 
 class PlayerTest {
 
@@ -177,6 +174,22 @@ class PlayerTest {
         p.buyLand(s1);
         p2.payRent(s1);
         assertEquals(p2.checkBalance(), 1500-25-50);
+    }
+
+    
+    @Test
+    public void testBuyLand(){
+
+    }
+
+    @Test
+    public void testBuyLand2(){
+
+    }
+
+    @Test
+    public void testSellProperty(){
+
     }
 
 }
