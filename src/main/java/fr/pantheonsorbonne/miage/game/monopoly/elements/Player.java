@@ -57,7 +57,6 @@ public class Player {
     }
 
     public void buildHouse(){
-
         if(canBuyHouse()){
             //buy less then 3 houses in every city
             if(!allCitiesOwnMaison()){  //marron , bleu , orange 
@@ -66,7 +65,12 @@ public class Player {
                         break;
                     }
                     if(city.getColor().getColorName().equals("marron")||city.getColor().getColorName().equals("bleuClair")){ //priority x
-                        return;
+                        while(money>3000){  //if you only have these color, better buy all of them 
+                            if(city.getNbHouse()<3){
+                                city.buildHouse(1);
+                                this.withdrawMoney(city.getColor().getHousePrice());
+                            }
+                        }
                     }
                     //since colorsetProperty is already sorted, the most important city comes first
                     else if(city.getColor().getColorName().equals("orange")||city.getColor().getColorName().equals("rouge")||city.getColor().getColorName().equals("jeune")||city.getColor().getColorName().equals("rose")){  //priority 1
@@ -88,18 +92,58 @@ public class Player {
                         }
                     }
                     else if(city.getColor().getColorName().equals("vert")){ //priority 3
-                        // while(money>800){
-                        //     if(city.getName().equals("Rue de la Paix")){
-                        //         if(city.getNbHouse()<3){
-                        //             city.buildHouse(1);
-                        //             this.withdrawMoney(city.getColor().getHousePrice());
-                        //         }
-                        //     }
-                        // }
+                        while(money>800){
+                                if(city.getNbHouse()<3){
+                                    city.buildHouse(1);
+                                    this.withdrawMoney(city.getColor().getHousePrice());
+                                }
+                        }
                     }
                 }
             }
+            else{
+                for(SpaceCity city: colorsetProperty){
+                    if(money<3000){
+                        break;
+                    }
+                    if(city.getColor().getColorName().equals("marron")||city.getColor().getColorName().equals("bleuClair")){ //priority x
+                        while(money>800){ 
+                            if(city.getNbHouse()<5){
+                                city.buildHouse(1);
+                                this.withdrawMoney(city.getColor().getHousePrice());
+                            }
+                        }
+                    }
+                    //since colorsetProperty is already sorted, the most important city comes first
+                    else if(city.getColor().getColorName().equals("orange")||city.getColor().getColorName().equals("rouge")||city.getColor().getColorName().equals("jeune")||city.getColor().getColorName().equals("rose")){  //priority 1
+                        while(money>3000){ 
+                                if(city.getNbHouse()<5){
+                                    city.buildHouse(1);
+                                    this.withdrawMoney(city.getColor().getHousePrice());
+                                }
+                        }
+                    }    
+                    else if(city.getColor().getColorName().equals("bleu")){ //priority 2
+                        while(money>3000){
+                                if(city.getName().equals("Rue de la Paix")){
+                                    if(city.getNbHouse()<5){
+                                        city.buildHouse(1);
+                                        this.withdrawMoney(city.getColor().getHousePrice());
+                                    }
+                                }
+                        }
+                    }
+                    else if(city.getColor().getColorName().equals("vert")){ //priority 3
+                        while(money>3000){
+                                if(city.getNbHouse()<5){
+                                    city.buildHouse(1);
+                                    this.withdrawMoney(city.getColor().getHousePrice());
+                                }
+                        }
+                    }
+            }   }
         }
+    
     }
 
     public boolean allCitiesOwnMaison(){
@@ -176,7 +220,7 @@ public class Player {
 	}
 
     
-    private void setRentOfProperties(){
+    public void setRentOfProperties(){
         for(SpaceToBuy sp : property ){
             sp.setCurrentRentPrice();
         }
@@ -339,7 +383,8 @@ public class Player {
     }
 
     public void setColorsetProperty(ArrayList<SpaceCity> colorset){
-        this.colorsetProperty.addAll(colorset);//gotta do more optiaml 
+        this.colorsetProperty.addAll(colorset);
+        //orange-> rouge->jeune->rose->blue->vert
     }
 
 }
