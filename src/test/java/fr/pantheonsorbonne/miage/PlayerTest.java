@@ -158,8 +158,6 @@ class PlayerTest {
 
         assertEquals(p.checkBalance(), 1500-300);
         assertEquals(p.getNbServicePublic(), 2);
-        //assertEquals(s.getCurrentRentPrice(), 50);
-        //assertEquals(s1.getCurrentRentPrice(), 50);
     }
 
     @Test
@@ -184,6 +182,31 @@ class PlayerTest {
 
     @Test
     public void testBuyLand2(){
+
+    }
+
+    @Test
+    public void testbuildHouse(){
+        Player p = new Player("Linda");
+        Player p2 = new Player("Yewon");
+        Color bleuClair = new Color("bleuClair",50);
+        SpaceCity s = new SpaceCity("Rue de Vaugirard",6,100,bleuClair,new int[] {6,30,90,270,400,550});
+        SpaceCity s1 =new SpaceCity("Rue de Courcelles",8,100,bleuClair, new int[] {6,30,90,270,400,550});
+        SpaceCity s2 =new SpaceCity("Avenue de la République",9,120,bleuClair,new int[] {8,40,100,300,450,600});
+        p2.buyLand(s);p2.buyLand(s);p2.buyLand(s);
+        p2.buildHouse();
+        assertEquals(2,s2.getNbHouse());
+    }
+
+    
+    @Test
+    public void testbuildHouse2(){
+
+    }
+
+    
+    @Test
+    public void testBuyHouse3(){
 
     }
 

@@ -32,16 +32,14 @@ class SpaceCityTest {
     public void setCurrentRentPriceTest2(){ //spaceStation
         Player p = new Player("Yewon");
         Color marron = new Color("marron",50);
-        assertEquals(p,marron.getColorMonopolist());
         SpaceCity s = new SpaceCity("Boulevard de Bellvile",1,60,marron, new int[] {2,10,30,90,160,250}); 
+        SpaceCity s1 = new SpaceCity("Rue Lecourbe",3,60,marron,new int[]{4,20,60,180,320,450});
         SpaceStation st = new SpaceStation("Gare Saint-Lazare", 35,200);
         p.buyLand(s); p.buyLand(st);
         p.setRentOfProperties();
         assertEquals(25, st.getCurrentRentPrice());
-        assertEquals(p,marron.getColorMonopolist()); //??
+        assertEquals(null,marron.getColorMonopolist()); //??
         assertEquals(false, marron.isColorOwned());
         assertEquals(2,s.getCurrentRentPrice());
-
     }
-
 }
