@@ -18,8 +18,9 @@ public class Color {
 
     
     public void setColorMonopolist(Player colorMonopolist){ 
+       
             this.colorMonopolist=colorMonopolist; //set colorist dans color // on peut enlever cette partie 
-            
+
             ArrayList<SpaceCity> priorityList = new ArrayList<>(); // + la fonctionne qui ajout une liste de colorSet dans player
             int maxind = 0;
             priorityList.add(spaces.get(maxind));
@@ -29,7 +30,6 @@ public class Color {
                     maxind = i;
                 }
             }
-
             SpaceCity tmp = priorityList.get(0); //sorted descending order
             priorityList.set(0,priorityList.get(maxind));
             priorityList.set(maxind,tmp);
@@ -43,10 +43,6 @@ public class Color {
             }
         }
         return true;
-    }
-
-    public void removeColorMonopolist(){
-        this.colorMonopolist = null;
     }
 
     public int getHousePrice(){
@@ -67,6 +63,10 @@ public class Color {
 
     public String getColorName(){
         return this.name;
+    }
+    
+    public void removeColorMonopolist(){
+        this.colorMonopolist = null;
     }
 
 }

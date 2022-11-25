@@ -12,6 +12,8 @@ import fr.pantheonsorbonne.miage.game.monopoly.elements.SpaceToBuy;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.util.ArrayList;
+
 class PlayerTest {
 
     @Test
@@ -187,21 +189,29 @@ class PlayerTest {
 
     @Test
     public void testbuildHouse(){
-        Player p = new Player("Linda");
         Player p2 = new Player("Yewon");
         Color bleuClair = new Color("bleuClair",50);
         SpaceCity s = new SpaceCity("Rue de Vaugirard",6,100,bleuClair,new int[] {6,30,90,270,400,550});
         SpaceCity s1 =new SpaceCity("Rue de Courcelles",8,100,bleuClair, new int[] {6,30,90,270,400,550});
         SpaceCity s2 =new SpaceCity("Avenue de la République",9,120,bleuClair,new int[] {8,40,100,300,450,600});
-        p2.buyLand(s);p2.buyLand(s);p2.buyLand(s);
+        p2.buyLand(s);p2.buyLand(s1);p2.buyLand(s2);
         p2.buildHouse();
-        assertEquals(2,s2.getNbHouse());
+        assertEquals(0,s2.getNbHouse());
     }
 
     
     @Test
     public void testbuildHouse2(){
-
+        Player p2 = new Player("Yewon");
+        Color orange = new Color("orange",100);
+        SpaceCity s = new SpaceCity("Avenue de Mozart",16,180,orange, new int[] {14,70,200,550,750,950});
+        SpaceCity s1 = new SpaceCity("Boulevard Saint-Michel",18,180,orange, new int[] {14,70,200,550,750,950});
+        SpaceCity s2 = new SpaceCity("Place Pigalle",19,200,orange,new int[] {16,80,220,600,800,1000});
+    
+        p2.buyLand(s);p2.buyLand(s1);p2.buyLand(s2);
+        p2.buildHouse();
+        assertEquals(2,s2.getNbHouse());
+        p2.checkBalance();
     }
 
     

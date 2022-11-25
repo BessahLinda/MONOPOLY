@@ -65,14 +65,13 @@ public class Player {
                         break;
                     }
                     if(city.getColor().getColorName().equals("marron")||city.getColor().getColorName().equals("bleuClair")){ //priority x
-                        while(money>3000){  //if you only have these color, better buy all of them 
+                        while(money>2000){  //if you only have these color, better buy all of them 
                             if(city.getNbHouse()<3){
                                 city.buildHouse(1);
                                 this.withdrawMoney(city.getColor().getHousePrice());
                             }
                         }
                     }
-                    //since colorsetProperty is already sorted, the most important city comes first
                     else if(city.getColor().getColorName().equals("orange")||city.getColor().getColorName().equals("rouge")||city.getColor().getColorName().equals("jeune")||city.getColor().getColorName().equals("rose")){  //priority 1
                         while(money>800){ 
                                 if(city.getNbHouse()<3){
@@ -385,6 +384,10 @@ public class Player {
     public void setColorsetProperty(ArrayList<SpaceCity> colorset){
         this.colorsetProperty.addAll(colorset);
         //orange-> rouge->jeune->rose->blue->vert
+    }
+
+    public ArrayList<SpaceCity> getColorsetProperty(){
+        return this.colorsetProperty;
     }
 
 }
