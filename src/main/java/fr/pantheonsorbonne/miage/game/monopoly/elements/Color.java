@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Color {
-
+//de
     
     private Player colorMonopolist; //guess we can remove this and replace by spaces 
     private final String name;
