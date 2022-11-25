@@ -339,7 +339,15 @@ public class Player {
     }
 
     public void setColorsetProperty(ArrayList<SpaceCity> colorset){
+<<<<<<< Updated upstream
         this.colorsetProperty.addAll(colorset);//gotta do more optiaml 
+=======
+        this.colorsetProperty.addAll(colorset);
+    }
+
+    public ArrayList getColorsetProperty(){
+        return this.colorsetProperty;
+>>>>>>> Stashed changes
     }
 
 }
