@@ -93,7 +93,7 @@ public class Game {
         } else if (playerSpaceAfterMove instanceof SpaceChance) {
             onSpaceChance(playerSpaceAfterMove, player);
 
-        } else if (playerSpaceAfterMove instanceof SpaceCity){
+        } else if (playerSpaceAfterMove instanceof SpaceToBuy){
             onSpaceCity(playerSpaceAfterMove, player);
         }
 

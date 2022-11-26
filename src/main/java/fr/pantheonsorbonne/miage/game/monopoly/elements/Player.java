@@ -65,37 +65,27 @@ public class Player {
                         break;
                     }
                     if(city.getColor().getColorName().equals("marron")||city.getColor().getColorName().equals("bleuClair")){ //priority x
-                        while(money>2000){  //if you only have these color, better buy all of them 
-                            if(city.getNbHouse()<3){
-                                city.buildHouse(1);
-                                this.withdrawMoney(city.getColor().getHousePrice());
-                            }
+                        while(money>2000&&city.getNbHouse()<2){  
+                            city.buildHouse(1);
+                            this.withdrawMoney(city.getColor().getHousePrice());
                         }
                     }
                     else if(city.getColor().getColorName().equals("orange")||city.getColor().getColorName().equals("rouge")||city.getColor().getColorName().equals("jeune")||city.getColor().getColorName().equals("rose")){  //priority 1
-                        while(money>800){ 
-                                if(city.getNbHouse()<3){
-                                    city.buildHouse(1);
-                                    this.withdrawMoney(city.getColor().getHousePrice());
-                                }
+                        while(money>800&&city.getNbHouse()<2){ 
+                            city.buildHouse(1);
+                            this.withdrawMoney(city.getColor().getHousePrice());
                         }
                     }    
                     else if(city.getColor().getColorName().equals("bleu")){ //priority 2
-                        while(money>800){
-                                if(city.getName().equals("Rue de la Paix")){
-                                    if(city.getNbHouse()<3){
-                                        city.buildHouse(1);
-                                        this.withdrawMoney(city.getColor().getHousePrice());
-                                    }
-                                }
+                        while(money>800&&city.getName().equals("Rue de la Paix")&&city.getNbHouse()<2){
+                            city.buildHouse(1);
+                            this.withdrawMoney(city.getColor().getHousePrice());      
                         }
                     }
                     else if(city.getColor().getColorName().equals("vert")){ //priority 3
-                        while(money>800){
-                                if(city.getNbHouse()<3){
-                                    city.buildHouse(1);
-                                    this.withdrawMoney(city.getColor().getHousePrice());
-                                }
+                        while(money>800&&city.getNbHouse()<2){
+                            city.buildHouse(1);
+                            this.withdrawMoney(city.getColor().getHousePrice());
                         }
                     }
                 }
@@ -106,38 +96,30 @@ public class Player {
                         break;
                     }
                     if(city.getColor().getColorName().equals("marron")||city.getColor().getColorName().equals("bleuClair")){ //priority x
-                        while(money>800){ 
-                            if(city.getNbHouse()<5){
+                        while(money>800&&city.getNbHouse()<4){ 
+                            city.buildHouse(1);
+                            this.withdrawMoney(city.getColor().getHousePrice());
+                        }
+                    }
+                    //since colorsetProperty is already sorted, the most important city comes first
+                    else if(city.getColor().getColorName().equals("orange")||city.getColor().getColorName().equals("rouge")||city.getColor().getColorName().equals("jeune")||city.getColor().getColorName().equals("rose")){  //priority 1
+                        while(money>3000&&city.getNbHouse()<4){ 
+                            city.buildHouse(1);
+                            this.withdrawMoney(city.getColor().getHousePrice()); 
+                        }
+                    }    
+                    else if(city.getColor().getColorName().equals("bleu")){ //priority 2
+                        while(money>3000&&city.getName().equals("Rue de la Paix")){
+                            if(city.getNbHouse()<4){
                                 city.buildHouse(1);
                                 this.withdrawMoney(city.getColor().getHousePrice());
                             }
                         }
                     }
-                    //since colorsetProperty is already sorted, the most important city comes first
-                    else if(city.getColor().getColorName().equals("orange")||city.getColor().getColorName().equals("rouge")||city.getColor().getColorName().equals("jeune")||city.getColor().getColorName().equals("rose")){  //priority 1
-                        while(money>3000){ 
-                                if(city.getNbHouse()<5){
-                                    city.buildHouse(1);
-                                    this.withdrawMoney(city.getColor().getHousePrice());
-                                }
-                        }
-                    }    
-                    else if(city.getColor().getColorName().equals("bleu")){ //priority 2
-                        while(money>3000){
-                                if(city.getName().equals("Rue de la Paix")){
-                                    if(city.getNbHouse()<5){
-                                        city.buildHouse(1);
-                                        this.withdrawMoney(city.getColor().getHousePrice());
-                                    }
-                                }
-                        }
-                    }
                     else if(city.getColor().getColorName().equals("vert")){ //priority 3
-                        while(money>3000){
-                                if(city.getNbHouse()<5){
-                                    city.buildHouse(1);
-                                    this.withdrawMoney(city.getColor().getHousePrice());
-                                }
+                        while(money>3000&&city.getNbHouse()<4){
+                            city.buildHouse(1);
+                            this.withdrawMoney(city.getColor().getHousePrice());
                         }
                     }
             }   }
