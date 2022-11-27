@@ -10,7 +10,7 @@ public class SpaceStation extends SpaceToBuy {
 
     @Override
     public void setCurrentRentPrice() {
-        this.currentRentPrice = this.owner.getNbStation() * 25;        
+        this.currentRentPrice = this.getOwner().getNbStation() * 25;        
     }
  
 }

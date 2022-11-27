@@ -4,7 +4,6 @@ import org.junit.jupiter.api.Test;
 
 import fr.pantheonsorbonne.miage.game.monopoly.elements.Color;
 import fr.pantheonsorbonne.miage.game.monopoly.elements.Player;
-import fr.pantheonsorbonne.miage.game.monopoly.elements.Space;
 import fr.pantheonsorbonne.miage.game.monopoly.elements.SpaceCity;
 import fr.pantheonsorbonne.miage.game.monopoly.elements.SpacePublicService;
 import fr.pantheonsorbonne.miage.game.monopoly.elements.SpaceStation;
@@ -23,28 +22,28 @@ class PlayerTest {
     public void testAdvance() {
         Player p = new Player("Linda");
         p.advance(7);
-        assertEquals(p.getPosition(), 7);
+        assertEquals(7, p.getPosition());
         p.advance(38);
-        assertEquals(p.getPosition(),5);
-        assertEquals(p.checkBalance(), 1700);
+        assertEquals(5,p.getPosition());
+        assertEquals(1700, p.checkBalance());
 
         Player p2 = new Player("Yewon");
         p2.advance(44);
-        assertEquals(p2.getPosition(),4);
-        assertEquals(p2.checkBalance(), 1700);
+        assertEquals(4,p2.getPosition());
+        assertEquals(1700, p2.checkBalance());
         
         Player p3 = new Player("Linda");
         p3.advance(32);
-        assertEquals(p3.getPosition(),32);
+        assertEquals(32,p3.getPosition());
         p3.advance(8);
-        assertEquals(p3.getPosition(), 0);
+        assertEquals(0, p3.getPosition());
     }
 
     @Test
     public void testCheckBalance() {
         Player p = new Player("Linda");
-        assertEquals(p.isAffordable(200),true);
-        assertEquals(p.isAffordable(2003),false);
+        assertEquals(true,p.isAffordable(200));
+        assertEquals(false,p.isAffordable(2003));
     }    
     
     @Test
@@ -57,16 +56,14 @@ class PlayerTest {
         p.buyLand(s);p.buyLand(s2);
         assertEquals(s.getOwner(), p);
         assertEquals(s2.getOwner(), p);
-        assertEquals(bleuClair.getColorMonopolist(), null);
+        assertEquals(null, bleuClair.getColorMonopolist());
         assertEquals(p.checkBalance(), 1500-100-120);
-        assertEquals(s.getCurrentRentPrice(), 6);
+        assertEquals(6, s.getCurrentRentPrice());
 
         p.buyLand(s1);
         assertEquals(bleuClair.getColorMonopolist(), p);
-        assertEquals(s.getCurrentRentPrice(), 12);
-        assertEquals(s2.getCurrentRentPrice(), 16);
-        //assertEquals( marron.getSpaces().get(0),s); 
-
+        assertEquals(12, s.getCurrentRentPrice());
+        assertEquals(16, s2.getCurrentRentPrice());
     } 
 
     @Test
@@ -86,9 +83,9 @@ class PlayerTest {
     @Test
     public void testBankrupt() {
         Player p = new Player("Linda");
-        assertEquals(p.isBankrupt(),false);
+        assertEquals(false,p.isBankrupt());
         p.withdrawMoney(1600);
-        assertEquals(p.isBankrupt(),true);
+        assertEquals(true,p.isBankrupt());
     }  
     
     @Test
@@ -102,14 +99,28 @@ class PlayerTest {
         assertEquals(p.checkBalance(), (1500-s.getPrice()+s.getCurrentRentPrice()));
     }
 
+    public void testPayRentCity2(){
+        Color rose = new Color("rose", 100);
+        SpaceCity s1 = new SpaceCity("Boulevard de la Villette",11,140,rose,new int[] {10,50,150,450,625,750});
+        SpaceCity s2 = new SpaceCity("Avenue de Neuilly",13,140,rose,new int[] {10,50,150,450,625,750});
+        SpaceCity s3 = new SpaceCity("Rue de Paradis",14,160,rose,new int[] {12,60,180,500,700,900});
+        Player p = new Player("Linda");
+        p.buyLand(s1);
+        p.buyLand(s2);
+        p.buyLand(s3);
+        assertEquals(p.checkBalance(), (1500-s1.getPrice()-s2.getPrice()-s3.getPrice()));
+        Player p2 = new Player("Yewon");
+        p2.payRent(s1);
+        assertEquals(20, s1.getCurrentRentPrice());
+        assertEquals(p.checkBalance(), 1500-s1.getPrice()-s2.getPrice()-s3.getPrice()+s1.getCurrentRentPrice());
+    }
+
     @Test
     public void testGoToJail(){
         Player p = new Player("Linda");
         p.goToJail();
-        assertEquals(p.isInJail(), true);
-        assertEquals(p.getPosition(), 10);
-        
-
+        assertEquals(true, p.isInJail());
+        assertEquals(10, p.getPosition());
     }
 
     @Test 
@@ -117,7 +128,7 @@ class PlayerTest {
         Player p = new Player("Linda");
         p.goToJail();
         p.goOutJail(50  );
-        assertEquals(p.isInJail(), false);
+        assertEquals(false, p.isInJail());
         assertEquals(p.checkBalance(),1500-50); 
     }
 
@@ -136,16 +147,16 @@ class PlayerTest {
         p.buyLand(s);
         assertEquals(s.getOwner(), p);
         assertEquals(p.checkBalance(), 1500-200);
-        assertEquals(s.getCurrentRentPrice(), 25);
-        assertEquals(p.getNbStation(), 1);
+        assertEquals(25, s.getCurrentRentPrice());
+        assertEquals(1, p.getNbStation());
 
         SpaceToBuy s1 = new SpaceStation("Gare de Lyon", 15,200);
         p.buyLand(s1);
 
         assertEquals(p.checkBalance(), 1500-400);
-        assertEquals(p.getNbStation(), 2);
-        assertEquals(s.getCurrentRentPrice(), 50);
-        assertEquals(s1.getCurrentRentPrice(), 50);
+        assertEquals(2, p.getNbStation());
+        assertEquals(50, s.getCurrentRentPrice());
+        assertEquals(50, s1.getCurrentRentPrice());
     }
 
     @Test
@@ -156,13 +167,13 @@ class PlayerTest {
         assertEquals(s.getOwner(), p);
         assertEquals(p.checkBalance(), 1500-150);
         s.getCurrentRentPrice();
-        assertEquals(p.getNbServicePublic(), 1);
+        assertEquals(1, p.getNbServicePublic());
 
         SpaceToBuy s1 = new SpacePublicService("Compagine de distribution d'éléctricité", 12,150);
         p.buyLand(s1);
 
         assertEquals(p.checkBalance(), 1500-300);
-        assertEquals(p.getNbServicePublic(), 2);
+        assertEquals(2, p.getNbServicePublic());
     }
 
     @Test
@@ -179,16 +190,6 @@ class PlayerTest {
         assertEquals(p2.checkBalance(), 1500-25-50);
     }
 
-    
-    @Test
-    public void testBuyLand(){
-
-    }
-
-    @Test
-    public void testBuyLand2(){
-
-    }
 
     @Test
     public void testBuildHouse(){
@@ -279,8 +280,8 @@ class PlayerTest {
         SpaceCity r2 = new SpaceCity("Avenue de Neuilly",13,140,rose,new int[] {10,50,150,450,625,750});
         SpaceCity r3 = new SpaceCity("Rue de Paradis",14,160,rose,new int[] {12,60,180,500,700,900});
         SpaceCity j = new SpaceCity("Faubourg Saint-Honoré",26,260,jaune,new int[] {22,110,330,800,975,1150});
-        SpaceCity j1 = new SpaceCity("Place de la Bourse",27,260,jaune,new int[] {22,110,330,800,975,1150});
-        SpaceCity j2 = new SpaceCity("Rue de la Fayette",29,280,jaune,new int[] {22,120,360,850,1025,1200});
+        new SpaceCity("Place de la Bourse",27,260,jaune,new int[] {22,110,330,800,975,1150});
+        new SpaceCity("Rue de la Fayette",29,280,jaune,new int[] {22,120,360,850,1025,1200});
         SpaceStation st = new SpaceStation("Gare Saint-Lazare", 35,200);
         p2.earnMoney(460);
         p2.buyLand(r3);p2.buyLand(r1);p2.buyLand(r2);
@@ -322,8 +323,8 @@ class PlayerTest {
         SpaceCity r2 = new SpaceCity("Avenue de Neuilly",13,140,rose,new int[] {10,50,150,450,625,750});
         SpaceCity r3 = new SpaceCity("Rue de Paradis",14,160,rose,new int[] {12,60,180,500,700,900});
         SpaceCity j = new SpaceCity("Faubourg Saint-Honoré",26,260,jaune,new int[] {22,110,330,800,975,1150});
-        SpaceCity j1 = new SpaceCity("Place de la Bourse",27,260,jaune,new int[] {22,110,330,800,975,1150});
-        SpaceCity j2 = new SpaceCity("Rue de la Fayette",29,280,jaune,new int[] {22,120,360,850,1025,1200});
+        new SpaceCity("Place de la Bourse",27,260,jaune,new int[] {22,110,330,800,975,1150});
+        new SpaceCity("Rue de la Fayette",29,280,jaune,new int[] {22,120,360,850,1025,1200});
         SpaceStation st = new SpaceStation("Gare Saint-Lazare", 35,200);
         p2.earnMoney(460); //500 
         p2.buyLand(r3);p2.buyLand(r1);p2.buyLand(r2);

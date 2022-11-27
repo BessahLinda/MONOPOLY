@@ -6,10 +6,8 @@ import org.junit.jupiter.api.Test;
 
 import fr.pantheonsorbonne.miage.game.monopoly.elements.Color;
 import fr.pantheonsorbonne.miage.game.monopoly.elements.Player;
-import fr.pantheonsorbonne.miage.game.monopoly.elements.Space;
 import fr.pantheonsorbonne.miage.game.monopoly.elements.SpaceCity;
 import fr.pantheonsorbonne.miage.game.monopoly.elements.SpaceStation;
-import fr.pantheonsorbonne.miage.game.monopoly.elements.SpaceToBuy;
 
 class SpaceCityTest {
 

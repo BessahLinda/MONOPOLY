@@ -28,7 +28,7 @@ public class MonopolyStandAlone {
             }
             
         }while (players.size()> 1);
-        System.out.println("★★★★★★★★★★★ player "+ players.get(0).getName() + " won the game ★★★★★★★★★★★★★★★★★★★★★★★★");
+        System.out.println("$$$$$$$$$$ player "+ players.get(0).getName() + " won the game $$$$$$$$$$$");
         
     }
 }

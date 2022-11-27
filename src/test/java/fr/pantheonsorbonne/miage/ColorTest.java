@@ -28,7 +28,7 @@ class ColorTest {
         SpaceCity s1 =new SpaceCity("Rue de Courcelles",8,100,bleuClair, new int[] {6,30,90,270,400,550});
         SpaceCity s2 =new SpaceCity("Avenue de la République",9,120,bleuClair,new int[] {8,40,100,300,450,600});
         p.buyLand(s2); p.buyLand(s); p.buyLand(s1);
-        assertEquals(bleuClair.isColorOwned(),true );
+        assertEquals(true,bleuClair.isColorOwned() );
         assertEquals(bleuClair.getColorMonopolist(), p);
     }
     
@@ -44,6 +44,6 @@ class ColorTest {
         p.buyLand(s2);
         y.buyLand(s1);
         assertFalse(rose.isColorOwned()); 
-        assertEquals( s1.getCurrentRentPrice(),10);
+        assertEquals( 10,s1.getCurrentRentPrice());
     }
 }
