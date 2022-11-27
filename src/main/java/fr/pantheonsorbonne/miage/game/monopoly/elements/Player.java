@@ -137,6 +137,7 @@ public class Player {
     }
 
     public void buyLand(SpaceToBuy s){
+        //I'd like to put condition if a player already has one of  blueclaire or marron, I dont want to buy the others
         if (money>400){
             withdrawMoney(s.getPrice());
             s.setOwner(this);
@@ -207,14 +208,7 @@ public class Player {
         }
     }
 
-    public void sellProperty(int payment) {  
-
-            if(getAsset() < payment){
-                property.clear();
-                colorsetProperty.clear();
-                this.money = -10000000;
-            }    
-
+    public ArrayList<SpaceToBuy> arrangePriority(){
         ArrayList<SpaceToBuy> priority = new ArrayList<>();
         ArrayList<SpaceToBuy> priorityColor = new ArrayList<>();
         ArrayList<SpaceToBuy> prioritySpecial = new ArrayList<>();
@@ -222,15 +216,18 @@ public class Player {
 
         for(SpaceToBuy s : property){
 
-            if(((SpaceCity) s).getColor().isColorOwned()){
-                priorityColor.add(s);
-            }
-            else if(s instanceof SpaceStation || s instanceof SpacePublicService){
-                prioritySpecial.add(s);
+            if(s instanceof SpaceCity){
+                if(((SpaceCity) s).getColor().isColorOwned()){
+                    priorityColor.add(s);
+                }
+                else{
+                    priority.add(s);
+                }
             }
             else{
-                priority.add(s);
+                prioritySpecial.add(s);
             }
+            
         }
 
         //sorting Color + optimser plus
@@ -256,9 +253,9 @@ public class Player {
 
         //sorting space without owning color set
         indexMin = 0;
-        for(int i =0; i < priorityColor.size(); i++){
-            for(int j=i+1; j< priorityColor.size(); j++){
-                if(priorityColor.get(indexMin).getCurrentRentPrice()>priorityColor.get(j).getCurrentRentPrice()){
+        for(int i =0; i < priority.size(); i++){
+            for(int j=i+1; j< priority.size(); j++){
+                if(priority.get(indexMin).getCurrentRentPrice()>priority.get(j).getCurrentRentPrice()){
                     indexMin = j;
                 }
             }
@@ -270,6 +267,19 @@ public class Player {
         priority.addAll(priorityColor);
         priority.addAll(prioritySpecial);
 
+        return priority;
+    }
+
+    public void sellProperty(int payment) {  
+
+            if(getAsset() < payment){
+                property.clear();
+                colorsetProperty.clear();
+                this.money = -10000000;
+            }    
+
+        ArrayList<SpaceToBuy> priority = this.arrangePriority();
+       
         int index = 0;
         while( payment > this.checkBalance()){
             if(priority.get(index) instanceof SpaceCity){
@@ -282,6 +292,7 @@ public class Player {
                     if(currentCity.getColor().getColorMonopolist()==null){
                         this.earnMoney(priority.get(index).getCurrentResellPrice());
                         priority.get(index).setOwner(null);
+                        this.property.remove(currentCity);
                         index++;
                     }
                     else{
@@ -297,18 +308,24 @@ public class Player {
 
             
             if(index>=priority.size()){ // optimser plus , also think about when we update currentRent, currentResell price
-                for(SpaceToBuy s : priority){
-                    if(s instanceof SpaceCity){
-                        SpaceCity currentCity = (SpaceCity) s;
-                        if(currentCity.owner == this){
-                            this.earnMoney((int)(currentCity.getPrice()*0.75));
-                            s.setOwner(null);
-                            break;
-                        }
-                    }    
+                while(payment > this.checkBalance()){
+                    for(SpaceToBuy s : priority){
+                        if(s instanceof SpaceCity){
+                            SpaceCity currentCity = (SpaceCity) s;
+                            if(currentCity.owner == this){
+                                this.earnMoney((int)(currentCity.getPrice()*0.75));
+                                s.setOwner(null);
+                                this.property.remove(currentCity);
+                                this.colorsetProperty.remove(currentCity);
+                                currentCity.getColor().setColorMonopolist(null);
+                                break;
+                            }
+                        }    
+                    }
                 }
             }
         }
+        this.withdrawMoney(payment);
     }
 
     public void earnMoney(int m) {

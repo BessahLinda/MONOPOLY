@@ -14,6 +14,8 @@ import fr.pantheonsorbonne.miage.game.monopoly.elements.SpaceToBuy;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 class PlayerTest {
 
@@ -189,7 +191,7 @@ class PlayerTest {
     }
 
     @Test
-    public void testbuildHouse(){
+    public void testBuildHouse(){
         Player p2 = new Player("Yewon");
         Color bleuClair = new Color("bleuClair",50);
         SpaceCity s = new SpaceCity("Rue de Vaugirard",6,100,bleuClair,new int[] {6,30,90,270,400,550});
@@ -202,7 +204,7 @@ class PlayerTest {
 
     
     @Test
-    public void testbuildHouse2(){
+    public void testBuildHouse2(){
         Player p2 = new Player("Yewon");
         Color orange = new Color("orange",100);
         SpaceCity s = new SpaceCity("Avenue de Mozart",16,180,orange, new int[] {14,70,200,550,750,950});
@@ -238,8 +240,7 @@ class PlayerTest {
     }
 
     @Test
-    public void testSellProperty(){
-        
+    public void testSellProperty(){  //check if it's selling non coloset space first
         Player p2 = new Player("Yewon");
         Color orange = new Color("orange",100);
         Color rose = new Color("rose", 100);
@@ -257,19 +258,82 @@ class PlayerTest {
         p2.buyLand(r3);p2.buyLand(r1);p2.buyLand(r2);
         p2.buyLand(s);p2.buyLand(s1);p2.buyLand(s2);p2.buyLand(j);
 
-        SpaceToBuy ss = (SpaceToBuy)s;
-        SpaceToBuy ss1 = (SpaceToBuy)s1;
-        SpaceToBuy ss2 = (SpaceToBuy)s2;
-        SpaceToBuy rr1 = (SpaceToBuy)r1;
-        SpaceToBuy rr2 = (SpaceToBuy)r2;
-        SpaceToBuy rr3 = (SpaceToBuy)r3;
+        List<SpaceToBuy> result = new ArrayList<>(Arrays.asList(r3,r1,r2,s,s1,s2));
 
-        SpaceToBuy[] result = {rr3,rr1,rr2,ss,ss1,ss2};
-
-        // p2.earnMoney(260); //500 
-        // int a = p2.checkBalance();
-        // p2.sellProperty(550);
-        // assertEquals(result,p2.getProperty());
+        p2.earnMoney(260); //500 
+        p2.sellProperty(550);
+        assertEquals(result,p2.getProperty());
     }
 
+
+    @Test
+    public void testSellProperty2(){  //check if it keeps colorset-land and only sells maison 
+        Player p2 = new Player("Yewon");
+        Color orange = new Color("orange",100);
+        Color rose = new Color("rose", 100);
+        Color jaune = new Color("jaune",150);
+        SpaceCity s = new SpaceCity("Avenue de Mozart",16,180,orange, new int[] {14,70,200,550,750,950});
+        SpaceCity s1 = new SpaceCity("Boulevard Saint-Michel",18,180,orange, new int[] {14,70,200,550,750,950});
+        SpaceCity s2 = new SpaceCity("Place Pigalle",19,200,orange,new int[] {16,80,220,600,800,1000});
+        SpaceCity r1 = new SpaceCity("Boulevard de la Villette",11,140,rose,new int[] {10,50,150,450,625,750});
+        SpaceCity r2 = new SpaceCity("Avenue de Neuilly",13,140,rose,new int[] {10,50,150,450,625,750});
+        SpaceCity r3 = new SpaceCity("Rue de Paradis",14,160,rose,new int[] {12,60,180,500,700,900});
+        SpaceCity j = new SpaceCity("Faubourg Saint-Honoré",26,260,jaune,new int[] {22,110,330,800,975,1150});
+        SpaceCity j1 = new SpaceCity("Place de la Bourse",27,260,jaune,new int[] {22,110,330,800,975,1150});
+        SpaceCity j2 = new SpaceCity("Rue de la Fayette",29,280,jaune,new int[] {22,120,360,850,1025,1200});
+        SpaceStation st = new SpaceStation("Gare Saint-Lazare", 35,200);
+        p2.earnMoney(460);
+        p2.buyLand(r3);p2.buyLand(r1);p2.buyLand(r2);
+        p2.buyLand(s);p2.buyLand(s1);p2.buyLand(s2);p2.buyLand(j);p2.buyLand(st); 
+        s.buildHouse(1);s1.buildHouse(1);s2.buildHouse(1); 
+        r1.buildHouse(1);r2.buildHouse(1);r3.buildHouse(1); 
+        j.buildHouse(2); 
+
+        List<SpaceToBuy> result = new ArrayList<>(Arrays.asList(r3,r1,r2,s,s1,s2,st));
+        assertEquals(1, r2.getNbHouse());
+
+        p2.sellProperty(1369);//500
+        assertEquals(0, s.getNbHouse());
+        assertEquals(0, r1.getNbHouse());
+        assertEquals(result,p2.getProperty());
+    }
+
+    
+    @Test
+    public void testSellProperty3(){  
+        
+    }
+
+    // @Test
+    // public void testSellProperty4(){  
+    //  //space public service & space station     
+    // }
+
+    @Test
+    public void testPriorityArray(){
+        Player p2 = new Player("Yewon");
+        Color orange = new Color("orange",100);
+        Color rose = new Color("rose", 100);
+        Color jaune = new Color("jaune",150);
+        SpaceCity s = new SpaceCity("Avenue de Mozart",16,180,orange, new int[] {14,70,200,550,750,950});
+        SpaceCity s1 = new SpaceCity("Boulevard Saint-Michel",18,180,orange, new int[] {14,70,200,550,750,950});
+        SpaceCity s2 = new SpaceCity("Place Pigalle",19,200,orange,new int[] {16,80,220,600,800,1000});
+        SpaceCity r1 = new SpaceCity("Boulevard de la Villette",11,140,rose,new int[] {10,50,150,450,625,750});
+        SpaceCity r2 = new SpaceCity("Avenue de Neuilly",13,140,rose,new int[] {10,50,150,450,625,750});
+        SpaceCity r3 = new SpaceCity("Rue de Paradis",14,160,rose,new int[] {12,60,180,500,700,900});
+        SpaceCity j = new SpaceCity("Faubourg Saint-Honoré",26,260,jaune,new int[] {22,110,330,800,975,1150});
+        SpaceCity j1 = new SpaceCity("Place de la Bourse",27,260,jaune,new int[] {22,110,330,800,975,1150});
+        SpaceCity j2 = new SpaceCity("Rue de la Fayette",29,280,jaune,new int[] {22,120,360,850,1025,1200});
+        SpaceStation st = new SpaceStation("Gare Saint-Lazare", 35,200);
+        p2.earnMoney(460); //500 
+        p2.buyLand(r3);p2.buyLand(r1);p2.buyLand(r2);
+        p2.buyLand(s);p2.buyLand(s1);p2.buyLand(s2);p2.buyLand(j);p2.buyLand(st); //150
+        s.buildHouse(1);s1.buildHouse(1);s1.buildHouse(1); 
+        r1.buildHouse(1);r2.buildHouse(1);r3.buildHouse(1); //600
+        j.buildHouse(2); 
+
+        List<SpaceToBuy> result = new ArrayList<>(Arrays.asList(j,r1,r2,s2,r3,s,s1,st));
+        assertEquals(result,p2.arrangePriority());
+        
+    }
 }
