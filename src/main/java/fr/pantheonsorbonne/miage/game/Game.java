@@ -105,11 +105,13 @@ public class Game {
         if(d.isDouble()){
             p.goOutJail();
             nextTour(p);
-        }else if(p.getPrisonDuration()==3){
+        }else if(p.getPrisonDuration()==2){
             p.goOutJail(50);
+            System.out.println(p.getName()+"went out from prison");
             nextTour(p);
-        }else if(p.getPrisonDuration()<3){
-            p.setPrisonDuration();
+        }else if(p.getPrisonDuration()<2){
+            p.setPrisonDuration(); 
+            System.out.println(p.getName()+" is still in prison");
         }
     }
 
@@ -118,12 +120,14 @@ public class Game {
         SpaceTax space = (SpaceTax) playerAfterMove;
         player.payTax(space);
         
-        System.out.println(player.getName()+" paid " + space.getTax() +"$ You now have "+ player.checkBalance());     
+        System.out.println(player.getName()+" paid " + space.getTax() +"$ You now have "+ player.checkBalance()); 
+            
     }
 
     private void onSpaceChance(Space playerAfterMove, Player player){
         SpaceChance space = (SpaceChance) playerAfterMove;
         space.imFeelingLucky(player, this);        
+        System.out.println(player.getName() + " have now " + player.checkBalance() );
     }
 
     private void onSpaceCity(Space playerAfterMove, Player player){
@@ -134,11 +138,12 @@ public class Game {
             player.payRent(space);
             System.out.println(player.getName() + " paid " + space.getCurrentRentPrice() + " for " + space.getOwner().getName());
         }
+        System.out.println(player.getName() + " have now " + player.checkBalance() );
     }
 
     private void onSpaceJail(Space playerAfterMove, Player player){
         SpaceJail space = (SpaceJail) playerAfterMove;
-        if (space.getType() != 0) { // it means this block is goToJail so block the player and take him to the jail
+        if (space.getType() != 0) { 
             player.goToJail();
         }
     }

@@ -71,19 +71,19 @@ public class Player {
                         }
                     }
                     else if(city.getColor().getColorName().equals("orange")||city.getColor().getColorName().equals("rouge")||city.getColor().getColorName().equals("jeune")||city.getColor().getColorName().equals("rose")){  //priority 1
-                        while(money>800&&city.getNbHouse()<2){ 
+                        while(money>400&&city.getNbHouse()<2){ 
                             city.buildHouse(1);
                             this.withdrawMoney(city.getColor().getHousePrice());
                         }
                     }    
                     else if(city.getColor().getColorName().equals("bleu")){ //priority 2
-                        while(money>800&&city.getName().equals("Rue de la Paix")&&city.getNbHouse()<2){
+                        while(money>400&&city.getName().equals("Rue de la Paix")&&city.getNbHouse()<2){
                             city.buildHouse(1);
                             this.withdrawMoney(city.getColor().getHousePrice());      
                         }
                     }
                     else if(city.getColor().getColorName().equals("vert")){ //priority 3
-                        while(money>800&&city.getNbHouse()<2){
+                        while(money>400&&city.getNbHouse()<2){
                             city.buildHouse(1);
                             this.withdrawMoney(city.getColor().getHousePrice());
                         }
@@ -92,7 +92,7 @@ public class Player {
             }
             else{
                 for(SpaceCity city: colorsetProperty){
-                    if(money<3000){
+                    if(money<2000){
                         break;
                     }
                     if(city.getColor().getColorName().equals("marron")||city.getColor().getColorName().equals("bleuClair")){ //priority x
@@ -213,7 +213,6 @@ public class Player {
         ArrayList<SpaceToBuy> priorityColor = new ArrayList<>();
         ArrayList<SpaceToBuy> prioritySpecial = new ArrayList<>();
 
-
         for(SpaceToBuy s : property){
 
             if(s instanceof SpaceCity){
@@ -234,7 +233,7 @@ public class Player {
         int indexMin = 0;
         for(int i =0; i < priorityColor.size(); i++){ 
             for(int j=i+1; j< priorityColor.size(); j++){
-                if(priorityColor.get(indexMin).getCurrentRentPrice()>priorityColor.get(j).getCurrentRentPrice()){
+                if(priorityColor.get(indexMin).getPrice()>priorityColor.get(j).getPrice()){
                     indexMin = j;
                 }
             }   
@@ -244,10 +243,10 @@ public class Player {
         }
 
         //sorting public sation and public service (Space Station has higher value than Public service)
-        for(SpaceToBuy s : prioritySpecial){
-            if(s instanceof SpacePublicService){
-                prioritySpecial.remove(s);
-                prioritySpecial.add(0,s);
+        for(int k=1; k< prioritySpecial.size(); k++){
+            if(prioritySpecial.get(k) instanceof SpacePublicService){
+                prioritySpecial.remove(prioritySpecial.get(k));
+                prioritySpecial.add(0,prioritySpecial.get(k));
             }
         }
 
@@ -255,7 +254,7 @@ public class Player {
         indexMin = 0;
         for(int i =0; i < priority.size(); i++){
             for(int j=i+1; j< priority.size(); j++){
-                if(priority.get(indexMin).getCurrentRentPrice()>priority.get(j).getCurrentRentPrice()){
+                if(priority.get(indexMin).getPrice()>priority.get(j).getPrice()){
                     indexMin = j;
                 }
             }
@@ -313,6 +312,7 @@ public class Player {
                         if(s instanceof SpaceCity){
                             SpaceCity currentCity = (SpaceCity) s;
                             if(currentCity.owner == this){
+                                System.out.println(this.getName()+"sell his");
                                 this.earnMoney((int)(currentCity.getPrice()*0.75));
                                 s.setOwner(null);
                                 this.property.remove(currentCity);
@@ -325,6 +325,7 @@ public class Player {
                 }
             }
         }
+        setRentOfProperties();
         this.withdrawMoney(payment);
     }
 

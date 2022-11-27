@@ -13,19 +13,8 @@ public  class Dice {
     }
 
     public boolean isDouble(){
-        if(dice1==dice2){
-            return true;
-        }else{
-            return false;
-        }
+        return dice1==dice2;
     }
-
-    /*public int rollDice(){
-        this.dice1= (int) ((Math.random() * 6) + 1);
-        return this.dice1;
-    }*/
-    
-
 
 }
 

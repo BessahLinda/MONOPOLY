@@ -310,7 +310,7 @@ class PlayerTest {
     // }
 
     @Test
-    public void testPriorityArray(){
+    public void testArrangePriority(){
         Player p2 = new Player("Yewon");
         Color orange = new Color("orange",100);
         Color rose = new Color("rose", 100);
