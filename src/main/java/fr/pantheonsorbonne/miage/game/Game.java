@@ -96,7 +96,6 @@ public class Game {
         } else if (playerSpaceAfterMove instanceof SpaceToBuy){
             onSpaceCity(playerSpaceAfterMove, player);
         }
-
         System.out.println("\n**********************\n");
     }
 

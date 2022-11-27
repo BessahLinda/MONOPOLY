@@ -6,7 +6,7 @@ import fr.pantheonsorbonne.miage.game.monopoly.elements.Player;
 
 public class MonopolyStandAlone {
     public static void main(String[] args){
-        List<Player> players = new ArrayList<>(); players.add(new Player("Linda")); players.add(new Player("Yewon"));players.add(new Player("Imane"));
+        List<Player> players = new ArrayList<>(); players.add(new Player("Linda")); players.add(new Player("Yewon"));
         Game game = new Game(players);
 
         do{
@@ -20,7 +20,6 @@ public class MonopolyStandAlone {
                 else{
                     game.nextTour(players.get(i)); 
                 }
-                
                 if(players.get(i).isBankrupt()){
                     System.out.println(players.get(i).getName()+" doesn't have enough money to pay. You are retired from the game");     
                     players.remove(players.get(i));

@@ -43,7 +43,7 @@ class SpaceCityTest {
         p.buyLand(s); p.buyLand(st);
         p.setRentOfProperties();
         assertEquals(25, st.getCurrentRentPrice());
-        assertEquals(null,marron.getColorMonopolist()); //??
+        assertEquals(null,marron.getColorMonopolist()); 
         assertEquals(false, marron.isColorOwned());
         assertEquals(2,s.getCurrentRentPrice());
     }

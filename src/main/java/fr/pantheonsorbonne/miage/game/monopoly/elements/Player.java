@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class Player {
 
     private final String name;
-    private int money = 1500;
+    private int money = 1500; //faut supprimer dans partie reseaux 
     private int position = 0;   
     private int prisonDuration; 
     private boolean isInJail = false;
@@ -207,7 +207,7 @@ public class Player {
         }
     }
 
-    private void sellProperty(int payment) {  
+    public void sellProperty(int payment) {  
 
             if(getAsset() < payment){
                 property.clear();
@@ -370,6 +370,10 @@ public class Player {
 
     public ArrayList<SpaceCity> getColorsetProperty(){
         return this.colorsetProperty;
+    }
+
+    public ArrayList<SpaceToBuy> getProperty(){
+        return this.property;
     }
 
 }
