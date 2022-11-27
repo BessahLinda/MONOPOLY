@@ -279,15 +279,10 @@ public class Player {
             property.clear();
             colorsetProperty.clear();
             this.money = -10000000;
-            //
             return;
         }    
 
         ArrayList<SpaceToBuy> priority = this.arrangePriority();
-       System.out.println(priority);
-       System.out.println(this.property);
-       System.out.println(this.name + " only has "+ this.checkBalance());
-
 
         int index = 0;
         //if priority 0
