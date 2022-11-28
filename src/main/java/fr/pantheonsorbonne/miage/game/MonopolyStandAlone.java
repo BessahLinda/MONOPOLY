@@ -6,7 +6,7 @@ import fr.pantheonsorbonne.miage.game.monopoly.elements.Player;
 
 public class MonopolyStandAlone {
     public static void main(String[] args){
-        List<Player> players = new ArrayList<>(); players.add(new Player("Linda")); players.add(new Player("Yewon"));
+        List<Player> players = new ArrayList<>(); players.add(new Player("Linda")); players.add(new Player("Yewon")); players.add(new Player("syna")); players.add(new Player("imane"));
         Game game = new Game(players);
 
         do{
