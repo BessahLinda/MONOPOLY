@@ -138,7 +138,7 @@ public class Player {
 
     public void buyLand(SpaceToBuy s){
         //I'd like to put condition if a player already has one of  blueclaire or marron, I dont want to buy the others
-        if (money>400){
+        if (money>200){
             withdrawMoney(s.getPrice());
             s.setOwner(this);
             property.add(s);

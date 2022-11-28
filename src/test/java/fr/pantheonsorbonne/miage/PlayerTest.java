@@ -40,7 +40,7 @@ class PlayerTest {
     }
 
     @Test
-    public void testCheckBalance() {
+    public void testIsAffordable() {
         Player p = new Player("Linda");
         assertEquals(true,p.isAffordable(200));
         assertEquals(false,p.isAffordable(2003));
@@ -337,4 +337,74 @@ class PlayerTest {
         assertEquals(result,p2.arrangePriority());
         
     }
+
+    @Test
+    public void testAllCitiesOwnMaison(){
+        Player p2 = new Player("Yewon");
+        Color orange = new Color("orange",100);
+        Color rose = new Color("rose", 100);
+        SpaceCity s = new SpaceCity("Avenue de Mozart",16,180,orange, new int[] {14,70,200,550,750,950});
+        SpaceCity s1 = new SpaceCity("Boulevard Saint-Michel",18,180,orange, new int[] {14,70,200,550,750,950});
+        SpaceCity s2 = new SpaceCity("Place Pigalle",19,200,orange,new int[] {16,80,220,600,800,1000});
+        SpaceCity r1 = new SpaceCity("Boulevard de la Villette",11,140,rose,new int[] {10,50,150,450,625,750});
+        SpaceCity r2 = new SpaceCity("Avenue de Neuilly",13,140,rose,new int[] {10,50,150,450,625,750});
+        SpaceCity r3 = new SpaceCity("Rue de Paradis",14,160,rose,new int[] {12,60,180,500,700,900});
+        
+
+        p2.buyLand(r3);p2.buyLand(r1);p2.buyLand(r2);
+        p2.buyLand(s);p2.buyLand(s1);p2.buyLand(s2);
+
+        s.buildHouse(1);s1.buildHouse(1);s2.buildHouse(1);r1.buildHouse(1);r2.buildHouse(1);r3.buildHouse(1);
+        assert(p2.allCitiesOwnMaison());
+
+    }
+
+    @Test
+    public void testSetRentOfProperties(){
+        Player p2 = new Player("Yewon");
+        Color orange = new Color("orange",100);
+        Color rose = new Color("rose", 100);
+        SpaceCity s = new SpaceCity("Avenue de Mozart",16,180,orange, new int[] {14,70,200,550,750,950});
+        SpaceCity s1 = new SpaceCity("Boulevard Saint-Michel",18,180,orange, new int[] {14,70,200,550,750,950});
+        SpaceCity s2 = new SpaceCity("Place Pigalle",19,200,orange,new int[] {16,80,220,600,800,1000});
+        SpaceCity r1 = new SpaceCity("Boulevard de la Villette",11,140,rose,new int[] {10,50,150,450,625,750});
+        SpaceCity r2 = new SpaceCity("Avenue de Neuilly",13,140,rose,new int[] {10,50,150,450,625,750});
+        SpaceCity r3 = new SpaceCity("Rue de Paradis",14,160,rose,new int[] {12,60,180,500,700,900});
+        SpaceStation st = new SpaceStation("Gare Saint-Lazare", 35,200);
+        SpaceStation st2 = new SpaceStation("Gare du Nord", 35,200);
+        p2.buyLand(r3);p2.buyLand(r1);p2.buyLand(r2);
+        p2.buyLand(s);p2.buyLand(s1);p2.buyLand(s2);
+        p2.earnMoney(1000);
+        p2.buyLand(st2);
+        p2.buyLand(st);
+
+        p2.setRentOfProperties();
+        assertEquals(st.getCurrentRentPrice(), 50);
+        assertEquals(st2.getCurrentRentPrice(), 50);
+        assertEquals(s.getCurrentRentPrice(), 14*2);
+
+
+    }
+
+    @Test
+    public void testGetNbStation(){
+        Player p2 = new Player("Yewon");
+        SpaceStation st = new SpaceStation("Gare Saint-Lazare", 35,200);
+        SpaceStation st2 = new SpaceStation("Gare du Nord", 35,200);
+        p2.buyLand(st2);
+        p2.buyLand(st);
+        assertEquals(p2.getNbStation(), 2);
+    }
+
+    @Test
+    public void testGetNbServicePublic(){
+        Player p2 = new Player("Yewon");
+        SpaceToBuy st = new SpacePublicService("Gare Saint-Lazare", 35,200);
+        SpaceToBuy st2 = new SpacePublicService("Gare du Nord", 35,200);
+        p2.buyLand(st2);
+        p2.buyLand(st);
+        assertEquals(p2.getNbServicePublic(), 2);
+    }
+
+
 }

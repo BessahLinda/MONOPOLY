@@ -30,6 +30,7 @@ class ColorTest {
         p.buyLand(s2); p.buyLand(s); p.buyLand(s1);
         assertEquals(true,bleuClair.isColorOwned() );
         assertEquals(bleuClair.getColorMonopolist(), p);
+        assert(p.getColorsetProperty().contains(s));
     }
     
     @Test
