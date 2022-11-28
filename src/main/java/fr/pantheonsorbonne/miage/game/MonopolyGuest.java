@@ -18,8 +18,11 @@ public class MonopolyGuest {
         facade.waitReady();
         //set our palyer name
         final String playerName="Yewon - " + new Random().nextInt();
+        final String playerName1="Linda - " + new Random().nextInt();
         Player p1 = new Player(playerName);
+        Player p2 = new Player(playerName1);
         facade.createNewPlayer(playerName);
+        facade.createNewPlayer(playerName1);
         System.out.println("I am: "+ playerName);
         //wait until we are able to join a new game
         Game currentGame = facade.autoJoinGame("monopoly-room-1");
@@ -43,14 +46,15 @@ public class MonopolyGuest {
                 case "BUY_CELL":  // index
                     // player.buy_cell(params)
                     // player.makeDecision(action, params)
-                    
-                case "SELL_CELL": // index
+                case "SELL_CELL": 
                     break;
-                case "BUY_HOUSE": // index
+                case "BUY_HOUSE": 
+                    p1.buildHouse();
                     break;
                 case "SELL_HOUSE": // index
                     break;
                 case "SEND_MONEY_TO": // cashAmount, playerName
+                    p1.earnMoney(Integer.parseInt(command.body()));
                     // facade.sendGameCommandToPlayer(currentGame, playerName, new GameCommand("SEND_MONEY", cashAmount));
                     break;
                 case "SEND_MONEY": // cashAmount
