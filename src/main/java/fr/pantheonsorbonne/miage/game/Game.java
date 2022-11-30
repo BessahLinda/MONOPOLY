@@ -126,6 +126,7 @@ public class Game {
 
     private void onSpaceChance(Space playerAfterMove, Player player){
         SpaceChance space = (SpaceChance) playerAfterMove;
+        System.out.println(player.getName() + " have a lucky card" );
         space.imFeelingLucky(player, this);        
         System.out.println(player.getName() + " have now " + player.checkBalance() );
     }
@@ -133,12 +134,13 @@ public class Game {
     private void onSpaceCity(Space playerAfterMove, Player player){
         SpaceToBuy space = (SpaceToBuy) playerAfterMove;
         if (!space.isSpaceOwned()) {
-            player.buyLand(space);
+            player.buyLand(space);           
         } else if (space.getOwner()!=player){
             player.payRent(space);
             System.out.println(player.getName() + " paid " + space.getCurrentRentPrice() + " for " + space.getOwner().getName());
         }
         System.out.println(player.getName() + " have now " + player.checkBalance() );
+        player.toStringP();
     }
 
     private void onSpaceJail(Space playerAfterMove, Player player){

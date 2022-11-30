@@ -178,11 +178,12 @@ public class Player {
     }
 
     public void payRent(SpaceToBuy s) {
-        if(isAffordable(s.getCurrentRentPrice())){
-            withdrawMoney(s.getCurrentRentPrice());
-            s.getOwner().earnMoney(s.getCurrentRentPrice());
+        int rent = s.getCurrentRentPrice();
+        if(isAffordable(rent)){
+            withdrawMoney(rent);
+            s.getOwner().earnMoney(rent);
         }else{
-            sellProperty(s.getCurrentRentPrice());
+            sellProperty(rent);
         }
     }
 
@@ -245,11 +246,10 @@ public class Player {
 
         //sorting public sation and public service (Space Station has higher value than Public service)
         if(prioritySpecial.size()>=2){
-            for(int k=0; k<prioritySpecial.size(); k++){ //2 
+            for(int k=1; k< prioritySpecial.size(); k++){
                 if(prioritySpecial.get(k) instanceof SpacePublicService){
-                    SpaceToBuy tmp = prioritySpecial.get(k);
                     prioritySpecial.remove(prioritySpecial.get(k));
-                    prioritySpecial.add(0,tmp);
+                    prioritySpecial.add(0,prioritySpecial.get(k));
                 }
             }
         }
@@ -285,13 +285,6 @@ public class Player {
 
         ArrayList<SpaceToBuy> priority = this.arrangePriority();
 
-        // if(property.size()>1){
-        //     priority = this.arrangePriority();
-        // }
-        // else{
-        //     priority = this.property;
-        // }
-
         int index = 0;
         //if priority 0
         while( payment > this.checkBalance()){
@@ -305,8 +298,8 @@ public class Player {
                     if(currentCity.getColor().getColorMonopolist()==null){
                         this.earnMoney(priority.get(index).getCurrentResellPrice());
                         priority.get(index).setOwner(null);
-                        System.out.println(this.getName()+" sold " + priority.get(index).getName());
                         this.property.remove(currentCity);
+                        System.out.println(this.getName()+" sold " + priority.get(index).getName());
                         index++;
                     }
                     else{
@@ -409,6 +402,19 @@ public class Player {
 
     public ArrayList<SpaceToBuy> getProperty(){
         return this.property;
+    }
+
+    public void toStringP(){
+        String string = this.name +" have : ";
+        for(SpaceToBuy sp : property ){
+            if (sp instanceof SpaceCity){
+                SpaceCity sc = (SpaceCity)sp;
+                string += " [" + sc.getName()  + " , color:" + sc.getColor().getColorName() +", nbH :" + sc.getNbHouse() + " , rent:" + sc.getCurrentRentPrice()+ "]; ";
+            }else{
+                string += " [" + sp.getName() +" , rent:" + sp.getCurrentRentPrice() +"]; ";
+            }    
+        }
+        System.out.println(string);
     }
 
 }

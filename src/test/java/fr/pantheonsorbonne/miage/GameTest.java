@@ -1,5 +1,6 @@
 package fr.pantheonsorbonne.miage;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
@@ -18,7 +19,9 @@ class GameTest {
         Game game = new Game(players);
         players.get(0).goToJail();
         game.playerInJail(players.get(0));
-        assertTrue(players.get(0).isInJail());
+        //false si double
+        assertTrue(players.get(0).isInJail()); 
+            
 
         
 

@@ -32,6 +32,7 @@ public class SpaceChance extends Space{
     }
 
     private void luckyTakePlayerToAnotherLocation(Player player, Game game) {
+        System.out.println(player.getName() + " luckyTakePlayerToAnotherLocation ");
         game.nextTour(player);
     }
 
