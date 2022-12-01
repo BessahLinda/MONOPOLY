@@ -65,16 +65,10 @@ public class Player {
                         break;
                     }
                     if(city.getColor().getColorName().equals("marron")||city.getColor().getColorName().equals("bleuClair")){ //priority x
-                        while(money>2000&&city.getNbHouse()<2){  
-                            city.buildHouse(1);
-                            this.withdrawMoney(city.getColor().getHousePrice());
-                        }
+                        buyHouseWhile(this,city,2000,2);
                     }
                     else if(city.getColor().getColorName().equals("orange")||city.getColor().getColorName().equals("rouge")||city.getColor().getColorName().equals("jaune")||city.getColor().getColorName().equals("rose")){  //priority 1
-                        while(money>400&&city.getNbHouse()<2){ 
-                            city.buildHouse(1);
-                            this.withdrawMoney(city.getColor().getHousePrice());
-                        }
+                        buyHouseWhile(this,city,400,2);
                     }    
                     else if(city.getColor().getColorName().equals("bleu")){ //priority 2
                         while(money>400&&city.getName().equals("Rue de la Paix")&&city.getNbHouse()<2){
@@ -83,10 +77,7 @@ public class Player {
                         }
                     }
                     else if(city.getColor().getColorName().equals("vert")){ //priority 3
-                        while(money>400&&city.getNbHouse()<2){
-                            city.buildHouse(1);
-                            this.withdrawMoney(city.getColor().getHousePrice());
-                        }
+                        buyHouseWhile(this,city,400,2);}
                     }
                 }
             }
@@ -96,19 +87,14 @@ public class Player {
                         break;
                     }
                     if(city.getColor().getColorName().equals("marron")||city.getColor().getColorName().equals("bleuClair")){ //priority x
-                        while(money>800&&city.getNbHouse()<4){ 
-                            city.buildHouse(1);
-                            this.withdrawMoney(city.getColor().getHousePrice());
-                        }
+                        buyHouseWhile(this,city,800,4);
                     }
                     //since colorsetProperty is already sorted, the most important city comes first
                     else if(city.getColor().getColorName().equals("orange")||city.getColor().getColorName().equals("rouge")||city.getColor().getColorName().equals("jaune")||city.getColor().getColorName().equals("rose")){  //priority 1
-                        while(money>3000&&city.getNbHouse()<4){ 
-                            city.buildHouse(1);
-                            this.withdrawMoney(city.getColor().getHousePrice()); 
-                        }
+                        buyHouseWhile(this,city,3000,4);
                     }    
                     else if(city.getColor().getColorName().equals("bleu")){ //priority 2
+
                         while(money>3000&&city.getName().equals("Rue de la Paix")){
                             if(city.getNbHouse()<4){
                                 city.buildHouse(1);
@@ -117,16 +103,22 @@ public class Player {
                         }
                     }
                     else if(city.getColor().getColorName().equals("vert")){ //priority 3
-                        while(money>3000&&city.getNbHouse()<4){
-                            city.buildHouse(1);
-                            this.withdrawMoney(city.getColor().getHousePrice());
-                        }
+                        buyHouseWhile(this,city,3000,4);
                     }
                }
             }
         }
     
+    
+
+    public static void buyHouseWhile(Player p, SpaceCity city, int money, int nbHouse){
+
+        while( p.checkBalance() > money && city.getNbHouse()<2){  
+            city.buildHouse(1);
+            p.withdrawMoney(city.getColor().getHousePrice());
+        }
     }
+
 
     public static void buyHouseOnEmptyLand(){
         
