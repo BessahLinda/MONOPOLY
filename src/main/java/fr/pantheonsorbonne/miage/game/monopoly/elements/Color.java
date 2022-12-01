@@ -3,7 +3,7 @@ package fr.pantheonsorbonne.miage.game.monopoly.elements;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Color {
+public class Color implements Comparable{
 
     
     private Player colorMonopolist; //guess we can remove this and replace by spaces 
@@ -67,6 +67,13 @@ public class Color {
     
     public void removeColorMonopolist(){
         this.colorMonopolist = null;
+    }
+
+
+    @Override
+    public int compareTo(Object o) {
+        // caster l'objet en couleur, 
+        return 0;
     }
 
 }
