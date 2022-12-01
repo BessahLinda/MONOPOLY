@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 public class Player {
 
+    private Strategy strategy;
     private final String name;
     private int money = 1500; //faut supprimer dans partie reseaux 
     private int position = 0;   
@@ -60,69 +61,16 @@ public class Player {
         if(canBuyHouse()){
             //buy less then 3 houses in every city
             if(!allCitiesOwnMaison()){  //marron , bleu , orange 
-                for(SpaceCity city: colorsetProperty){
-                    if(money<500){
-                        break;
-                    }
-                    if(city.getColor().getColorName().equals("marron")||city.getColor().getColorName().equals("bleuClair")){ //priority x
-                        buyHouseWhile(this,city,2000,2);
-                    }
-                    else if(city.getColor().getColorName().equals("orange")||city.getColor().getColorName().equals("rouge")||city.getColor().getColorName().equals("jaune")||city.getColor().getColorName().equals("rose")){  //priority 1
-                        buyHouseWhile(this,city,400,2);
-                    }    
-                    else if(city.getColor().getColorName().equals("bleu")){ //priority 2
-                        while(money>400&&city.getName().equals("Rue de la Paix")&&city.getNbHouse()<2){
-                            city.buildHouse(1);
-                            this.withdrawMoney(city.getColor().getHousePrice());      
-                        }
-                    }
-                    else if(city.getColor().getColorName().equals("vert")){ //priority 3
-                        buyHouseWhile(this,city,400,2);}
-                    }
-                }
+                strategy.buyHouseOnEmptyLand(this);
+            }
             }
             else{
-                for(SpaceCity city: colorsetProperty){
-                    if(money<2000){
-                        break;
-                    }
-                    if(city.getColor().getColorName().equals("marron")||city.getColor().getColorName().equals("bleuClair")){ //priority x
-                        buyHouseWhile(this,city,800,4);
-                    }
-                    //since colorsetProperty is already sorted, the most important city comes first
-                    else if(city.getColor().getColorName().equals("orange")||city.getColor().getColorName().equals("rouge")||city.getColor().getColorName().equals("jaune")||city.getColor().getColorName().equals("rose")){  //priority 1
-                        buyHouseWhile(this,city,3000,4);
-                    }    
-                    else if(city.getColor().getColorName().equals("bleu")){ //priority 2
-
-                        while(money>3000&&city.getName().equals("Rue de la Paix")){
-                            if(city.getNbHouse()<4){
-                                city.buildHouse(1);
-                                this.withdrawMoney(city.getColor().getHousePrice());
-                            }
-                        }
-                    }
-                    else if(city.getColor().getColorName().equals("vert")){ //priority 3
-                        buyHouseWhile(this,city,3000,4);
-                    }
-               }
+                strategy.buyHouseIfallCitiesOwnMaison(this);
             }
         }
     
+     
     
-
-    public static void buyHouseWhile(Player p, SpaceCity city, int money, int nbHouse){
-
-        while( p.checkBalance() > money && city.getNbHouse()<2){  
-            city.buildHouse(1);
-            p.withdrawMoney(city.getColor().getHousePrice());
-        }
-    }
-
-
-    public static void buyHouseOnEmptyLand(){
-        
-    }
 
 
     public boolean allCitiesOwnMaison(){
