@@ -49,7 +49,7 @@ public class MonopolyGuest {
                 case "SELL_CELL": 
                     break;
                 case "BUY_HOUSE": 
-                    p1.buildHouse();
+                    p1.buyHouse();
                     break;
                 case "SELL_HOUSE": // index
                     break;

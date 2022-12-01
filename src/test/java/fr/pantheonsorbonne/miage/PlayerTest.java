@@ -199,7 +199,7 @@ class PlayerTest {
         SpaceCity s1 =new SpaceCity("Rue de Courcelles",8,100,bleuClair, new int[] {6,30,90,270,400,550});
         SpaceCity s2 =new SpaceCity("Avenue de la République",9,120,bleuClair,new int[] {8,40,100,300,450,600});
         p2.buyLand(s);p2.buyLand(s1);p2.buyLand(s2);
-        p2.buildHouse();
+        p2.buyHouse();
         assertEquals(0,s2.getNbHouse());
     }
 
@@ -213,7 +213,7 @@ class PlayerTest {
         SpaceCity s2 = new SpaceCity("Place Pigalle",19,200,orange,new int[] {16,80,220,600,800,1000});
     
         p2.buyLand(s);p2.buyLand(s1);p2.buyLand(s2);
-        p2.buildHouse();
+        p2.buyHouse();
         assertEquals(2,s2.getNbHouse());
         p2.checkBalance();
     }
@@ -235,7 +235,7 @@ class PlayerTest {
         p2.buyLand(r3);p2.buyLand(r1);p2.buyLand(r2);
         p2.buyLand(s);p2.buyLand(s1);p2.buyLand(s2);p2.buyLand(j);
         p2.earnMoney(2000);
-        p2.buildHouse();
+        p2.buyHouse();
         assertEquals(2,r3.getNbHouse());
         p2.checkBalance();
     }

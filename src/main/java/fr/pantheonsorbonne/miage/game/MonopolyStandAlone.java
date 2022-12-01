@@ -12,7 +12,7 @@ public class MonopolyStandAlone {
         do{
             for(int i = 0; i<players.size();++i){ 
 
-                players.get(i).buildHouse();
+                players.get(i).buyHouse();
                 
                 if(players.get(i).isInJail()){
                     game.playerInJail(players.get(i));

@@ -56,7 +56,7 @@ public class Player {
         return true;
     }
 
-    public void buildHouse(){
+    public void buyHouse(){
         if(canBuyHouse()){
             //buy less then 3 houses in every city
             if(!allCitiesOwnMaison()){  //marron , bleu , orange 
@@ -70,7 +70,7 @@ public class Player {
                             this.withdrawMoney(city.getColor().getHousePrice());
                         }
                     }
-                    else if(city.getColor().getColorName().equals("orange")||city.getColor().getColorName().equals("rouge")||city.getColor().getColorName().equals("jeune")||city.getColor().getColorName().equals("rose")){  //priority 1
+                    else if(city.getColor().getColorName().equals("orange")||city.getColor().getColorName().equals("rouge")||city.getColor().getColorName().equals("jaune")||city.getColor().getColorName().equals("rose")){  //priority 1
                         while(money>400&&city.getNbHouse()<2){ 
                             city.buildHouse(1);
                             this.withdrawMoney(city.getColor().getHousePrice());
@@ -102,7 +102,7 @@ public class Player {
                         }
                     }
                     //since colorsetProperty is already sorted, the most important city comes first
-                    else if(city.getColor().getColorName().equals("orange")||city.getColor().getColorName().equals("rouge")||city.getColor().getColorName().equals("jeune")||city.getColor().getColorName().equals("rose")){  //priority 1
+                    else if(city.getColor().getColorName().equals("orange")||city.getColor().getColorName().equals("rouge")||city.getColor().getColorName().equals("jaune")||city.getColor().getColorName().equals("rose")){  //priority 1
                         while(money>3000&&city.getNbHouse()<4){ 
                             city.buildHouse(1);
                             this.withdrawMoney(city.getColor().getHousePrice()); 
@@ -122,10 +122,16 @@ public class Player {
                             this.withdrawMoney(city.getColor().getHousePrice());
                         }
                     }
-            }   }
+               }
+            }
         }
     
     }
+
+    public static void buyHouseOnEmptyLand(){
+        
+    }
+
 
     public boolean allCitiesOwnMaison(){
         for (SpaceCity s: colorsetProperty){
