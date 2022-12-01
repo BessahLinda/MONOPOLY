@@ -2,6 +2,7 @@ package fr.pantheonsorbonne.miage.game;
 import java.util.ArrayList;
 import java.util.List;
 
+import fr.pantheonsorbonne.miage.HostFacade;
 import fr.pantheonsorbonne.miage.game.monopoly.elements.Color;
 import fr.pantheonsorbonne.miage.game.monopoly.elements.Dice;
 import fr.pantheonsorbonne.miage.game.monopoly.elements.Player;
@@ -73,7 +74,6 @@ public class Game {
         board.add(new SpaceCity("Rue de la Paix",39,400,bleu,new int[] {50,200,600,1400,1700,2000}));
 
         this.players =players;
-        // when we buy a house 1)call change owner fonction from SpaceCity 2) add city to Player property
     }
     
     
@@ -100,7 +100,7 @@ public class Game {
     }
 
 
-    public void playerInJail(Player p){
+    public void checkPlayerInJail(Player p){
         d.rollDices();
         if(d.isDouble()){
             p.goOutJail();
@@ -149,7 +149,6 @@ public class Game {
             player.goToJail();
         }
     }
-    
-}        
+
 
 

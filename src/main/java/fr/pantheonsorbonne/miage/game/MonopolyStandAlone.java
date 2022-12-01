@@ -6,8 +6,8 @@ import fr.pantheonsorbonne.miage.game.monopoly.elements.Player;
 
 public class MonopolyStandAlone {
     public static void main(String[] args){
-        List<Player> players = new ArrayList<>(); players.add(new Player("Linda")); players.add(new Player("Yewon")); players.add(new Player("syna")); players.add(new Player("imane"));
-        Game game = new Game(players);
+        List<Player> players = new ArrayList<>(); players.add(new Player("Linda")); players.add(new Player("Yewon")); 
+        GameLogic game = new GameLogic(players);
 
         do{
             for(int i = 0; i<players.size();++i){ 
@@ -15,7 +15,7 @@ public class MonopolyStandAlone {
                 players.get(i).buildHouse();
                 
                 if(players.get(i).isInJail()){
-                    game.playerInJail(players.get(i));
+                    game.checkPlayerInJail(players.get(i));
                 }
                 else{
                     game.nextTour(players.get(i)); 
@@ -27,7 +27,7 @@ public class MonopolyStandAlone {
                 }
             }
             
-        }while (players.size()> 1);
+        }while (players.size()>1);
         System.out.println("$$$$$$$$$$ player "+ players.get(0).getName() + " won the game $$$$$$$$$$$");
         
     }

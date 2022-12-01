@@ -3,7 +3,7 @@ package fr.pantheonsorbonne.miage.game.monopoly.elements;
 import java.util.List;
 import java.util.Random;
 
-import fr.pantheonsorbonne.miage.game.Game;
+import fr.pantheonsorbonne.miage.game.GameLogic;
 
 public class SpaceChance extends Space{
     private final int prices[] = {-100,-90,-80,-70,-60,-50,-40,-30,30,40,50,60,70,80,90,100};
@@ -14,7 +14,7 @@ public class SpaceChance extends Space{
         
     }
 
-    public void imFeelingLucky(Player player, Game game) {
+    public void imFeelingLucky(Player player, GameLogic game) {
         int ret = (int)((Math.random() * 1));
         switch (ret) {
             case 0:
@@ -31,7 +31,7 @@ public class SpaceChance extends Space{
         }
     }
 
-    private void luckyTakePlayerToAnotherLocation(Player player, Game game) {
+    private void luckyTakePlayerToAnotherLocation(Player player, GameLogic game) {
         System.out.println(player.getName() + " luckyTakePlayerToAnotherLocation ");
         game.nextTour(player);
     }

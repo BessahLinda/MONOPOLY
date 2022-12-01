@@ -16,24 +16,19 @@ public class MonopolyGuest {
     public static void main(String[] args) throws Exception {
         PlayerFacade facade = Facade.getFacade();
         facade.waitReady();
+
+        int maxPlayer = 3;
         //set our palyer name
-        final String playerName="Yewon - " + new Random().nextInt();
-        final String playerName1="Linda - " + new Random().nextInt();
-        Player p1 = new Player(playerName);
-        Player p2 = new Player(playerName1);
-        facade.createNewPlayer(playerName);
+        for()
+        final String playerName1="Yewon - " + new Random().nextInt();
+        Player p1 = new Player(playerName1);
+        Player p2 = new Player(playerName2);
+        facade.sendGameCommandToAll(game, new GameCommand("p1", p1.));
         facade.createNewPlayer(playerName1);
-        System.out.println("I am: "+ playerName);
+        facade.createNewPlayer(playerName2);
+        System.out.println("I am: "+ playerName1);
         //wait until we are able to join a new game
         Game currentGame = facade.autoJoinGame("monopoly-room-1");
-
-        //get our mark
-        
-        // if (!command.name().equals("SEND_MONEY")) {
-        //     throw new RuntimeException();
-        // }
-        // System.out.println(command.body()); // directory 
-        // System.exit(0);
 
         gameloop:  // pour finir loop faut decalarer 
         for(;;){
@@ -41,18 +36,18 @@ public class MonopolyGuest {
             switch (command.name()) { //cd
                 case "MOVE_PAWN_TO": // index
                     p1.advance(Integer.parseInt(command.body()));
-                    System.out.println(p1.getName()+"is arrived to" + p1.getPosition());
+                    System.out.println(p1.getName()+"has arrived to" + p1.getPosition());
                     break;
                 case "BUY_CELL":  // index
                     // player.buy_cell(params)
                     // player.makeDecision(action, params)
                 case "SELL_CELL": 
+                case "SELL_HOUSE": // index
                     break;
                 case "BUY_HOUSE": 
                     p1.buildHouse();
                     break;
-                case "SELL_HOUSE": // index
-                    break;
+               
                 case "SEND_MONEY_TO": // cashAmount, playerName
                     p1.earnMoney(Integer.parseInt(command.body()));
                     // facade.sendGameCommandToPlayer(currentGame, playerName, new GameCommand("SEND_MONEY", cashAmount));

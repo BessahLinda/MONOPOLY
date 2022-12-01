@@ -1,6 +1,9 @@
 package fr.pantheonsorbonne.miage.game.monopoly.elements;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class Player {
 
@@ -138,7 +141,7 @@ public class Player {
 
     public void buyLand(SpaceToBuy s){
         //I'd like to put condition if a player already has one of  blueclaire or marron, I dont want to buy the others
-        if (money>200){
+        if (money>300){
             withdrawMoney(s.getPrice());
             s.setOwner(this);
             property.add(s);
@@ -279,7 +282,7 @@ public class Player {
         if(getAsset() < payment){
             property.clear();
             colorsetProperty.clear();
-            this.money = -10000000;
+            this.money = 0;
             return;
         }    
 
@@ -393,7 +396,12 @@ public class Player {
 
     public void setColorsetProperty(ArrayList<SpaceCity> colorset){
         this.colorsetProperty.addAll(colorset);
-        //orange-> rouge->jeune->rose->blue->vert
+
+
+        // Map sortOrder = {"orange": 0, rouge: 1, jaune: 2, rose: 3, bleu: 4, vert: 5, bleuClair: 6, marron: 7 };
+        // colorset.sort(function (p1, p2) {
+        //      return sortOrder[p1.getColor().getColorName()] - sortOrder[p2.getColor().getColorName()];
+        //   });
     }
 
     public ArrayList<SpaceCity> getColorsetProperty(){

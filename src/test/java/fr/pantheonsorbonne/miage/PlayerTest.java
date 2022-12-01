@@ -300,40 +300,40 @@ class PlayerTest {
     }
 
     
-    @Test
-    public void testSellProperty3(){
-        Player p2 = new Player("Yewon");
-        Color orange = new Color("orange",100);
-        Color rose = new Color("rose", 100);
-        Color jaune = new Color("jaune",150);
-        SpaceCity s = new SpaceCity("Avenue de Mozart",16,180,orange, new int[] {14,70,200,550,750,950});
-        SpaceCity s1 = new SpaceCity("Boulevard Saint-Michel",18,180,orange, new int[] {14,70,200,550,750,950});
-        SpaceCity s2 = new SpaceCity("Place Pigalle",19,200,orange,new int[] {16,80,220,600,800,1000});
-        SpaceCity r1 = new SpaceCity("Boulevard de la Villette",11,140,rose,new int[] {10,50,150,450,625,750});
-        SpaceCity r2 = new SpaceCity("Avenue de Neuilly",13,140,rose,new int[] {10,50,150,450,625,750});
-        SpaceCity r3 = new SpaceCity("Rue de Paradis",14,160,rose,new int[] {12,60,180,500,700,900});
-        SpaceCity j = new SpaceCity("Faubourg Saint-Honoré",26,260,jaune,new int[] {22,110,330,800,975,1150});
-        SpaceCity j1 = new SpaceCity("Place de la Bourse",27,260,jaune,new int[] {22,110,330,800,975,1150});
-        SpaceCity j2 = new SpaceCity("Rue de la Fayette",29,280,jaune,new int[] {22,120,360,850,1025,1200});
-        SpaceStation st = new SpaceStation("Gare Saint-Lazare", 35,200);
-        SpaceToBuy sp = new SpacePublicService("Compagine de distribution des eaux", 28,150);
+    // @Test
+    // public void testSellProperty3(){
+    //     Player p2 = new Player("Yewon");
+    //     Color orange = new Color("orange",100);
+    //     Color rose = new Color("rose", 100);
+    //     Color jaune = new Color("jaune",150);
+    //     SpaceCity s = new SpaceCity("Avenue de Mozart",16,180,orange, new int[] {14,70,200,550,750,950});
+    //     SpaceCity s1 = new SpaceCity("Boulevard Saint-Michel",18,180,orange, new int[] {14,70,200,550,750,950});
+    //     SpaceCity s2 = new SpaceCity("Place Pigalle",19,200,orange,new int[] {16,80,220,600,800,1000});
+    //     SpaceCity r1 = new SpaceCity("Boulevard de la Villette",11,140,rose,new int[] {10,50,150,450,625,750});
+    //     SpaceCity r2 = new SpaceCity("Avenue de Neuilly",13,140,rose,new int[] {10,50,150,450,625,750});
+    //     SpaceCity r3 = new SpaceCity("Rue de Paradis",14,160,rose,new int[] {12,60,180,500,700,900});
+    //     SpaceCity j = new SpaceCity("Faubourg Saint-Honoré",26,260,jaune,new int[] {22,110,330,800,975,1150});
+    //     SpaceCity j1 = new SpaceCity("Place de la Bourse",27,260,jaune,new int[] {22,110,330,800,975,1150});
+    //     SpaceCity j2 = new SpaceCity("Rue de la Fayette",29,280,jaune,new int[] {22,120,360,850,1025,1200});
+    //     SpaceStation st = new SpaceStation("Gare Saint-Lazare", 35,200);
+    //     SpaceToBuy sp = new SpacePublicService("Compagine de distribution des eaux", 28,150);
 
-        p2.earnMoney(460);
-        p2.buyLand(r3);p2.buyLand(r1);p2.buyLand(r2);
-        p2.buyLand(s);p2.buyLand(s1);p2.buyLand(s2);p2.buyLand(j);p2.buyLand(st); p2.buyLand(sp);
-        s.buildHouse(1);s1.buildHouse(1);s2.buildHouse(1); 
-        r1.buildHouse(1);r2.buildHouse(1);r3.buildHouse(1); 
-        j.buildHouse(2); 
+    //     p2.earnMoney(460);
+    //     p2.buyLand(r3);p2.buyLand(r1);p2.buyLand(r2);
+    //     p2.buyLand(s);p2.buyLand(s1);p2.buyLand(s2);p2.buyLand(j);p2.buyLand(st); p2.buyLand(sp);
+    //     s.buildHouse(1);s1.buildHouse(1);s2.buildHouse(1); 
+    //     r1.buildHouse(1);r2.buildHouse(1);r3.buildHouse(1); 
+    //     j.buildHouse(2); 
 
-        List<SpaceToBuy> result = new ArrayList<>(Arrays.asList(r3,r1,r2,s,s1,s2,st,sp));
-        assertEquals(1, r2.getNbHouse());
+    //     List<SpaceToBuy> result = new ArrayList<>(Arrays.asList(r3,r1,r2,s,s1,s2,st,sp));
+    //     assertEquals(1, r2.getNbHouse());
 
-        p2.sellProperty(1369);//500
-        assertEquals(0, s.getNbHouse());
-        assertEquals(0, r1.getNbHouse());
-        assertEquals(result,p2.getProperty());
+    //     p2.sellProperty(1369);//500
+    //     assertEquals(0, s.getNbHouse());
+    //     assertEquals(0, r1.getNbHouse());
+    //     assertEquals(result,p2.getProperty());
 
-    }
+    // }
 
     // @Test
     // public void testSellProperty4(){  
