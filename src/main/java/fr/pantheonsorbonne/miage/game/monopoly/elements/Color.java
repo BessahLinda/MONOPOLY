@@ -7,12 +7,12 @@ public class Color implements Comparable{
 
     
     private Player colorMonopolist; //guess we can remove this and replace by spaces 
-    private final String name;
+    private final ColorEnum color;
     private final int housePrice;
     private List<SpaceCity> spaces = new ArrayList<>();
 
     public Color(String name, int housePrice){
-        this.name = name;
+        this.color = ColorEnum.valueOf(name);
         this.housePrice = housePrice;
     }
 
@@ -62,7 +62,7 @@ public class Color implements Comparable{
     }
 
     public String getColorName(){
-        return this.name;
+        return this.color.name();
     }
     
     public void removeColorMonopolist(){
@@ -72,8 +72,11 @@ public class Color implements Comparable{
 
     @Override
     public int compareTo(Object o) {
-        // caster l'objet en couleur, 
-        return 0;
+       if(o instanceof Color){
+           Color otherColor = (Color) o;
+           return this.color.value-otherColor.color.value;
+       }
+       throw new RuntimeException("not a color");
     }
 
 }
