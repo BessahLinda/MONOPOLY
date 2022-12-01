@@ -188,10 +188,11 @@ public class Player {
     }
 
     public void payTax(SpaceTax s){
-        if(isAffordable(s.getTax())){
-            withdrawMoney(s.getTax());
+        int tax = s.getTax();
+        if(isAffordable(tax)){
+            withdrawMoney(tax);
         }else{
-            sellProperty(s.getTax());
+            sellProperty(tax);
         }
     }
 
