@@ -335,7 +335,7 @@ public class Player {
 
     public void setColorsetProperty(ArrayList<SpaceCity> colorset){
         this.colorsetProperty.addAll(colorset);
-        //orange-> rouge->jeune->rose->blue->vert
+        //orange-> rouge->jeune->rose->blue->vert tte
     }
 
     public ArrayList<SpaceCity> getColorsetProperty(){
