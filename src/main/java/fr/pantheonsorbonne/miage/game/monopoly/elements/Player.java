@@ -1,12 +1,15 @@
 package fr.pantheonsorbonne.miage.game.monopoly.elements;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 
 import org.apache.camel.converter.stream.StreamCacheBulkConverterLoader;
 
 public class Player {
 
-    private Strategy strategy;
+    protected Strategy strategy;
     private final String name;
     private int money = 1500; //faut supprimer dans partie reseaux 
     private int position = 0;   
@@ -152,133 +155,8 @@ public class Player {
         }
     }
 
-    public ArrayList<SpaceToBuy> arrangePriority(){
-        ArrayList<SpaceToBuy> priority = new ArrayList<>();
-        ArrayList<SpaceToBuy> priorityColor = new ArrayList<>();
-        ArrayList<SpaceToBuy> prioritySpecial = new ArrayList<>();
-
-        for(SpaceToBuy s : property){
-
-            if(s instanceof SpaceCity){
-                if(((SpaceCity) s).getColor().isColorOwned()){
-                    priorityColor.add(s);
-                }
-                else{
-                    priority.add(s);
-                }
-            }
-            else{
-                prioritySpecial.add(s);
-            }
-            
-        }
-
-        //sorting Color + optimser plus
-        int indexMin = 0;
-        for(int i =0; i < priorityColor.size(); i++){ 
-            for(int j=i+1; j< priorityColor.size(); j++){
-                if(priorityColor.get(indexMin).getPrice()>priorityColor.get(j).getPrice()){
-                    indexMin = j;
-                }
-            }   
-            SpaceToBuy tmp = priorityColor.get(i);
-            priorityColor.set(i,priorityColor.get(indexMin));
-            priorityColor.set(indexMin,tmp); 
-        }
-
-        //sorting public sation and public service (Space Station has higher value than Public service)
-        if(prioritySpecial.size()>=2){
-            for(int k=1; k< prioritySpecial.size(); k++){
-                if(prioritySpecial.get(k) instanceof SpacePublicService){
-                    prioritySpecial.remove(prioritySpecial.get(k));
-                    prioritySpecial.add(0,prioritySpecial.get(k));
-                }
-            }
-        }
-           
-
-        //sorting space without owning color set
-        indexMin = 0;
-        for(int i =0; i < priority.size(); i++){
-            for(int j=i+1; j< priority.size(); j++){
-                if(priority.get(indexMin).getPrice()>priority.get(j).getPrice()){
-                    indexMin = j;
-                }
-            }
-            SpaceToBuy tmp = priority.get(i);
-            priority.set(i,priority.get(indexMin));
-            priority.set(indexMin,tmp);
-        }
-
-        priority.addAll(priorityColor);
-        priority.addAll(prioritySpecial);
-
-        return priority;
-    }
-
     public void sellProperty(int payment) {  
-
-        if(getAsset() < payment){
-            property.clear();
-            colorsetProperty.clear();
-            this.money = -10000000;
-            return;
-        }    
-
-        ArrayList<SpaceToBuy> priority = this.arrangePriority();
-
-        int index = 0;
-        //if priority 0
-        while( payment > this.checkBalance()){
-            if(priority.get(index) instanceof SpaceCity){
-                SpaceCity currentCity = (SpaceCity) priority.get(index);
-                if(currentCity.getNbHouse()!=0){
-                    this.earnMoney((int)(currentCity.getColor().getHousePrice()*0.75));
-                    currentCity.deconstructHouse();
-                }
-                else{
-                    if(currentCity.getColor().getColorMonopolist()==null){
-                        this.earnMoney(priority.get(index).getCurrentResellPrice());
-                        priority.get(index).setOwner(null);
-                        this.property.remove(currentCity);
-                        System.out.println(this.getName()+" sold " + priority.get(index).getName());
-                        index++;
-                    }
-                    else{
-                        index++;
-                    }
-                }
-            }
-            else{
-                this.earnMoney(priority.get(index).getCurrentResellPrice());
-                priority.get(index).setOwner(null);
-                this.property.remove(priority.get(index));
-                System.out.println(this.getName()+" sold " + priority.get(index).getName());
-                index++; //color monopolist change status
-            }
-
-            
-            if(index>=priority.size()){ 
-                while(payment > this.checkBalance()){
-                    for(SpaceToBuy s : priority){
-                        if(s instanceof SpaceCity){
-                            SpaceCity currentCity = (SpaceCity) s;
-                            if(currentCity.owner == this){
-                                System.out.println(this.getName()+" sold " + currentCity.getName());
-                                this.earnMoney((int)(currentCity.getPrice()*0.75));
-                                s.setOwner(null);
-                                this.property.remove(currentCity);
-                                this.colorsetProperty.remove(currentCity);
-                                currentCity.getColor().removeColorMonopolist();
-                                break;
-                            }
-                        }    
-                    }
-                }
-            }
-        }
-        setRentOfProperties();
-        this.withdrawMoney(payment);
+        this.strategy.sellProperty(this, payment);
     }
 
     public void earnMoney(int m) {
@@ -334,8 +212,11 @@ public class Player {
     }
 
     public void setColorsetProperty(ArrayList<SpaceCity> colorset){
-        this.colorsetProperty.addAll(colorset);
-        //orange-> rouge->jeune->rose->blue->vert tte
+        
+        colorsetProperty.addAll(colorset);
+        Collections.sort(colorsetProperty);
+
+        //this.colorsetProperty.addAll(colorset);
     }
 
     public ArrayList<SpaceCity> getColorsetProperty(){
@@ -357,6 +238,10 @@ public class Player {
             }    
         }
         System.out.println(string);
+    }
+
+    public Strategy getStrategy(){
+        return this.strategy;
     }
 
 }

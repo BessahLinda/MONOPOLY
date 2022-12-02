@@ -3,11 +3,16 @@ package fr.pantheonsorbonne.miage;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import org.junit.jupiter.api.Test;
 
 import fr.pantheonsorbonne.miage.game.monopoly.elements.Color;
 import fr.pantheonsorbonne.miage.game.monopoly.elements.Player;
 import fr.pantheonsorbonne.miage.game.monopoly.elements.SpaceCity;
+import fr.pantheonsorbonne.miage.game.monopoly.elements.SpaceToBuy;
 
 class ColorTest {
     
@@ -47,4 +52,6 @@ class ColorTest {
         assertFalse(rose.isColorOwned()); 
         assertEquals( 10,s1.getCurrentRentPrice());
     }
+
+
 }

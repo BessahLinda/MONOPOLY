@@ -3,7 +3,7 @@ package fr.pantheonsorbonne.miage.game.monopoly.elements;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Color implements Comparable{
+public class Color {
 
     
     private Player colorMonopolist; //guess we can remove this and replace by spaces 
@@ -26,7 +26,7 @@ public class Color implements Comparable{
             priorityList.add(spaces.get(maxind));
             for(int i = 1; i<spaces.size() ; i++){
                 priorityList.add(spaces.get(i));
-                if(spaces.get(i).getPrice()>spaces.get(maxind).getPrice()){
+                if(spaces.get(i).getPrice() >spaces.get(maxind).getPrice()){
                     maxind = i;
                 }
             }
@@ -69,14 +69,11 @@ public class Color implements Comparable{
         this.colorMonopolist = null;
     }
 
-
-    @Override
-    public int compareTo(Object o) {
-       if(o instanceof Color){
-           Color otherColor = (Color) o;
-           return this.color.value-otherColor.color.value;
-       }
-       throw new RuntimeException("not a color");
+    public int getValue(){
+        return this.color.value;
     }
+
+
+   
 
 }

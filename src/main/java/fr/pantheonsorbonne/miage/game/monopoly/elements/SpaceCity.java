@@ -1,6 +1,6 @@
 package fr.pantheonsorbonne.miage.game.monopoly.elements;
 
-public class SpaceCity extends SpaceToBuy {
+public class SpaceCity extends SpaceToBuy implements Comparable{
 
     
     private final Color color;
@@ -52,5 +52,15 @@ public class SpaceCity extends SpaceToBuy {
     public int getCurrentResellPrice(){
         return (int)((this.price +nbHouse*this.color.getHousePrice())*0.75);
     }
+
+    @Override
+    public int compareTo(Object o) {
+       if(o instanceof SpaceCity){
+           SpaceCity otherColor = (SpaceCity) o;
+           return this.getColor().getValue()-otherColor.getColor().getValue();
+       }
+       throw new RuntimeException("not a color");
+    }
+    
 }
 

@@ -1,14 +1,19 @@
 package fr.pantheonsorbonne.miage.game.monopoly.elements;
 
 public enum ColorEnum {
-    vert(5),
-    orange(7),
+
+    orange(1),
     rouge(2),
-    marron(1),
-    bleuClair (6),
-    rose (100),
-    jaune (150),
-    bleu (200);
+    jaune (3),
+    vert(4),
+    rose (5),
+    bleu (6),
+    bleuClair(7),
+    marron(8);
+    
+    
+    
+    
 
     int value;
 
