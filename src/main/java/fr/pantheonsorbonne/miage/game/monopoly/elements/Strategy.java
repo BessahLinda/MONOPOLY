@@ -3,11 +3,6 @@ package fr.pantheonsorbonne.miage.game.monopoly.elements;
 public class  Strategy implements IAStrategy{
 
 
-    
-    public Strategy() {
-    }
-
-
     public void buyHouseWhile(Player p, SpaceCity city, int money, int nbHouse){
 
         while( p.checkBalance() > money && city.getNbHouse()<2){  
@@ -20,10 +15,10 @@ public class  Strategy implements IAStrategy{
     public void buyHouseOnEmptyLand(Player p){
 
         for(SpaceCity city: p.getColorsetProperty()){
-            if(p.checkBalance()<500){
+            if(p.checkBalance()<250){
                 break;
             }
-            if(city.getColor().getColorName().equals("marron")||city.getColor().getColorName().equals("bleuClair")){ //priority x
+            else if(city.getColor().getColorName().equals("marron")||city.getColor().getColorName().equals("bleuClair")){ //priority x
                 buyHouseWhile(p,city,1500,2);
             }
             else if(city.getColor().getColorName().equals("orange")||city.getColor().getColorName().equals("rouge")||city.getColor().getColorName().equals("jaune")||city.getColor().getColorName().equals("rose")){  //priority 1
