@@ -16,12 +16,12 @@ import fr.pantheonsorbonne.miage.game.monopoly.elements.SpaceTax;
 import fr.pantheonsorbonne.miage.game.monopoly.elements.SpaceToBuy;
 
 
-public class Game {
+public class GameLogic{
     private static Dice d = new Dice();
     private static List<Space> board = new ArrayList<>();
     List<Player> players = new ArrayList<>();
 
-    public Game(List<Player> players){
+    public GameLogic(List<Player> players){
         Color marron = new Color("marron",50);
         Color bleuClair = new Color("bleuClair",50);
         Color rose = new Color("rose", 100);
