@@ -2,6 +2,8 @@ package fr.pantheonsorbonne.miage.game.monopoly.elements;
 
 import java.util.ArrayList;
 
+import org.apache.camel.converter.stream.StreamCacheBulkConverterLoader;
+
 public class Player {
 
     private Strategy strategy;
@@ -15,6 +17,7 @@ public class Player {
 
     public Player(String name){
         this.name = name;
+        this.strategy = new Strategy();
         
     }
 
@@ -59,17 +62,9 @@ public class Player {
 
     public void buyHouse(){
         if(canBuyHouse()){
-            //buy less then 3 houses in every city
-            if(!allCitiesOwnMaison()){  //marron , bleu , orange 
-                strategy.buyHouseOnEmptyLand(this);
-            }
-            }
-            else{
-                strategy.buyHouseIfallCitiesOwnMaison(this);
-            }
+            strategy.buyHouse(this);
         }
-    
-     
+    }
     
 
 

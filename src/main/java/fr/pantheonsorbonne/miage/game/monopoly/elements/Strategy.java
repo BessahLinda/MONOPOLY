@@ -1,6 +1,12 @@
 package fr.pantheonsorbonne.miage.game.monopoly.elements;
 
-public abstract class  Strategy implements IAStrategy{
+public class  Strategy implements IAStrategy{
+
+
+    
+    public Strategy() {
+    }
+
 
     public void buyHouseWhile(Player p, SpaceCity city, int money, int nbHouse){
 
@@ -61,6 +67,26 @@ public abstract class  Strategy implements IAStrategy{
             }
        }
     }
+
+
+    @Override
+    public void buyHouse(Player p) {
+        //buy less then 3 houses in every city
+        if(!p.allCitiesOwnMaison()){  //marron , bleu , orange 
+            buyHouseOnEmptyLand(p);
+        }else{
+            buyHouseIfallCitiesOwnMaison(p);
+        }
+    }
+
+
+    @Override
+    public void sellProperty(Player p) {
+        // TODO Auto-generated method stub
+        
+    }
+
+    
        
 
 }
