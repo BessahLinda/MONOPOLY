@@ -8,49 +8,41 @@ import fr.pantheonsorbonne.miage.model.Game;
 import fr.pantheonsorbonne.miage.model.GameCommand;
 
 import java.util.Random;
+import java.util.Set;
 
 /**
  * this is an example for the Guest in the tictactoe game
  */
 public class MonopolyGuest {
+    static final String playerId = "Player-" + new Random().nextInt();
+    static final PlayerFacade playerFacade = Facade.getFacade();
+    static Game monopoly;
+    static int maxPlayer = 3;
     public static void main(String[] args) throws Exception {
-        PlayerFacade facade = Facade.getFacade();
-        facade.waitReady();
+        playerFacade.waitReady();
+        playerFacade.createNewPlayer(playerId);
+        monopoly = playerFacade.autoJoinGame("monopoly");
 
-        int maxPlayer = 3;
-        //set our palyer name
-        for()
-        final String playerName1="Yewon - " + new Random().nextInt();
-        Player p1 = new Player(playerName1);
-        Player p2 = new Player(playerName2);
-        facade.sendGameCommandToAll(game, new GameCommand("p1", p1.));
-        facade.createNewPlayer(playerName1);
-        facade.createNewPlayer(playerName2);
-        System.out.println("I am: "+ playerName1);
-        //wait until we are able to join a new game
-        Game currentGame = facade.autoJoinGame("monopoly-room-1");
 
         gameloop:  // pour finir loop faut decalarer 
         for(;;){
-            GameCommand command = facade.receiveGameCommand(currentGame); //blocking everything till it gets command
+            GameCommand command = playerFacade.receiveGameCommand(monopoly); //blocking everything till it gets command
             switch (command.name()) { //cd
                 case "MOVE_PAWN_TO": // index
                     p1.advance(Integer.parseInt(command.body()));
-                    System.out.println(p1.getName()+"has arrived to" + p1.getPosition());
+                    System.out.println(p1.getName()+" has arrived to " + p1.getPosition());
                     break;
-                case "BUY_CELL":  // index
-                    // player.buy_cell(params)
-                    // player.makeDecision(action, params)
+                case "BUY_CELL":
+                    p1.buyLand(Integer.parseInt(command.body()));
                 case "SELL_CELL": 
-                case "SELL_HOUSE": // index
+                case "SELL_HOUSE":
+                    p1.sellProperty();
                     break;
                 case "BUY_HOUSE": 
                     p1.buildHouse();
                     break;
-               
                 case "SEND_MONEY_TO": // cashAmount, playerName
                     p1.earnMoney(Integer.parseInt(command.body()));
-                    // facade.sendGameCommandToPlayer(currentGame, playerName, new GameCommand("SEND_MONEY", cashAmount));
                     break;
                 case "SEND_MONEY": // cashAmount
                     p1.earnMoney(Integer.parseInt(command.body()));
@@ -66,6 +58,8 @@ public class MonopolyGuest {
         
     
 
+       protected Set<String> getInitialPlayers() {
+           return this.getPlayers();
        }
 
 }

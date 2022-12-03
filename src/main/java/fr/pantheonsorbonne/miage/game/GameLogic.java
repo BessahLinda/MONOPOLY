@@ -16,12 +16,12 @@ import fr.pantheonsorbonne.miage.game.monopoly.elements.SpaceTax;
 import fr.pantheonsorbonne.miage.game.monopoly.elements.SpaceToBuy;
 
 
-public class GameLogic{
+public abstract class GameLogic{
     private static Dice d = new Dice();
-    private static List<Space> board = new ArrayList<>();
+    protected static List<Space> board = new ArrayList<>();
     List<Player> players = new ArrayList<>();
 
-    public GameLogic(List<Player> players){
+    public void setBoardPlayer(List<Player> players){
         Color marron = new Color("marron",50);
         Color bleuClair = new Color("bleuClair",50);
         Color rose = new Color("rose", 100);
@@ -72,83 +72,47 @@ public class GameLogic{
         board.add(new SpaceCity("Avenue des Champs-Elysées",37,350,bleu, new int[] {35,175,500,1100,1300,1500}));
         board.add(new SpaceTax("Taxe de luxe",4,100));
         board.add(new SpaceCity("Rue de la Paix",39,400,bleu,new int[] {50,200,600,1400,1700,2000}));
-
         this.players =players;
     }
-    
-    
 
-	public void nextTour(Player player) {
+    public abstract void nextTour(Player player);
 
-        player.advance( d.rollDices());
-        Space playerSpaceAfterMove = board.get(player.getPosition());
-        System.out.println(player.getName() +" are now on " + playerSpaceAfterMove.getName().toUpperCase() );
+    protected abstract  void onSpaceCity(Space playerAfterMove, Player player);
 
-        if (playerSpaceAfterMove instanceof SpaceJail) {
-            onSpaceJail(playerSpaceAfterMove, player);
+    protected abstract void onSpaceJail(Space playerAfterMove, Player player);
 
-        } else if (playerSpaceAfterMove instanceof SpaceTax) {
-            onSpaceTax(playerSpaceAfterMove, player);
+    protected abstract void onSpaceTax(Space playerAfterMove, Player player);
 
-        } else if (playerSpaceAfterMove instanceof SpaceChance) {
-            onSpaceChance(playerSpaceAfterMove, player);
+    protected abstract void onSpaceChance(Space playerAfterMove, Player player);
 
-        } else if (playerSpaceAfterMove instanceof SpaceToBuy){
-            onSpaceCity(playerSpaceAfterMove, player);
-        }
-        System.out.println("\n**********************\n");
-    }
+    protected abstract void checkPlayerInJail(Player p);
 
+    public void playRound() {
+        do{
+            for(int i = 0; i<players.size();++i){ 
 
-    public void checkPlayerInJail(Player p){
-        d.rollDices();
-        if(d.isDouble()){
-            p.goOutJail();
-            nextTour(p);
-        }else if(p.getPrisonDuration()==2){
-            p.goOutJail(50);
-            System.out.println(p.getName()+"went out from prison");
-            nextTour(p);
-        }else if(p.getPrisonDuration()<2){
-            p.setPrisonDuration(); 
-            System.out.println(p.getName()+" is still in prison");
-        }
-    }
-
-    
-    private void onSpaceTax(Space playerAfterMove, Player player){
-        SpaceTax space = (SpaceTax) playerAfterMove;
-        player.payTax(space);
-        
-        System.out.println(player.getName()+" paid " + space.getTax() +"$ You now have "+ player.checkBalance()); 
+                players.get(i).buildHouse();
+                
+                if(players.get(i).isInJail()){
+                    this.checkPlayerInJail(players.get(i));
+                }
+                else{
+                    this.nextTour(players.get(i)); 
+                }
+                if(players.get(i).isBankrupt()){
+                    System.out.println(players.get(i).getName()+" doesn't have enough money to pay. You are retired from the game");     
+                    players.remove(players.get(i));
+                    ++i;
+                }
+            }
             
+        }while (players.size()>1);
+        System.out.println("$$$$$$$$$$ player "+ players.get(0).getName() + " won the game $$$$$$$$$$$");
+        
     }
 
-    private void onSpaceChance(Space playerAfterMove, Player player){
-        SpaceChance space = (SpaceChance) playerAfterMove;
-        System.out.println(player.getName() + " have a lucky card" );
-        space.imFeelingLucky(player, this);        
-        System.out.println(player.getName() + " have now " + player.checkBalance() );
-    }
 
-    private void onSpaceCity(Space playerAfterMove, Player player){
-        SpaceToBuy space = (SpaceToBuy) playerAfterMove;
-        if (!space.isSpaceOwned()) {
-            player.buyLand(space);           
-        } else if (space.getOwner()!=player){
-            player.payRent(space);
-            System.out.println(player.getName() + " paid " + space.getCurrentRentPrice() + " for " + space.getOwner().getName());
-        }
-        System.out.println(player.getName() + " have now " + player.checkBalance() );
-        player.toStringP();
-    }
 
-    private void onSpaceJail(Space playerAfterMove, Player player){
-        SpaceJail space = (SpaceJail) playerAfterMove;
-        if (space.getType() != 0) { 
-            player.goToJail();
-        }
-    }
-
+}
 
 

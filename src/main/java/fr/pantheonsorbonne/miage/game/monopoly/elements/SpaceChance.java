@@ -36,12 +36,6 @@ public class SpaceChance extends Space{
         game.nextTour(player);
     }
 
-    /**private void luckyTakePlayerToTheJail(Player player) {
-        System.out.println("Lucky card : You are in jail now.");
-        player.setInJail(true);
-        player.setPosition(SpaceJail.jailLocationIndex);
-    }**/
-
     private void luckyChangeCash(Player player) {
         int rndIndex = new Random().nextInt(prices.length);
         int rndPrice = prices[rndIndex];
