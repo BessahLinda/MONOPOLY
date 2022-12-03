@@ -152,7 +152,8 @@ public class  StrategyLinda extends Strategy {
         if(p.getAsset() < payment){
             p.getProperty().clear();
             p.getColorsetProperty().clear();
-            p.withdrawMoney(payment) ;
+            p.withdrawMoney(100000) ;
+
             return;
         }    
 

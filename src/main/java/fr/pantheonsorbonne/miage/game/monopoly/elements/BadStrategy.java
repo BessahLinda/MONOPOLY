@@ -14,9 +14,25 @@ public class BadStrategy extends Strategy {
     @Override
     public void sellProperty(Player p, int payment) {
         int b = (int) ((Math.random() * p.getProperty().size()) + 1);
-        while(p.checkBalance()> payment){
-            p.getColorsetProperty().get(b).getCurrentResellPrice();
+        for(SpaceToBuy s : p.getProperty()){
+            while(p.checkBalance()> payment){
+                if(s instanceof SpaceCity){
+                    SpaceCity space = (SpaceCity)s;
+                    while(space.getNbHouse()>0){
+                        space.deconstructHouse();
+                        p.earnMoney((int)(space.getColor().getHousePrice()*0.75));
+                    }
+                }else{
+                    p.earnMoney(s.getCurrentResellPrice());
+                    s.setOwner(null);
+                    p.getProperty().remove(s);
+                    System.out.println(p.getName()+" sold " + s.getName());
+                   
+                }
+                
+            }
         }
+        
     }
     
 }

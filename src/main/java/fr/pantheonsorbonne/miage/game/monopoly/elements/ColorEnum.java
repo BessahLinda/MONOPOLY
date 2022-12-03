@@ -10,10 +10,6 @@ public enum ColorEnum {
     bleu (6),
     bleuClair(7),
     marron(8);
-    
-    
-    
-    
 
     int value;
 

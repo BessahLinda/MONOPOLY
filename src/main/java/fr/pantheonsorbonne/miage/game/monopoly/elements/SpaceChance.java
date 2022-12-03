@@ -1,8 +1,6 @@
 package fr.pantheonsorbonne.miage.game.monopoly.elements;
 
-import java.util.List;
 import java.util.Random;
-
 import fr.pantheonsorbonne.miage.game.Game;
 
 public class SpaceChance extends Space{
