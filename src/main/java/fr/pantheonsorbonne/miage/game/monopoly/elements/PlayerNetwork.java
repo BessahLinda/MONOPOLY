@@ -1,7 +1,7 @@
 package fr.pantheonsorbonne.miage.game.monopoly.elements;
 
 import java.util.ArrayList;
-public class Player {
+public class PlayerNetwork extends Player {
 
     private final String name;
     private int money = 1500; //faut supprimer dans partie reseaux 
@@ -11,48 +11,30 @@ public class Player {
     private ArrayList<SpaceToBuy> property = new ArrayList<>();
     private ArrayList<SpaceCity> colorsetProperty = new ArrayList<>();
 
-    public Player(String name){
+    public PlayerNetwork(String name) {
         this.name = name;
-        
     }
 
     public void advance(int diceResult){
-        if ((this.position + diceResult) >= 40){
-            this.position = (this.position +diceResult) % 40;
-            money += 200;
-        }else
-            this.position += diceResult;      
+        super.advance(diceResult);
     }
 
     public int getAsset(){ //game over condtion : asset < 0
-        int asset = money;
-        for(SpaceToBuy s : property ){
-            if(s instanceof SpaceCity){
-                SpaceCity spaceCity = (SpaceCity)s;
-                asset += spaceCity.getColor().getHousePrice()*spaceCity.getNbHouse()*0.75 + spaceCity.getPrice()*0.75;
-            }
-            else{
-                asset += s.getPrice()*0.75;
-            }
-        }
-        return asset;
+       return super.getAsset();
     }
 
     // check if I can pay the toll fee
     public boolean hasEnoughAsset(int payment){
-        return getAsset()<payment;
+        return super.hasEnoughAsset(payment);
     }
 
     // check if I can buy 
     public boolean isAffordable(int price){
-        return this.money > price;
+        return super.isAffordable(price);
     }
 
     public boolean canBuyHouse(){
-        if(colorsetProperty.isEmpty()){
-            return false;
-        }
-        return true;
+        return super.canBuyHouse()
     }
 
     public void buildHouse(){
@@ -66,6 +48,7 @@ public class Player {
                     if(city.getColor().getColorName().equals("marron")||city.getColor().getColorName().equals("bleuClair")){ //priority x
                         while(money>2000&&city.getNbHouse()<2){  
                             city.buildHouse(1);
+                            hostFacade.sendGameCommandToPlayer(monopoly, player.getName(),new GameCommand("BUY_HOUSE", city.getIndex());    
                             this.withdrawMoney(city.getColor().getHousePrice());
                         }
                     }
@@ -291,12 +274,14 @@ public class Player {
                 if(currentCity.getNbHouse()!=0){
                     this.earnMoney((int)(currentCity.getColor().getHousePrice()*0.75));
                     currentCity.deconstructHouse();
+                    hostFacade.sendGameCommandToPlayer(monopoly, player.getName(),new GameCommand("SELL_HOUSE", Integer.toString(space.getTax())));    
                 }
                 else{
                     if(currentCity.getColor().getColorMonopolist()==null){
                         this.earnMoney(priority.get(index).getCurrentResellPrice());
                         priority.get(index).setOwner(null);
                         this.property.remove(currentCity);
+                        hostFacade.sendGameCommandToPlayer(monopoly, player.getName(),new GameCommand("SELL_CELL", Integer.toString(space.getTax())));    
                         System.out.println(this.getName()+" sold " + priority.get(index).getName());
                         index++;
                     }
@@ -309,6 +294,7 @@ public class Player {
                 this.earnMoney(priority.get(index).getCurrentResellPrice());
                 priority.get(index).setOwner(null);
                 this.property.remove(priority.get(index));
+                hostFacade.sendGameCommandToPlayer(monopoly, player.getName(),new GameCommand("SELL_CELL", Integer.toString(space.getTax())));    
                 System.out.println(this.getName()+" sold " + priority.get(index).getName());
                 index++; //color monopolist change status
             }
@@ -325,7 +311,8 @@ public class Player {
                                 s.setOwner(null);
                                 this.property.remove(currentCity);
                                 this.colorsetProperty.remove(currentCity);
-                                currentCity.getColor().removeColorMonopolist();
+                                currentCity.getColor().removeColorMonopolist();                        
+                                hostFacade.sendGameCommandToPlayer(monopoly, player.getName(),new GameCommand("SELL_CELL", Integer.toString(space.getTax())));    
                                 break;
                             }
                         }    
@@ -338,11 +325,11 @@ public class Player {
     }
 
     public void earnMoney(int m) {
-        this.money += m;
+        super.earnMoney(m);
     }
 
     public void withdrawMoney(int amount){
-        money = money - amount;
+        super.withdrawMoney(amount);
     }
 
     public String getName() {
@@ -420,4 +407,5 @@ public class Player {
         System.out.println(string);
     }
 
+    
 }

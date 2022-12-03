@@ -81,7 +81,8 @@ public final class MonopolyHost extends GameLogic{
 
     @Override
     public void nextTour(Player player) {
-        player.advance(d.rollDices());
+        player.advance(d.rollDices());        
+        hostFacade.sendGameCommandToPlayer(monopoly, player.getName(),new GameCommand("BUY_CELL", Integer.toString(player.getPosition())));
         Space playerSpaceAfterMove = board.get(player.getPosition());
         System.out.println(player.getName() +" are now on " + playerSpaceAfterMove.getName().toUpperCase() );
 
@@ -104,7 +105,7 @@ public final class MonopolyHost extends GameLogic{
     protected void onSpaceCity(Space playerAfterMove, Player player){
         SpaceToBuy space = (SpaceToBuy) playerAfterMove;
         if (!space.isSpaceOwned()) {
-            hostFacade.sendGameCommandToPlayer(monopoly, player.getName(),new GameCommand("BUY_CELL", Integer.toString(players.get().get)));
+            hostFacade.sendGameCommandToPlayer(monopoly, player.getName(),new GameCommand("BUY_CELL", Integer.toString(player.getPosition())));
             player.buyLand(space);           
         } else if (space.getOwner()!=player){
             hostFacade.sendGameCommandToPlayer(monopoly, player.getName(),new GameCommand("BUY_CELL", Integer.toString(players.get().get)));
@@ -126,9 +127,14 @@ public final class MonopolyHost extends GameLogic{
     @Override
     protected void onSpaceTax(Space playerAfterMove, Player player){
         SpaceTax space = (SpaceTax) playerAfterMove;
-        player.payTax(space);
+        if(player.isAffordable(space.getTax())){
+            player.withdrawMoney(space.getTax());
+            hostFacade.sendGameCommandToPlayer(monopoly, player.getName(),new GameCommand("SEND_MONEY", Integer.toString(-space.getTax())));    
+        }else{
+            player.sellProperty(space.getTax());
+        }
+       
         System.out.println(player.getName()+" paid " + space.getTax() +"$ You now have "+ player.checkBalance()); 
-            
     }
 
     protected void onSpaceChance(Space playerAfterMove, Player player){
