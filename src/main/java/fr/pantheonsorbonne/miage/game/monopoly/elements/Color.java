@@ -8,6 +8,8 @@ public class Color {
     
     private Player colorMonopolist; //guess we can remove this and replace by spaces 
     private final ColorEnum color;
+    
+
     private final int housePrice;
     private List<SpaceCity> spaces = new ArrayList<>();
 

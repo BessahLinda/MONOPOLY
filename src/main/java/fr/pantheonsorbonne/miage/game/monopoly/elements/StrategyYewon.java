@@ -1,6 +1,6 @@
 package fr.pantheonsorbonne.miage.game.monopoly.elements;
 
-public class AncienneStrat implements AIStrategy{
+public class StrategyYewon extends Strategy implements AIStrategy{
 
     public void buyHouseWhile(Player p, SpaceCity city, int money, int nbHouse){
 
@@ -85,8 +85,10 @@ public class AncienneStrat implements AIStrategy{
     }
 
 
+
+
     @Override
-    public void sellProperty(Player p) {
+    public void sellProperty(Player p, int payment) {
         // TODO Auto-generated method stub
         
     }

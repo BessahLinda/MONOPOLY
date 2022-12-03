@@ -8,6 +8,7 @@ import fr.pantheonsorbonne.miage.game.monopoly.elements.Color;
 import fr.pantheonsorbonne.miage.game.monopoly.elements.Player;
 import fr.pantheonsorbonne.miage.game.monopoly.elements.SpaceCity;
 import fr.pantheonsorbonne.miage.game.monopoly.elements.SpaceStation;
+import fr.pantheonsorbonne.miage.game.monopoly.elements.StrategyLinda;
 
 class SpaceCityTest {
 
@@ -15,7 +16,7 @@ class SpaceCityTest {
     public void setCurrentRentPriceTest(){
         Color marron = new Color("marron",50);
         SpaceCity s = new SpaceCity("Boulevard de Bellvile",1,60,marron, new int[] {2,10,30,90,160,250}); 
-        Player p = new Player("Linda");
+        Player p = new Player("Linda", new StrategyLinda());
         assertEquals(2,s.getCurrentRentPrice());
         p.buyLand(s);
         marron.setColorMonopolist(p );
@@ -28,11 +29,11 @@ class SpaceCityTest {
 
     @Test
     public void setCurrentRentPriceTest2(){ //spaceStation
-        Player p = new Player("Yewon");
+        Player p = new Player("Yewon", new StrategyLinda());
         Color marron = new Color("marron",50);
         Color rose = new Color("rose", 100);
         SpaceCity s = new SpaceCity("Boulevard de Bellvile",1,60,marron, new int[] {2,10,30,90,160,250}); 
-        SpaceCity s1 = new SpaceCity("Rue Lecourbe",3,60,marron,new int[]{4,20,60,180,320,450});
+        new SpaceCity("Rue Lecourbe",3,60,marron,new int[]{4,20,60,180,320,450});
         SpaceStation st = new SpaceStation("Gare Saint-Lazare", 35,200);
         new SpaceCity("Boulevard de la Villette",11,140,rose,new int[] {10,50,150,450,625,750});
         new SpaceCity("Avenue de Neuilly",13,140,rose,new int[] {10,50,150,450,625,750});
@@ -48,7 +49,7 @@ class SpaceCityTest {
 
     @Test
     public void setCurrentRentPriceTest3(){ //spaceStation
-        Player p = new Player("Yewon");
+        Player p = new Player("Yewon", new StrategyLinda());
         Color marron = new Color("marron",50);
         Color rose = new Color("rose", 100);
         SpaceCity s = new SpaceCity("Boulevard de Bellvile",1,60,marron, new int[] {2,10,30,90,160,250}); 

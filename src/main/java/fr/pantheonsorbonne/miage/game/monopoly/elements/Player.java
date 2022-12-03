@@ -1,11 +1,8 @@
 package fr.pantheonsorbonne.miage.game.monopoly.elements;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
-import java.util.Comparator;
 
-import org.apache.camel.converter.stream.StreamCacheBulkConverterLoader;
 
 public class Player {
 
@@ -18,9 +15,9 @@ public class Player {
     private ArrayList<SpaceToBuy> property = new ArrayList<>();
     private ArrayList<SpaceCity> colorsetProperty = new ArrayList<>();
 
-    public Player(String name){
+    public Player(String name, Strategy s){
         this.name = name;
-        this.strategy = new Strategy();
+        this.strategy = s;
         
     }
 
@@ -212,11 +209,8 @@ public class Player {
     }
 
     public void setColorsetProperty(ArrayList<SpaceCity> colorset){
-        
         colorsetProperty.addAll(colorset);
         Collections.sort(colorsetProperty);
-
-        //this.colorsetProperty.addAll(colorset);
     }
 
     public ArrayList<SpaceCity> getColorsetProperty(){
