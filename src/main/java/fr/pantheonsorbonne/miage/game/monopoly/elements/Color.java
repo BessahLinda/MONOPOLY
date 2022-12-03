@@ -8,10 +8,8 @@ public class Color {
     
     private Player colorMonopolist; //guess we can remove this and replace by spaces 
     private final ColorEnum color;
-    
-
     private final int housePrice;
-    private List<SpaceCity> spaces = new ArrayList<>();
+    private ArrayList<SpaceCity> spaces = new ArrayList<>();
 
     public Color(String name, int housePrice){
         this.color = ColorEnum.valueOf(name);
@@ -55,7 +53,7 @@ public class Color {
         return this.colorMonopolist != null;
     }
 
-    public List getSpaces(){
+    public ArrayList getSpaces(){
         return this.spaces;
     }
 

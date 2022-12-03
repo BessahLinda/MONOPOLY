@@ -134,6 +134,7 @@ public class Game {
 
     private void isOnSpaceCity(Space playerAfterMove, Player player){
         SpaceToBuy space = (SpaceToBuy) playerAfterMove;
+        
         if (!space.isSpaceOwned()) {
             player.buyLand(space);           
         } else if (space.getOwner()!=player){
