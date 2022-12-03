@@ -4,6 +4,7 @@ import fr.pantheonsorbonne.miage.Facade;
 import fr.pantheonsorbonne.miage.PlayerFacade;
 import fr.pantheonsorbonne.miage.game.monopoly.elements.Dice;
 import fr.pantheonsorbonne.miage.game.monopoly.elements.Player;
+import fr.pantheonsorbonne.miage.game.monopoly.elements.StrategyLinda;
 import fr.pantheonsorbonne.miage.model.Game;
 import fr.pantheonsorbonne.miage.model.GameCommand;
 
@@ -19,8 +20,8 @@ public class MonopolyGuest {
         //set our palyer name
         final String playerName="Yewon - " + new Random().nextInt();
         final String playerName1="Linda - " + new Random().nextInt();
-        Player p1 = new Player(playerName);
-        Player p2 = new Player(playerName1);
+        Player p1 = new Player(playerName, new StrategyLinda());
+        Player p2 = new Player(playerName1, new StrategyLinda());
         facade.createNewPlayer(playerName);
         facade.createNewPlayer(playerName1);
         System.out.println("I am: "+ playerName);

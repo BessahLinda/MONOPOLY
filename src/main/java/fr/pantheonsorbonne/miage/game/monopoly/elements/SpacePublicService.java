@@ -4,7 +4,8 @@ package fr.pantheonsorbonne.miage.game.monopoly.elements;
 public class SpacePublicService extends SpaceToBuy {
     
     private Dice d = new Dice();
-    
+    private int a = 4;
+
     public SpacePublicService(String name, int index, int price) {
         super(name, index, price);
     }
@@ -12,14 +13,14 @@ public class SpacePublicService extends SpaceToBuy {
     @Override
     public void setCurrentRentPrice() {
         if(this.owner.getNbServicePublic() ==2){
-            this.currentRentPrice =  d.rollDices() * 10;
+            a= 10;
         }  
     }
 
 
     @Override
     public int getCurrentRentPrice(){
-        return d.rollDices() * 4;
+        return d.rollDices() * a;
     }
 
     

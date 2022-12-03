@@ -9,7 +9,7 @@ import fr.pantheonsorbonne.miage.game.monopoly.elements.StrategyLinda;
 
 public class MonopolyStandAlone {
     public static void main(String[] args){
-        List<Player> players = new ArrayList<>(); players.add(new Player("Linda", new StrategyLinda())); players.add(new Player("Yewon",new StrategyLinda()));players.add(new Player("imane",new BadStrategy()));
+        List<Player> players = new ArrayList<>(); players.add(new Player("Linda", new StrategyLinda())); players.add(new Player("Yewon",new StrategyLinda()));
         Game game = new Game(players);
 
         do{

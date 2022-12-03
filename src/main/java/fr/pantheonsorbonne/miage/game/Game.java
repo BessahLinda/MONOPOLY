@@ -86,16 +86,16 @@ public class Game {
         System.out.println(player.getName() +" are now on " + playerSpaceAfterMove.getName().toUpperCase() );
 
         if (playerSpaceAfterMove instanceof SpaceJail) {
-            onSpaceJail(playerSpaceAfterMove, player);
+            isOnSpaceJail(playerSpaceAfterMove, player);
 
         } else if (playerSpaceAfterMove instanceof SpaceTax) {
-            onSpaceTax(playerSpaceAfterMove, player);
+            isOnSpaceTax(playerSpaceAfterMove, player);
 
         } else if (playerSpaceAfterMove instanceof SpaceChance) {
-            onSpaceChance(playerSpaceAfterMove, player);
+            isOnSpaceChance(playerSpaceAfterMove, player);
 
         } else if (playerSpaceAfterMove instanceof SpaceToBuy){
-            onSpaceCity(playerSpaceAfterMove, player);
+            isOnSpaceCity(playerSpaceAfterMove, player);
         }
         System.out.println("\n**********************\n");
     }
@@ -117,7 +117,7 @@ public class Game {
     }
 
     
-    private void onSpaceTax(Space playerAfterMove, Player player){
+    public void isOnSpaceTax(Space playerAfterMove, Player player){
         SpaceTax space = (SpaceTax) playerAfterMove;
         player.payTax(space);
         
@@ -125,14 +125,14 @@ public class Game {
             
     }
 
-    private void onSpaceChance(Space playerAfterMove, Player player){
+    private void isOnSpaceChance(Space playerAfterMove, Player player){
         SpaceChance space = (SpaceChance) playerAfterMove;
         System.out.println(player.getName() + " have a lucky card" );
         space.imFeelingLucky(player, this);        
         System.out.println(player.getName() + " have now " + player.checkBalance() );
     }
 
-    private void onSpaceCity(Space playerAfterMove, Player player){
+    private void isOnSpaceCity(Space playerAfterMove, Player player){
         SpaceToBuy space = (SpaceToBuy) playerAfterMove;
         if (!space.isSpaceOwned()) {
             player.buyLand(space);           
@@ -144,11 +144,15 @@ public class Game {
         player.toStringP();
     }
 
-    private void onSpaceJail(Space playerAfterMove, Player player){
+    private void isOnSpaceJail(Space playerAfterMove, Player player){
         SpaceJail space = (SpaceJail) playerAfterMove;
         if (space.getType() != 0) { 
             player.goToJail();
         }
+    }
+
+    public List<Space> getBoard(){
+        return board;
     }
     
 }        

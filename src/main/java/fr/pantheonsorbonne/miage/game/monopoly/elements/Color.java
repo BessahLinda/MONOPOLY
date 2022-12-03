@@ -35,7 +35,7 @@ public class Color {
             SpaceCity tmp = priorityList.get(0); //sorted descending order
             priorityList.set(0,priorityList.get(maxind));
             priorityList.set(maxind,tmp);
-            colorMonopolist.setColorsetProperty(priorityList);
+            colorMonopolist.sortColorsetProperty(priorityList);
     }
 
     public boolean isColorMonopolist(Player colorMonopolist){ //on peut merger dans setColor 

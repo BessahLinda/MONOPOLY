@@ -13,7 +13,6 @@ public class BadStrategy extends Strategy {
 
     @Override
     public void sellProperty(Player p, int payment) {
-        int b = (int) ((Math.random() * p.getProperty().size()) + 1);
         for(SpaceToBuy s : p.getProperty()){
             while(p.checkBalance()> payment){
                 if(s instanceof SpaceCity){

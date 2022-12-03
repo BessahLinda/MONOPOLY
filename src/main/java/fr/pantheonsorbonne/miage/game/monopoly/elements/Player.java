@@ -54,10 +54,8 @@ public class Player {
     }
 
     public boolean canBuyHouse(){
-        if(colorsetProperty.isEmpty()){
-            return false;
-        }
-        return true;
+        return !colorsetProperty.isEmpty();
+
     }
 
     public void buyHouse(){
@@ -208,7 +206,7 @@ public class Player {
         return nb;
     }
 
-    public void setColorsetProperty(ArrayList<SpaceCity> colorset){
+    public void sortColorsetProperty(ArrayList<SpaceCity> colorset){
         colorsetProperty.addAll(colorset);
         Collections.sort(colorsetProperty);
     }
@@ -234,8 +232,5 @@ public class Player {
         System.out.println(string);
     }
 
-    public Strategy getStrategy(){
-        return this.strategy;
-    }
 
 }

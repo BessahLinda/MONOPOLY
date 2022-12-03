@@ -4,8 +4,7 @@ import java.util.Random;
 import fr.pantheonsorbonne.miage.game.Game;
 
 public class SpaceChance extends Space{
-    private final int prices[] = {-100,-90,-80,-70,-60,-50,-40,-30,30,40,50,60,70,80,90,100};
-    //private final int prices[] = {-500,-400,-300,-200,-100,100,200,300,400,500};
+    private final int[] prices = {-100,-90,-80,-70,-60,-50,-40,-30,30,40,50,60,70,80,90,100};
 
     public SpaceChance(String name, int index) {
         super(name, index);
@@ -13,7 +12,7 @@ public class SpaceChance extends Space{
     }
 
     public void imFeelingLucky(Player player, Game game) {
-        int ret = (int)((Math.random() * 1));
+        int ret = (int)(Math.random() * 1);
         switch (ret) {
             case 0:
                 luckyChangeCash(player);

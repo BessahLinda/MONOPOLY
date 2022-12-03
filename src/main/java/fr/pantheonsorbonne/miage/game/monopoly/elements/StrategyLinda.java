@@ -6,6 +6,14 @@ import java.util.Collections;
 public class  StrategyLinda extends Strategy {
 
    
+    public int calculateBuyLand(Player p, SpaceCity s){
+        int a =0;
+
+        //for(s.getColor().getSpaces())
+        
+        return a;
+
+    }
 
     @Override
     public void buyHouse(Player p) {

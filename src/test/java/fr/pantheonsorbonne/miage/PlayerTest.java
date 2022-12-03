@@ -128,6 +128,10 @@ class PlayerTest {
         p.goOutJail(50  );
         assertEquals(false, p.isInJail());
         assertEquals(p.checkBalance(),1500-50); 
+
+        p.goToJail();
+        p.goOutJail();
+        assertEquals(false, p.isInJail());
     }
 
     @Test
