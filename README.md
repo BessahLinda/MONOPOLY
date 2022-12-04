@@ -1,20 +1,41 @@
 # Règles
 
-Le jeu se joue à deux joueurs et comporte un maitre du jeu joueur.
+Le jeu se joue à au moins deux joueurs et au maximum à six joueurs.
 
 ## Mise en place
 
-Le maitre du jeu est tout le temps X alors que son adversaire est O. Le Maitre du jeu choisit la taille de la grille.
+Chaque joueur se voit attribuer un pion qui est placé sur la case "Départ" et commence la partie en recevant 1500€.  La partie se joue avec une paire de dés à six faces.
 
-## Déroulé de la partie
+## Déroulé d'un tour
+Chaque joueur lance les dés et avance son pion sur la case correspondante. En fonction de la case, il y a alors plusieurs possibilités :
+Case libre : Le terrain/la gare/le service public n’appartient à personne. Le joueur peut, s'il le souhaite, en devenir propriétaire.
 
-Le maitre du jeu commence. Il coche une case, puis transmets le plateau à son adversaire, qui a son tour, coche une case et le renvoie au maitre du jeu.
-Le maitre du jeu vérifie si la partie est terminée. Si c'est le cas, il en informe son adversaire.
+Case occupée:  Si le joueur tombe sur une case occupée, deux cas de figure se présentent :
+Payer le loyer s'il a assez d'argent. 
+Vendre un de ses biens à la banque s'il n'a pas assez d'argent pour payer le loyer.
+
+Case appartenant au joueur : Le joueur tombe sur un terrain, une gare ou un service public qui lui appartient, rien ne se passe.
+
+Case Aller en Prison : Le pion du joueur est placé sur la case Prison.
+
+Case Chance : Le joueur obtient un malus (exemple : payer 2000€ à la banque) ou un bonus (exemple : obtenir 2000€ de la part de la banque, avancer jusqu'à la case Départ) décidé aléatoirement.
+
+Case Départ : Si le joueur passe ou s'arrête sur cette case, il obtient 200€ de la banque.
+Gare : The four railroads/stations (Reading Railroad, Pennsylvania Railroad, B&O Railroad, and Short Line/Kings Cross, Marylebone, Fenchurch St, Liverpool St) are each worth 200. Rent is based on the number of railroads that player owns: 25 for one, 50 for two, 100 for three, and 200 for all four. Each railroad has a mortgage value of 100.
+
+Case Prison : 
+Attendre trois tours en lançant les dés à chaque tour pour essayer de faire un double. Si le joueur fait un double, il sort de prison en utilisant le lancer de dés pour avancer. Si, après les trois tours, il n'a pas fait de double, il doit payer 50€ à la banque et bouger son pion suivant son lancer de dés.
+Payer une amende de 50€ au début du tour suivant. Le joueur peut alors lancer les dés et bouger son pion normalement.
+
+
+À chaque tour, si le joueur possède tous les terrains d'une même couleur, il peut décider de construire une nouvelle maison sur un des terrains. Le joueur peut construire jusqu'à 4 maisons par terrain. La construction doit se faire uniformément sur les terrains d'une même couleur : il n'est pas possible de construire une deuxième maison sur un terrain bleu si les autres terrains bleus n'ont pas tous une maison.
+
+Chaque maison ajoutée sur le terrain augmente sa valeur immobilière et donc le prix du loyer pour les autres joueurs. Le fait de construire une maison ne termine pas le tour du joueur.
 
 
 ## Fin de la partie
 
-La partie est terminée lorsqu'aucun des joueurs ne peut plus cocher de cases (égalité ou tie) ou lorsqu'une ligne, colonne ou verticale contient les marques d'un seul joueur, qui est déclaré vainqueur.
+La partie s'arrête lorsque le dernier joueur est en situation de monopole, c'est-à -dire que tous les autres joueurs ont fait faillite.
 
 # Détail des classes principales
 
