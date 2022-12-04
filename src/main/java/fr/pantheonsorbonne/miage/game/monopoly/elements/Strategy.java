@@ -9,28 +9,31 @@ public class Strategy implements AIStrategy{
     public void buyHouse(Player p) {
         if(!everyCityHas2House(p)){
             for(int i =0; i<p.getColorsetProperty().size();++i){
-                while(p.checkBalance()>400 &&  p.getColorsetProperty().get(i).getNbHouse() < 2 && p.getColorsetProperty().get(i).getColor().getValue()<6){
+                while(p.checkBalance()>500 &&  p.getColorsetProperty().get(i).getNbHouse() < 2 && p.getColorsetProperty().get(i).getColor().getValue()<6){
+                    
                     p.getColorsetProperty().get(i).buildHouse(1);
-                    p.withdrawMoney(p.getColorsetProperty().get(i).getColor().getHousePrice());  
+                    p.withdrawMoney(p.getColorsetProperty().get(i).getColor().getHousePrice()); 
+                     
                 }
             }
         }
-        while(p.checkBalance()>400 && !allCitiesHave4Houses(p)){
+        while(p.checkBalance()>500 && !allCitiesHave4Houses(p)){ 
+            System.out.println(p.getName() +"pppppppppppppppppppppppppppppppppp");
             for(int i =0; i<p.getColorsetProperty().size();++i){
-                if(ownOnlyBadColors(p) && p.getColorsetProperty().get(i).getNbHouse() < 5){
+                if(ownOnlyBadColors(p)){
                     buyTwoHouses(p, i);
 
                 }else{
                     if(p.getColorsetProperty().get(i).getColor().getValue()>6 && everyCityHas4House(p)){
                         buyTwoHouses(p,i);
                     }else if(p.getColorsetProperty().get(i).getNbHouse() < 2 && p.getColorsetProperty().get(i).getColor().getValue()<6){
-                        while(p.checkBalance()>400 && p.getColorsetProperty().get(i).getNbHouse() < 2 ){
+                        while(p.checkBalance()>500 && p.getColorsetProperty().get(i).getNbHouse() < 2 ){
                             p.getColorsetProperty().get(i).buildHouse(1);
                             p.withdrawMoney(p.getColorsetProperty().get(i).getColor().getHousePrice());
-                            
+                           
                         }
                     }
-                    else if(p.getColorsetProperty().get(i).getNbHouse() < 5 && p.getColorsetProperty().get(i).getColor().getValue()<6){
+                    else if(p.getColorsetProperty().get(i).getColor().getValue()<6){
                         buyTwoHouses(p,i);
                     }                    
                 }
@@ -42,14 +45,11 @@ public class Strategy implements AIStrategy{
     public void buyTwoHouses(Player p,int i){
         int cpt=0;
 
-        while(p.checkBalance()>400 && cpt < 2){
-            if (p.getColorsetProperty().get(i).getNbHouse() == 4){
-                break;
-            }
+        while(p.checkBalance()>500 && cpt < 2 && p.getColorsetProperty().get(i).getNbHouse() < 4){
+
             p.getColorsetProperty().get(i).buildHouse(1);
             p.withdrawMoney(p.getColorsetProperty().get(i).getColor().getHousePrice());
             ++cpt;
-            
         }
     }
 
@@ -153,7 +153,7 @@ public class Strategy implements AIStrategy{
         if(p.getAsset() < payment){
             p.getProperty().clear();
             p.getColorsetProperty().clear();
-            p.withdrawMoney(100000) ;
+            p.withdrawMoney(10000) ;
             
             return;
         }    
@@ -214,4 +214,5 @@ public class Strategy implements AIStrategy{
         p.withdrawMoney(payment);
         
     }
+    
 }
