@@ -21,6 +21,7 @@ Case Aller en Prison : Le pion du joueur est placé sur la case Prison.
 Case Chance : Le joueur obtient un malus (exemple : payer 2000€ à la banque) ou un bonus (exemple : obtenir 2000€ de la part de la banque, avancer jusqu'à la case Départ) décidé aléatoirement.
 
 Case Départ : Si le joueur passe ou s'arrête sur cette case, il obtient 200€ de la banque.
+
 Gare : The four railroads/stations (Reading Railroad, Pennsylvania Railroad, B&O Railroad, and Short Line/Kings Cross, Marylebone, Fenchurch St, Liverpool St) are each worth 200. Rent is based on the number of railroads that player owns: 25 for one, 50 for two, 100 for three, and 200 for all four. Each railroad has a mortgage value of 100.
 
 Case Prison : 
