@@ -29,7 +29,7 @@ Attendre trois tours en lançant les dés à chaque tour pour essayer de faire u
 Payer une amende de 50€ au début du tour suivant. Le joueur peut alors lancer les dés et bouger son pion normalement.
 
 
-À chaque tour, si le joueur possède tous les terrains d'une même couleur, il peut décider de construire une nouvelle maison sur un des terrains. Le joueur peut construire jusqu'à 4 maisons par terrain. La construction doit se faire uniformément sur les terrains d'une même couleur : il n'est pas possible de construire une deuxième maison sur un terrain bleu si les autres terrains bleus n'ont pas tous une maison.
+À chaque tour, si le joueur possède tous les terrains d'une même couleur, il peut décider de construire des maisons sur ses terrains. Le joueur peut construire jusqu'à 4 maisons par terrain. 
 
 Chaque maison ajoutée sur le terrain augmente sa valeur immobilière et donc le prix du loyer pour les autres joueurs. Le fait de construire une maison ne termine pas le tour du joueur.
 
