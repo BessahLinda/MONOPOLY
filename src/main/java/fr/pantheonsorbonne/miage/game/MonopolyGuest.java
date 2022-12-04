@@ -3,23 +3,16 @@ package fr.pantheonsorbonne.miage.game;
 import fr.pantheonsorbonne.miage.Facade;
 import fr.pantheonsorbonne.miage.PlayerFacade;
 import fr.pantheonsorbonne.miage.game.monopoly.elements.Board;
-import fr.pantheonsorbonne.miage.game.monopoly.elements.Dice;
 import fr.pantheonsorbonne.miage.game.monopoly.elements.Player;
-import fr.pantheonsorbonne.miage.game.monopoly.elements.Space;
 import fr.pantheonsorbonne.miage.game.monopoly.elements.SpaceToBuy;
 import fr.pantheonsorbonne.miage.game.monopoly.elements.Strategy;
 import fr.pantheonsorbonne.miage.model.Game;
 import fr.pantheonsorbonne.miage.model.GameCommand;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
 import java.util.Random;
-import java.util.Set;
-
-import org.checkerframework.common.returnsreceiver.qual.This;
 
 /**
- * this is an example for the Guest in the tictactoe game
+ * this is an example for the Guest in the monopoly game
  */
 public class MonopolyGuest {
     static final String playerId = "Player-" + new Random().nextInt();

@@ -53,7 +53,7 @@ public class Color {
         return this.colorMonopolist != null;
     }
 
-    public ArrayList getSpaces(){
+    public List<SpaceCity> getSpaces(){
         return this.spaces;
     }
 
@@ -72,8 +72,4 @@ public class Color {
     public int getValue(){
         return this.color.value;
     }
-
-
-   
-
 }
