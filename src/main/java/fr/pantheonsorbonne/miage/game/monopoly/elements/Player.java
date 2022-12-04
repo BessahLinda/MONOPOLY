@@ -18,8 +18,8 @@ public class Player {
     public Player(String name, Strategy s){
         this.name = name;
         this.strategy = s;
-        
     }
+
 
     public void advance(int diceResult){
         if ((this.position + diceResult) >= 40){
@@ -231,6 +231,4 @@ public class Player {
         }
         System.out.println(string);
     }
-
-
 }

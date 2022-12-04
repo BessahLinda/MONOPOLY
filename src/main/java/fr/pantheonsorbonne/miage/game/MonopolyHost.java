@@ -20,14 +20,16 @@ package fr.pantheonsorbonne.miage.game;
 import fr.pantheonsorbonne.miage.Facade;
 import fr.pantheonsorbonne.miage.HostFacade;
 import fr.pantheonsorbonne.miage.PlayerFacade;
+import fr.pantheonsorbonne.miage.game.monopoly.elements.Board;
 import fr.pantheonsorbonne.miage.game.monopoly.elements.Dice;
 import fr.pantheonsorbonne.miage.game.monopoly.elements.Player;
+import fr.pantheonsorbonne.miage.game.monopoly.elements.PlayerNetwork;
 import fr.pantheonsorbonne.miage.game.monopoly.elements.Space;
 import fr.pantheonsorbonne.miage.game.monopoly.elements.SpaceChance;
 import fr.pantheonsorbonne.miage.game.monopoly.elements.SpaceJail;
 import fr.pantheonsorbonne.miage.game.monopoly.elements.SpaceTax;
 import fr.pantheonsorbonne.miage.game.monopoly.elements.SpaceToBuy;
-import fr.pantheonsorbonne.miage.game.monopoly.elements.Strategy;
+import fr.pantheonsorbonne.miage.game.monopoly.elements.StrategyNetwork;
 import fr.pantheonsorbonne.miage.model.Game;
 import fr.pantheonsorbonne.miage.model.GameCommand;
 
@@ -35,14 +37,13 @@ import fr.pantheonsorbonne.miage.model.GameCommand;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Random;
 import java.util.Set;
 
 /**
  * This is an example for the host in the tictactoe game
  */
 public final class MonopolyHost extends GameLogic{
-    private static final int PLAYER_COUNT = 2;
+    private static final int PLAYER_COUNT = 3;
     private final HostFacade hostFacade;
     private final Set<String> players;
     private final Game monopoly;
@@ -56,36 +57,55 @@ public final class MonopolyHost extends GameLogic{
 
 
     public static void main(String[] args) throws Exception{
-       
+        
         HostFacade hostFacade = Facade.getFacade();
         hostFacade.waitReady();
-
-        hostFacade.createNewPlayer("Host Player");
-
         Game monopoly = hostFacade.createNewGame("monopoly");
         hostFacade.waitForExtraPlayerCount(PLAYER_COUNT);
-    
+        
+        hostFacade.createNewPlayer("Host Player");
+        System.out.println();
         MonopolyHost host = new MonopolyHost(hostFacade, monopoly.getPlayers(), monopoly);
         host.play();
     }
 
     public void play() {
-        List<Player> players = new ArrayList<>(); 
+        List<Player> playersNet = new ArrayList<>(); 
         Iterator names = this.players.iterator();
-        while(names.hasNext()){
-            players.add(new Player((String)names.next(), new Strategy()));
-        }
-        setBoardPlayer(players);
-        System.out.println("New round:");
+        setBoardPlayerNetwork();
+        do{
+            String a = (String)names.next();
+            Player p = new PlayerNetwork(a, new StrategyNetwork(),hostFacade,monopoly);
+            playersNet.add(p);
+        }while(names.hasNext());
+        hostFacade.sendGameCommandToAll(monopoly, new GameCommand("NOTICE","New round:"));
         
-        playRound();
+        do{
+            for(int i = 0; i<playersNet.size();++i){ 
+
+                playersNet.get(i).buyHouse();
+                
+                if(playersNet.get(i).isInJail()){
+                    this.checkPlayerInJail(playersNet.get(i));
+                }
+                else{
+                    this.makeMove(playersNet.get(i)); 
+                }
+                if(playersNet.get(i).isBankrupt()){
+                    System.out.println(playersNet.get(i).getName()+" doesn't have enough money to pay. You are retired from the game");     
+                    playersNet.remove(playersNet.get(i));
+                    break;
+                }
+            }
+        }while (playersNet.size()>1);
+        System.out.println("$$$$$$$$$$ player "+ playersNet.get(0).getName() + " won the game $$$$$$$$$$$");
         System.exit(0);
     }
 
     @Override
     public void makeMove(Player player) {
         player.advance(d.rollDices());
-        hostFacade.sendGameCommandToPlayer(monopoly, player.getName(),new GameCommand("BUY_CELL", Integer.toString(player.getPosition())));
+        hostFacade.sendGameCommandToPlayer(monopoly, player.getName(),new GameCommand("MOVE_PAWN_TO", Integer.toString(player.getPosition())));
         Space destination = board.get(player.getPosition());
         String notif = player.getName() +" has arrived at " + destination.getName().toUpperCase();
         hostFacade.sendGameCommandToAll(monopoly, new GameCommand("NOTICE",notif));
@@ -111,7 +131,8 @@ public final class MonopolyHost extends GameLogic{
         SpaceToBuy space = (SpaceToBuy) destination;
         
         if (!space.isSpaceOwned()) {
-            player.buyLand(space);           
+            player.buyLand(space);    
+            hostFacade.sendGameCommandToPlayer(monopoly, player.getName(),new GameCommand("BUY_CELL", Integer.toString(player.getPosition())));       
         } else if (space.getOwner()!=player){
             player.payRent(space);
             System.out.println(player.getName() + " paid " + space.getCurrentRentPrice() + " for " + space.getOwner().getName());

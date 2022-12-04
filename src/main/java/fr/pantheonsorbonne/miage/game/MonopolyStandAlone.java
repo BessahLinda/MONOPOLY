@@ -33,6 +33,7 @@ public class MonopolyStandAlone extends GameLogic {
                 else{
                     game.makeMove(players.get(i)); 
                 }
+                
                 if(players.get(i).isBankrupt()){
                     System.out.println(players.get(i).getName()+" doesn't have enough money to pay. You are retired from the game");     
                     players.remove(players.get(i));
@@ -54,7 +55,6 @@ public class MonopolyStandAlone extends GameLogic {
 
         if (destination instanceof SpaceJail) {
             isOnSpaceJail(destination, player);
-
         } else if (destination instanceof SpaceTax) {
             isOnSpaceTax(destination, player);
 

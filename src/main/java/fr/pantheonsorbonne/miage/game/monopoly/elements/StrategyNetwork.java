@@ -3,7 +3,7 @@ package fr.pantheonsorbonne.miage.game.monopoly.elements;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class Strategy implements AIStrategy{
+public class StrategyNetwork extends Strategy{
 
     @Override
     public void buyHouse(Player p) {
@@ -152,9 +152,9 @@ public class Strategy implements AIStrategy{
         if(p.getAsset() < payment){
             p.getProperty().clear();
             p.getColorsetProperty().clear();
-            p.withdrawMoney(100000) ;
-            
+            p.withdrawMoney(100000);
             return;
+            hostFacade.sendGameCommandToPlayer(monopoly, this.getName(),new GameCommand("GAME_OVER", "LOSE"));
         }    
 
         ArrayList<SpaceToBuy> priority = arrangePriority(p);
@@ -210,7 +210,7 @@ public class Strategy implements AIStrategy{
             }
         }
         p.setRentOfProperties();
-        p.withdrawMoney(payment);
-        
+        // p.withdrawMoney(payment);
+        hostFacade.sendGameCommandToPlayer(monopoly, this.getName(),new GameCommand("SEND_MONEY_TO", String.valueOf(payment)+String.valueOf(s.getOwner())));   
     }
 }

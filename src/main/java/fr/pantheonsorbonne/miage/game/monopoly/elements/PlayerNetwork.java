@@ -3,22 +3,29 @@ package fr.pantheonsorbonne.miage.game.monopoly.elements;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import fr.pantheonsorbonne.miage.HostFacade;
+import fr.pantheonsorbonne.miage.model.Game;
+import fr.pantheonsorbonne.miage.model.GameCommand;
 
-public class Player {
 
-    protected Strategy strategy;
-    private final String name;
+public class PlayerNetwork extends Player {
+
+    protected StrategyNetwork strategy;
+    private String name;
     private int money = 0; 
     private int position = 0;   
     private int prisonDuration; 
     private boolean isInJail = false;
     private ArrayList<SpaceToBuy> property = new ArrayList<>();
     private ArrayList<SpaceCity> colorsetProperty = new ArrayList<>();
+    private HostFacade hostFacade;
+    private Game monopoly;
 
-    public Player(String name, Strategy s){
-        this.name = name;
-        this.strategy = s;
-        
+    public PlayerNetwork(String name, StrategyNetwork s,HostFacade hostFacade,fr.pantheonsorbonne.miage.model.Game monopoly){
+   
+        super(name, s);
+        this.hostFacade = hostFacade;
+        this.monopoly = monopoly;
     }
 
     public void advance(int diceResult){
@@ -41,7 +48,7 @@ public class Player {
     }
 
     public boolean canBuyHouse(){
-        return super.canBuyHouse()
+        return super.canBuyHouse();
     }
 
     public void buyHouse(){
@@ -67,6 +74,7 @@ public class Player {
             withdrawMoney(s.getPrice());
             s.setOwner(this);
             property.add(s);
+            hostFacade.sendGameCommandToPlayer(monopoly, this.getName(),new GameCommand("BUY_CELL", Integer.toString(this.getPosition())));
             System.out.println(this.getName()+" bought land at "+ s.getName());
             if(s instanceof SpaceCity){
                SpaceCity sc = (SpaceCity)s;
@@ -106,10 +114,13 @@ public class Player {
         int rent = s.getCurrentRentPrice();
         if(isAffordable(rent)){
             withdrawMoney(rent);
-            hostFacade.sendGameCommandToPlayer(monopoly, this.getName(),new GameCommand("SEND_MONEY_TO", -rent, s.getOwner));
+            hostFacade.sendGameCommandToPlayer(monopoly, this.getName(),new GameCommand("SEND_MONEY_TO", String.valueOf(rent)+String.valueOf(s.getOwner())));
             s.getOwner().earnMoney(rent);
         }else{
             sellProperty(rent);
+            hostFacade.sendGameCommandToPlayer(monopoly, this.getName(),new GameCommand("SELL_PROPERTY", String.valueOf(rent)));
+            s.getOwner().earnMoney(rent);
+            hostFacade.sendGameCommandToPlayer(monopoly, this.getName(),new GameCommand("SEND_MONEY_TO", String.valueOf(rent)+String.valueOf(s.getOwner())));
         }
     }
 
@@ -117,30 +128,32 @@ public class Player {
         int tax = s.getTax();
         if(isAffordable(tax)){
             withdrawMoney(tax);
-            hostFacade.sendGameCommandToPlayer(monopoly, this.getName(),new GameCommand("SEND_MONEY", -tax));
+            hostFacade.sendGameCommandToPlayer(monopoly, this.getName(),new GameCommand("SEND_MONEY", String.valueOf(-tax)));
         }else{
             sellProperty(tax);
-            hostFacade.sendGameCommandToPlayer(monopoly, this.getName(),new GameCommand("SELL_PROPERTY", tax));
+            hostFacade.sendGameCommandToPlayer(monopoly, this.getName(),new GameCommand("SELL_PROPERTY", String.valueOf(tax)));
+            hostFacade.sendGameCommandToPlayer(monopoly, this.getName(),new GameCommand("SEND_MONEY", String.valueOf(-tax)));
         }
     }
 
     public void payChance(int rndPrice) {
         if(isAffordable(rndPrice)){
             withdrawMoney(rndPrice);
-            hostFacade.sendGameCommandToPlayer(monopoly, this.getName(),new GameCommand("SEND_MONEY", rndPrice));
+            hostFacade.sendGameCommandToPlayer(monopoly, this.getName(),new GameCommand("SEND_MONEY", String.valueOf(rndPrice)));
         }else{
             sellProperty(rndPrice);
-            hostFacade.sendGameCommandToPlayer(monopoly, this.getName(),new GameCommand("SELL_PROPERTY", rndPrice));
+            hostFacade.sendGameCommandToPlayer(monopoly, this.getName(),new GameCommand("SELL_PROPERTY", String.valueOf(rndPrice)));
+            hostFacade.sendGameCommandToPlayer(monopoly, this.getName(),new GameCommand("SEND_MONEY", String.valueOf(rndPrice)));
         }
 	}
 
     
     public void setRentOfProperties(){
-        super.setRentOfProperties;
+        super.setRentOfProperties();
     }
 
     public void sellProperty(int payment) {  
-        this.strategy.sellProperty(this, payment);
+        strategy.sellProperty(this, payment);
     }
 
     public void earnMoney(int m) {
@@ -149,10 +162,6 @@ public class Player {
 
     public void withdrawMoney(int amount){
         money = money - amount;
-    }
-
-    public String getName() {
-        return this.name;
     }
 
     public int getPosition(){
