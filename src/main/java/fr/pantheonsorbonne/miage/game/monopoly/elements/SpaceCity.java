@@ -35,6 +35,7 @@ public class SpaceCity extends SpaceToBuy implements Comparable{
 
     public void buildHouse(int nbHouse){
         this.nbHouse += nbHouse;
+        setCurrentRentPrice();
     }
 
     public void deconstructHouse(){
