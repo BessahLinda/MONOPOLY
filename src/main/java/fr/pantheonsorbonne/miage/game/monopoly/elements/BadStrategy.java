@@ -1,7 +1,7 @@
 package fr.pantheonsorbonne.miage.game.monopoly.elements;
 
 
-public class BadStrategy extends Strategy {
+public class BadStrategy implements AIStrategy {
 
     @Override
     public void buyHouse(Player p) {

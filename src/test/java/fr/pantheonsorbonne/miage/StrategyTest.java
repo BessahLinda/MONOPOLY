@@ -8,7 +8,7 @@ import fr.pantheonsorbonne.miage.game.monopoly.elements.SpaceCity;
 import fr.pantheonsorbonne.miage.game.monopoly.elements.SpacePublicService;
 import fr.pantheonsorbonne.miage.game.monopoly.elements.SpaceStation;
 import fr.pantheonsorbonne.miage.game.monopoly.elements.SpaceToBuy;
-import fr.pantheonsorbonne.miage.game.monopoly.elements.StrategyLinda;
+import fr.pantheonsorbonne.miage.game.monopoly.elements.Strategy;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -20,7 +20,7 @@ class StrategyTest {
 
     @Test
     public void testBuydHouse(){
-        Player p2 = new Player("Yewon", new StrategyLinda());
+        Player p2 = new Player("Yewon", new Strategy());
         Color bleuClair = new Color("bleuClair",50);
         SpaceCity s = new SpaceCity("Rue de Vaugirard",6,100,bleuClair,new int[] {6,30,90,270,400,550});
         SpaceCity s1 =new SpaceCity("Rue de Courcelles",8,100,bleuClair, new int[] {6,30,90,270,400,550});
@@ -35,7 +35,7 @@ class StrategyTest {
     
     @Test
     public void testBuydHouse2(){
-        Player p2 = new Player("Yewon", new StrategyLinda());
+        Player p2 = new Player("Yewon", new Strategy());
         Color orange = new Color("orange",100);
         SpaceCity s = new SpaceCity("Avenue de Mozart",16,180,orange, new int[] {14,70,200,550,750,950});
         SpaceCity s1 = new SpaceCity("Boulevard Saint-Michel",18,180,orange, new int[] {14,70,200,550,750,950});
@@ -57,7 +57,7 @@ class StrategyTest {
     
     @Test
     public void testBuydHouse3(){
-         Player p2 = new Player("Yewon", new StrategyLinda());
+         Player p2 = new Player("Yewon", new Strategy());
         Color orange = new Color("orange",100);
         Color rose = new Color("rose", 100);
         Color jaune = new Color("jaune",150);
@@ -88,7 +88,7 @@ class StrategyTest {
     @Test
     public void setColorMonopolist(){
 
-        Player p = new Player("Linda", new StrategyLinda());
+        Player p = new Player("Linda", new Strategy());
 
 
         Color marron = new Color("marron",50);
@@ -145,7 +145,7 @@ class StrategyTest {
     @Test
     public void testBuyHouse4(){
 
-        Player p = new Player("Linda", new StrategyLinda());
+        Player p = new Player("Linda", new Strategy());
         Color marron = new Color("marron",50);
         Color orange = new Color("orange",100);
         SpaceCity s1 = new SpaceCity("Boulevard de Bellvile",1,60,marron, new int[] {2,10,30,90,160,250});
@@ -180,7 +180,7 @@ class StrategyTest {
 
     @Test
     public void testArrangePriority(){
-        Player p2 = new Player("Yewon", new StrategyLinda());
+        Player p2 = new Player("Yewon", new Strategy());
         Color orange = new Color("orange",100);
         Color rose = new Color("rose", 100);
         Color jaune = new Color("jaune",150);
@@ -208,7 +208,7 @@ class StrategyTest {
 
     @Test
     public void testBuydHouse5(){
-        Player p2 = new Player("Yewon", new StrategyLinda());
+        Player p2 = new Player("Yewon", new Strategy());
         Color orange = new Color("orange",100);
         Color rose = new Color("rose", 100);
 
@@ -290,7 +290,7 @@ class StrategyTest {
 
     @Test
     public void testSellProperty(){  //check if it's selling non coloset space first
-        Player p2 = new Player("Yewon", new StrategyLinda());
+        Player p2 = new Player("Yewon", new Strategy());
         Color orange = new Color("orange",100);
         Color rose = new Color("rose", 100);
         Color jaune = new Color("jaune",150);
@@ -317,7 +317,7 @@ class StrategyTest {
 
     @Test
     public void testSellProperty2(){  //check if it keeps colorset-land and only sells maison 
-        Player p2 = new Player("Yewon", new StrategyLinda());
+        Player p2 = new Player("Yewon", new Strategy());
         Color orange = new Color("orange",100);
         Color rose = new Color("rose", 100);
         Color jaune = new Color("jaune",150);
@@ -350,7 +350,7 @@ class StrategyTest {
     
     @Test
     public void testSellProperty3(){
-        Player p2 = new Player("Yewon", new StrategyLinda());
+        Player p2 = new Player("Yewon", new Strategy());
         Color orange = new Color("orange",100);
         Color rose = new Color("rose", 100);
         Color jaune = new Color("jaune",150);

@@ -1,112 +1,120 @@
-// /*
-//  * Licensed to the Apache Software Foundation (ASF) under one or more
-//  * contributor license agreements.  See the NOTICE file distributed with
-//  * this work for additional information regarding copyright ownership.
-//  * The ASF licenses this file to You under the Apache License, Version 2.0
-//  * (the "License"); you may not use this file except in compliance with
-//  * the License.  You may obtain a copy of the License at
-//  *
-//  *      http://www.apache.org/licenses/LICENSE-2.0
-//  *
-//  * Unless required by applicable law or agreed to in writing, software
-//  * distributed under the License is distributed on an "AS IS" BASIS,
-//  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-//  * See the License for the specific language governing permissions and
-//  * limitations under the License.
-//  */
-// package fr.pantheonsorbonne.miage.game;
+/*
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package fr.pantheonsorbonne.miage.game;
 
 
-// import fr.pantheonsorbonne.miage.Facade;
-// import fr.pantheonsorbonne.miage.HostFacade;
-// import fr.pantheonsorbonne.miage.PlayerFacade;
+import fr.pantheonsorbonne.miage.Facade;
+import fr.pantheonsorbonne.miage.HostFacade;
+import fr.pantheonsorbonne.miage.PlayerFacade;
+import fr.pantheonsorbonne.miage.game.monopoly.elements.Dice;
+import fr.pantheonsorbonne.miage.game.monopoly.elements.Player;
+import fr.pantheonsorbonne.miage.game.monopoly.elements.Space;
+import fr.pantheonsorbonne.miage.game.monopoly.elements.SpaceChance;
+import fr.pantheonsorbonne.miage.game.monopoly.elements.SpaceJail;
+import fr.pantheonsorbonne.miage.game.monopoly.elements.SpaceTax;
+import fr.pantheonsorbonne.miage.game.monopoly.elements.SpaceToBuy;
+import fr.pantheonsorbonne.miage.game.monopoly.elements.Strategy;
+import fr.pantheonsorbonne.miage.model.Game;
+import fr.pantheonsorbonne.miage.model.GameCommand;
 
-// import fr.pantheonsorbonne.miage.model.Game;
-// import fr.pantheonsorbonne.miage.model.GameCommand;
 
-// import java.util.Random;
-// import java.util.Set;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Random;
+import java.util.Set;
 
-// /**
-//  * This is an example for the host in the tictactoe game
-//  */
-// public final class MonopolyHost {
-//     private static final int PLAYER_COUNT = 4;
-//     private final HostFacade hostFacade;
-//     private final Set<String> players;
-//     private final Game monopoly;
+/**
+ * This is an example for the host in the tictactoe game
+ */
+public final class MonopolyHost extends GameLogic{
+    private static final int PLAYER_COUNT = 2;
+    private final HostFacade hostFacade;
+    private final Set<String> players;
+    private final Game monopoly;
+    private static Dice d = new Dice();
 
-//     private MonopolyHost(HostFacade hostFacade, Set<String> players, fr.pantheonsorbonne.miage.model.Game monopoly) {
-//         this.hostFacade = hostFacade;
-//         this.players = players;
-//         this.monopoly = monopoly;
-//     }
+    private MonopolyHost(HostFacade hostFacade,Set<String> set, fr.pantheonsorbonne.miage.model.Game monopoly) {
+        this.hostFacade = hostFacade;
+        this.players = set;
+        this.monopoly = monopoly;
+    }
 
-//     public static void main(String[] args) throws Exception, FullBoardException {
+    public static void main(String[] args) throws Exception{
        
-//         HostFacade hostFacade = Facade.getFacade();
-//         hostFacade.waitReady();
+        HostFacade hostFacade = Facade.getFacade();
+        hostFacade.waitReady();
 
-//         hostFacade.createNewPlayer("Nicolas" + new Random().nextInt());
+        hostFacade.createNewPlayer("Host Player");
 
-//         //play the game until the program quits
-//     //     while (true) {
-//     //         Game game = hostFacade.createNewGame("monopoly");
-//     //         hostFacade.waitForExtraPlayerCount(2);
-//     //         playTheGame(playerFacade, game);
-//     //     }
-//     // }
+        Game monopoly = hostFacade.createNewGame("monopoly");
+        hostFacade.waitForExtraPlayerCount(PLAYER_COUNT);
+    
+        MonopolyHost host = new MonopolyHost(hostFacade, monopoly.getPlayers(), monopoly);
+        host.play();
+    }
 
-//     // private static void playTheGame(PlayerFacade playerFacade, Game game) throws FullBoardException {
-//     //     //create a new board
-//     //     TicTacToe board = new TicTacToeImpl(6);
-//     //     //I'll be X, the other player will be O
-//     //     char myMark = 'X';
-//     //     //send its mark to the other player
-//     //     playerFacade.sendGameCommandToAll(game, new GameCommand("youare", "O"));
+    public void play() {
+        List<Player> players = new ArrayList<>(); 
+        Iterator names = this.players.iterator();
+        while(names.hasNext()){
+            players.add(new Player((String)names.next(), new Strategy()));
+        }
+        setBoardPlayer(players);
+        System.out.println("New round:");
+        
+        playRound();
+        System.exit(0);
+    }
 
-//     //     // loop until the game is other
-//     //     while (true) {
+    @Override
+    public void makeMove(Player player) {
+        // TODO Auto-generated method stub
+        
+    }
 
-//     //         //check if the game is over
-//     //         if (handleGameOver(playerFacade, game, board, myMark))
-//     //             break;
+    @Override
+    protected void isOnSpaceCity(Space destination, Player player) {
+        // TODO Auto-generated method stub
+        
+    }
 
-//     //         //if the game is not over, use my mark on the board
-//     //         board.addRand(myMark);
-//     //         System.out.println("-----------------------\n"+board);
-//     //         //send the board to the other player
-//     //         playerFacade.sendGameCommandToAll(game, new GameCommand("board", board.toFlatString()));
+    @Override
+    protected void isOnSpaceJail(Space destination, Player player) {
+        // TODO Auto-generated method stub
+        
+    }
 
-//     //         //get the other player's move and retreive the board
-//     //         GameCommand command = playerFacade.receiveGameCommand(game);
-//     //         board = new TicTacToeImpl(command.body());
-//     //     }
-//     // }
+    @Override
+    protected void isOnSpaceTax(Space destination, Player player) {
+        // TODO Auto-generated method stub
+        
+    }
 
-//     // private static boolean handleGameOver(PlayerFacade playerFacade, Game game, TicTacToe board, char myMark) {
-//     //     //check if the game is over
-//     //     if (board.getWinner() == myMark) {
-//     //         //we've won :-)
-//     //         playerFacade.sendGameCommandToAll(game, new GameCommand("gameover", "defeat"));
-//     //         playerFacade.sendGameCommandToAll(game, new GameCommand("board", board.toFlatString()));
-//     //         System.out.println("victory!\n" + board);
-//     //         return true;
-//     //     } else if (board.getWinner() == 'O') {
-//     //         //we've lost :-(
-//     //         playerFacade.sendGameCommandToAll(game, new GameCommand("gameover", "victory"));
-//     //         playerFacade.sendGameCommandToAll(game, new GameCommand("board", board.toFlatString()));
-//     //         System.out.println("defeat!\n" + board);
-//     //         return true;
-//     //     } else if (board.isFull()) {
-//     //         //it's a tie :-/
-//     //         playerFacade.sendGameCommandToAll(game, new GameCommand("gameover", "tie"));
-//     //         playerFacade.sendGameCommandToAll(game, new GameCommand("board", board.toFlatString()));
-//     //         System.out.println("tie!\n" + board);
-//     //         return true;
-//     //     }
-//     //     //the game is not over
-//     //     return false;
-//     // }
+    @Override
+    protected void isOnSpaceChance(Space destination, Player player) {
+        // TODO Auto-generated method stub
+        
+    }
 
-// }
+    @Override
+    protected void checkPlayerInJail(Player p) {
+        // TODO Auto-generated method stub
+        
+    }
+
+}

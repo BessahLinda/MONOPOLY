@@ -4,76 +4,57 @@ import fr.pantheonsorbonne.miage.Facade;
 import fr.pantheonsorbonne.miage.PlayerFacade;
 import fr.pantheonsorbonne.miage.game.monopoly.elements.Dice;
 import fr.pantheonsorbonne.miage.game.monopoly.elements.Player;
-import fr.pantheonsorbonne.miage.game.monopoly.elements.StrategyLinda;
+import fr.pantheonsorbonne.miage.game.monopoly.elements.Strategy;
 import fr.pantheonsorbonne.miage.model.Game;
 import fr.pantheonsorbonne.miage.model.GameCommand;
 
 import java.util.Random;
+import java.util.Set;
+
+import org.checkerframework.common.returnsreceiver.qual.This;
 
 /**
  * this is an example for the Guest in the tictactoe game
  */
 public class MonopolyGuest {
+    static final String playerId = "Player-" + new Random().nextInt();
+    static final PlayerFacade playerFacade = Facade.getFacade();
+    static Player p;
+    static Game monopoly;
     public static void main(String[] args) throws Exception {
-        PlayerFacade facade = Facade.getFacade();
-        facade.waitReady();
-        //set our palyer name
-        final String playerName="Yewon - " + new Random().nextInt();
-        final String playerName1="Linda - " + new Random().nextInt();
-        Player p1 = new Player(playerName, new StrategyLinda());
-        Player p2 = new Player(playerName1, new StrategyLinda());
-        facade.createNewPlayer(playerName);
-        facade.createNewPlayer(playerName1);
-        System.out.println("I am: "+ playerName);
-        //wait until we are able to join a new game
-        Game currentGame = facade.autoJoinGame("monopoly-room-1");
-
-        //get our mark
-        
-        // if (!command.name().equals("SEND_MONEY")) {
-        //     throw new RuntimeException();
-        // }
-        // System.out.println(command.body()); // directory 
-        // System.exit(0);
+        playerFacade.waitReady();
+        playerFacade.createNewPlayer(playerId);
+        p = new Player(playerId, new Strategy());
+        monopoly = playerFacade.autoJoinGame("monopoly");
 
         gameloop:  // pour finir loop faut decalarer 
         for(;;){
-            GameCommand command = facade.receiveGameCommand(currentGame); //blocking everything till it gets command
+            GameCommand command = playerFacade.receiveGameCommand(monopoly); //blocking everything till it gets command
             switch (command.name()) { //cd
                 case "MOVE_PAWN_TO": // index
-                    p1.advance(Integer.parseInt(command.body()));
-                    System.out.println(p1.getName()+"is arrived to" + p1.getPosition());
+                    p.advance(Integer.parseInt(command.body())-p.getPosition());
+                    System.out.println(p.getName()+" has arrived to " + p.getPosition());
                     break;
-                case "BUY_CELL":  // index
-                    // player.buy_cell(params)
-                    // player.makeDecision(action, params)
-                case "SELL_CELL": 
+                case "BUY_CELL":
+                    p.buyLand(Integer.parseInt(command.body()));
+                case "Sell_Propery":
+                    p.sellProperty();
                     break;
                 case "BUY_HOUSE": 
-                    p1.buyHouse();
+                    p.buildHouse();
                     break;
-                case "SELL_HOUSE": // index
+                case "SEND_MONEY_TO": // envoyer de l'argent à t
+                    p.withdrawMoney(Integer.parseInt(command.body()));
                     break;
-                case "SEND_MONEY_TO": // cashAmount, playerName
-                    p1.earnMoney(Integer.parseInt(command.body()));
-                    // facade.sendGameCommandToPlayer(currentGame, playerName, new GameCommand("SEND_MONEY", cashAmount));
+                case "SEND_MONEY": // player de guest gagner de l'agent (-100, player)
+                    p.earnMoney(Integer.parseInt(command.body()));
+                    System.out.println(p.getName()+" earns" + p.checkBalance());
                     break;
-                case "SEND_MONEY": // cashAmount
-                    p1.earnMoney(Integer.parseInt(command.body()));
-                    System.out.println(p1.getName()+"earns" + p1.checkBalance());
-                    break;
-
                 case "GAME_OVER":
-                    System.out.println("★★★★★★★★ player won the game ★★★★★★★");
+                    System.out.println("$$$$$$$$$$$$$ player won the game $$$$$$$$$$$$$$");
                     break gameloop;
             }
-
         }    
-        
-    
-
-       }
-
 }
 
 

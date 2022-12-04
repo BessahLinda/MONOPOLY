@@ -8,7 +8,7 @@ public class Player {
 
     protected Strategy strategy;
     private final String name;
-    private int money = 1500; 
+    private int money = 0; 
     private int position = 0;   
     private int prisonDuration; 
     private boolean isInJail = false;
@@ -22,40 +22,26 @@ public class Player {
     }
 
     public void advance(int diceResult){
-        if ((this.position + diceResult) >= 40){
-            this.position = (this.position +diceResult) % 40;
-            money += 200;
-        }else
-            this.position += diceResult;      
+        super.advance(diceResult);
     }
 
+
     public int getAsset(){ //game over condtion : asset < 0
-        int asset = money;
-        for(SpaceToBuy s : property ){
-            if(s instanceof SpaceCity){
-                SpaceCity spaceCity = (SpaceCity)s;
-                asset += spaceCity.getColor().getHousePrice()*spaceCity.getNbHouse()*0.75 + spaceCity.getPrice()*0.75;
-            }
-            else{
-                asset += s.getPrice()*0.75;
-            }
-        }
-        return asset;
-    }
+        return super.getAsset();
+     }
 
     // check if I can pay the toll fee
     public boolean hasEnoughAsset(int payment){
-        return getAsset()<payment;
+        return super.hasEnoughAsset(payment);
     }
 
     // check if I can buy 
     public boolean isAffordable(int price){
-        return this.money > price;
+        return super.isAffordable(price);
     }
 
     public boolean canBuyHouse(){
-        return !colorsetProperty.isEmpty();
-
+        return super.canBuyHouse()
     }
 
     public void buyHouse(){
@@ -226,7 +212,7 @@ public class Player {
                 SpaceCity sc = (SpaceCity)sp;
                 string += " [" + sc.getName()  + " , color:" + sc.getColor().getColorName() +", nbH :" + sc.getNbHouse() + " , rent:" + sc.getCurrentRentPrice()+ "] ";
             }else{
-                string += " [" + sp.getName() +" , rent:" + sp.getCurrentRentPrice() +"] ";
+                string += " [" + sp.getName() +" , rent : " + sp.getCurrentRentPrice() +"] ";
             }    
         }
         System.out.println(string);

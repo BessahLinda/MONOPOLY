@@ -8,18 +8,20 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
-import fr.pantheonsorbonne.miage.game.Game;
+import fr.pantheonsorbonne.miage.game.GameLogic;
+import fr.pantheonsorbonne.miage.game.MonopolyStandAlone;
 import fr.pantheonsorbonne.miage.game.monopoly.elements.Player;
-import fr.pantheonsorbonne.miage.game.monopoly.elements.StrategyLinda;
+import fr.pantheonsorbonne.miage.game.monopoly.elements.Strategy;
 
 class GameTest {
     
     @Test
     public void playerInJail(){
-        List<Player> players = new ArrayList<>(); players.add(new Player("Linda", new StrategyLinda())); players.add(new Player("Yewon", new StrategyLinda())); players.add(new Player("syna", new StrategyLinda())); players.add(new Player("imane", new StrategyLinda()));
-        Game game = new Game(players);
+        List<Player> players = new ArrayList<>(); players.add(new Player("Linda", new Strategy())); players.add(new Player("Yewon", new Strategy())); players.add(new Player("syna", new Strategy())); players.add(new Player("imane", new Strategy()));
+        MonopolyStandAlone game = new MonopolyStandAlone(players);
+        game.setBoardPlayer(players);
         players.get(0).goToJail();
-        game.playerInJail(players.get(0));
+        game.checkPlayerInJail(players.get(0));
         //false si double
         //assertTrue(players.get(0).isInJail());    
 
@@ -27,8 +29,9 @@ class GameTest {
 
     @Test
     public void isOnSpaceTax(){
-        List<Player> players = new ArrayList<>(); players.add(new Player("Linda", new StrategyLinda())); players.add(new Player("Yewon", new StrategyLinda())); players.add(new Player("syna", new StrategyLinda())); players.add(new Player("imane", new StrategyLinda()));
-        Game game = new Game(players);
+        List<Player> players = new ArrayList<>(); players.add(new Player("Linda", new Strategy())); players.add(new Player("Yewon", new Strategy())); players.add(new Player("syna", new Strategy())); players.add(new Player("imane", new Strategy()));
+        MonopolyStandAlone game = new MonopolyStandAlone(players);
+        game.setBoardPlayer(players);
         game.isOnSpaceTax(game.getBoard().get(4),players.get(0) );
         assertEquals(1500-200, players.get(0).checkBalance());
         

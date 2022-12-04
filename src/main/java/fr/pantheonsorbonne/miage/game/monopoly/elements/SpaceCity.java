@@ -15,6 +15,7 @@ public class SpaceCity extends SpaceToBuy implements Comparable{
         color.getSpaces().add(this);
     }
 
+    // depends on the number of houses, rent price changes
     @Override
     public void setCurrentRentPrice(){
         if(this.nbHouse == 4){
