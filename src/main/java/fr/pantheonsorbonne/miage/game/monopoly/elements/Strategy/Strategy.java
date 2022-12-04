@@ -9,7 +9,7 @@ import fr.pantheonsorbonne.miage.game.monopoly.elements.Spaces.SpaceCity;
 import fr.pantheonsorbonne.miage.game.monopoly.elements.Spaces.SpacePublicService;
 import fr.pantheonsorbonne.miage.game.monopoly.elements.Spaces.SpaceToBuy;
 
-public class GoodStrategy extends Strategy{
+public class Strategy implements AIStrategy{
 
     @Override
     public void buyHouse(Player p) {

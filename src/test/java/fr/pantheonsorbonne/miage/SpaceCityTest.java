@@ -8,7 +8,7 @@ import fr.pantheonsorbonne.miage.game.monopoly.elements.Color;
 import fr.pantheonsorbonne.miage.game.monopoly.elements.Player;
 import fr.pantheonsorbonne.miage.game.monopoly.elements.Spaces.SpaceCity;
 import fr.pantheonsorbonne.miage.game.monopoly.elements.Spaces.SpaceStation;
-import fr.pantheonsorbonne.miage.game.monopoly.elements.Strategy.GoodStrategy;
+import fr.pantheonsorbonne.miage.game.monopoly.elements.Strategy.Strategy;
 import fr.pantheonsorbonne.miage.game.monopoly.elements.Strategy.Strategy;
 
 class SpaceCityTest {
@@ -17,7 +17,7 @@ class SpaceCityTest {
     public void setCurrentRentPriceTest(){
         Color marron = new Color("marron",50);
         SpaceCity s = new SpaceCity("Boulevard de Bellvile",1,60,marron, new int[] {2,10,30,90,160,250}); 
-        Player p = new Player("Linda", new GoodStrategy());
+        Player p = new Player("Linda", new Strategy());
         assertEquals(2,s.getCurrentRentPrice());
         p.buyLand(s);
         marron.setColorMonopolist(p );
@@ -30,7 +30,7 @@ class SpaceCityTest {
 
     @Test
     public void setCurrentRentPriceTest2(){ //spaceStation
-        Player p = new Player("Yewon", new GoodStrategy());
+        Player p = new Player("Yewon", new Strategy());
         Color marron = new Color("marron",50);
         Color rose = new Color("rose", 100);
         SpaceCity s = new SpaceCity("Boulevard de Bellvile",1,60,marron, new int[] {2,10,30,90,160,250}); 
@@ -50,7 +50,7 @@ class SpaceCityTest {
 
     @Test
     public void setCurrentRentPriceTest3(){ //spaceStation
-        Player p = new Player("Yewon", new GoodStrategy());
+        Player p = new Player("Yewon", new Strategy());
         Color marron = new Color("marron",50);
         Color rose = new Color("rose", 100);
         SpaceCity s = new SpaceCity("Boulevard de Bellvile",1,60,marron, new int[] {2,10,30,90,160,250}); 
