@@ -40,9 +40,9 @@ La partie s'arrête lorsque le dernier joueur est en situation de monopole, c'es
 
 # Détail des classes principales
 
-* TicTacToeHost classe exécutable représentant le maitre du jeu
-* TicTacToeGuest classe exécutable représentant l'adversaire du maitre du jeu
-* TicTacToeStandAlone jeu local.
+* MonopolyHost classe exécutable représentant le maitre du jeu
+* MonopolyToeGuest classe exécutable représentant l'adversaire du maitre du jeu
+* MonopolyStandAlone jeu local.
 
 # Protocole réseau
 
