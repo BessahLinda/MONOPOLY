@@ -2,12 +2,17 @@ package fr.pantheonsorbonne.miage.game;
 
 import fr.pantheonsorbonne.miage.Facade;
 import fr.pantheonsorbonne.miage.PlayerFacade;
+import fr.pantheonsorbonne.miage.game.monopoly.elements.Board;
 import fr.pantheonsorbonne.miage.game.monopoly.elements.Dice;
 import fr.pantheonsorbonne.miage.game.monopoly.elements.Player;
+import fr.pantheonsorbonne.miage.game.monopoly.elements.Space;
+import fr.pantheonsorbonne.miage.game.monopoly.elements.SpaceToBuy;
 import fr.pantheonsorbonne.miage.game.monopoly.elements.Strategy;
 import fr.pantheonsorbonne.miage.model.Game;
 import fr.pantheonsorbonne.miage.model.GameCommand;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.Random;
 import java.util.Set;
 
@@ -26,35 +31,43 @@ public class MonopolyGuest {
         playerFacade.createNewPlayer(playerId);
         p = new Player(playerId, new Strategy());
         monopoly = playerFacade.autoJoinGame("monopoly");
+        Board board = new Board();
 
-        gameloop:  // pour finir loop faut decalarer 
-        for(;;){
-            GameCommand command = playerFacade.receiveGameCommand(monopoly); //blocking everything till it gets command
-            switch (command.name()) { //cd
-                case "MOVE_PAWN_TO": // index
-                    p.advance(Integer.parseInt(command.body())-p.getPosition());
-                    System.out.println(p.getName()+" has arrived to " + p.getPosition());
-                    break;
-                case "BUY_CELL":
-                    p.buyLand(Integer.parseInt(command.body()));
-                case "Sell_Propery":
-                    p.sellProperty();
-                    break;
-                case "BUY_HOUSE": 
-                    p.buildHouse();
-                    break;
-                case "SEND_MONEY_TO": // envoyer de l'argent à t
-                    p.withdrawMoney(Integer.parseInt(command.body()));
-                    break;
-                case "SEND_MONEY": // player de guest gagner de l'agent (-100, player)
-                    p.earnMoney(Integer.parseInt(command.body()));
-                    System.out.println(p.getName()+" earns" + p.checkBalance());
-                    break;
-                case "GAME_OVER":
-                    System.out.println("$$$$$$$$$$$$$ player won the game $$$$$$$$$$$$$$");
-                    break gameloop;
-            }
-        }    
+
+        gameloop:
+            for(;;){
+                GameCommand command = playerFacade.receiveGameCommand(monopoly);
+                switch (command.name()) {
+                    case "MOVE_PAWN_TO":
+                        p.advance(Integer.parseInt(command.body())-p.getPosition());
+                        // System.out.println(p.getName()+" has arrived to " + p.getPosition());
+                        break;
+                    case "BUY_CELL":
+                        p.buyLand((SpaceToBuy)board.getSpaceByIndex(Integer.parseInt(command.body())));
+                        break;
+                    case "SELL_PROPERTY":
+                        p.sellProperty(Integer.parseInt(command.body()));
+                        break;
+                    case "BUY_HOUSE": 
+                        p.buyHouse();
+                        break;
+                    case "SEND_MONEY_TO": // withdraw money for another player 
+                        p.withdrawMoney(Integer.parseInt(command.body())); ///??
+                        playerFacade.sendGameCommandToPlayer(monopoly, command.body(),new GameCommand("SEND_MONEY", command.body()));
+                        break;
+                    case "SEND_MONEY": // earn money
+                        p.earnMoney(Integer.parseInt(command.body()));
+                        System.out.println(p.getName()+" earns" + p.checkBalance());
+                        break;
+                    case "NOTICE":
+                        System.out.println(command.body());
+                        break;
+                    case "GAME_OVER":
+                        System.out.println("$$$$$$$$$$$$$ player won the game $$$$$$$$$$$$$$");
+                        break gameloop;
+                }
+            } 
+    }       
 }
 
 

@@ -1,33 +1,11 @@
-package fr.pantheonsorbonne.miage.game;
+package fr.pantheonsorbonne.miage.game.monopoly.elements;
+
 import java.util.ArrayList;
 import java.util.List;
 
-import fr.pantheonsorbonne.miage.game.monopoly.elements.Color;
-import fr.pantheonsorbonne.miage.game.monopoly.elements.Dice;
-import fr.pantheonsorbonne.miage.game.monopoly.elements.Player;
-import fr.pantheonsorbonne.miage.game.monopoly.elements.Space;
-import fr.pantheonsorbonne.miage.game.monopoly.elements.SpaceChance;
-import fr.pantheonsorbonne.miage.game.monopoly.elements.SpaceCity;
-import fr.pantheonsorbonne.miage.game.monopoly.elements.SpaceJail;
-import fr.pantheonsorbonne.miage.game.monopoly.elements.SpacePublicService;
-import fr.pantheonsorbonne.miage.game.monopoly.elements.SpaceStation;
-import fr.pantheonsorbonne.miage.game.monopoly.elements.SpaceTax;
-import fr.pantheonsorbonne.miage.game.monopoly.elements.SpaceToBuy;
-
-
-public abstract class GameLogic {
-    protected static Dice d = new Dice();
-    protected static List<Space> board = new ArrayList<>();
-    List<Player> players = new ArrayList<>();
-
-    protected GameLogic(List<Player> players) {
-      this.players = players;
-    }
-
-    protected GameLogic() {
-    }
-
-    public void setBoardPlayer(List<Player> players){
+public class Board {
+    private List<Space> board = new ArrayList<>();
+    public Board(){
         Color marron = new Color("marron",50);
         Color bleuClair = new Color("bleuClair",50);
         Color rose = new Color("rose", 100);
@@ -79,54 +57,10 @@ public abstract class GameLogic {
         board.add(new SpaceCity("Avenue des Champs-Elysées",37,350,bleu, new int[] {35,175,500,1100,1300,1500}));
         board.add(new SpaceTax("Taxe de luxe",4,100));
         board.add(new SpaceCity("Rue de la Paix",39,400,bleu,new int[] {50,200,600,1400,1700,2000}));
-    }
-    
-    
-    public abstract void makeMove(Player player);
-
-    protected abstract  void isOnSpaceCity(Space destination, Player player);
-
-    protected abstract void isOnSpaceJail(Space destination, Player player);
-
-    protected abstract void isOnSpaceTax(Space destination, Player player);
-
-    protected abstract void isOnSpaceChance(Space destination, Player player);
-
-    protected abstract void checkPlayerInJail(Player p);
-
-    public List<Space> getBoard(){
-        return board;
+  
     }
 
     public Space getSpaceByIndex(int index){
-        return (Space) board.get(index);
+        return board.get(index);
     }
-
-    public void playRound() {
-        do{
-            for(int i = 0; i<players.size();++i){ 
-
-                players.get(i).buyHouse();
-                
-                if(players.get(i).isInJail()){
-                    this.checkPlayerInJail(players.get(i));
-                }
-                else{
-                    this.makeMove(players.get(i)); 
-                }
-                if(players.get(i).isBankrupt()){
-                    System.out.println(players.get(i).getName()+" doesn't have enough money to pay. You are retired from the game");     
-                    players.remove(players.get(i));
-                    ++i;
-                }
-            }
-            
-        }while (players.size()>1);
-        System.out.println("$$$$$$$$$$ player "+ players.get(0).getName() + " won the game $$$$$$$$$$$");
-        
-    }
-
-    
-}        
-
-
+}

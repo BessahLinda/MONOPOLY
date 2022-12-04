@@ -54,6 +54,7 @@ public final class MonopolyHost extends GameLogic{
         this.monopoly = monopoly;
     }
 
+
     public static void main(String[] args) throws Exception{
        
         HostFacade hostFacade = Facade.getFacade();
@@ -83,38 +84,81 @@ public final class MonopolyHost extends GameLogic{
 
     @Override
     public void makeMove(Player player) {
-        // TODO Auto-generated method stub
-        
+        player.advance(d.rollDices());
+        hostFacade.sendGameCommandToPlayer(monopoly, player.getName(),new GameCommand("BUY_CELL", Integer.toString(player.getPosition())));
+        Space destination = board.get(player.getPosition());
+        String notif = player.getName() +" has arrived at " + destination.getName().toUpperCase();
+        hostFacade.sendGameCommandToAll(monopoly, new GameCommand("NOTICE",notif));
+
+
+        if (destination instanceof SpaceJail) {
+            isOnSpaceJail(destination, player);
+
+        } else if (destination instanceof SpaceTax) {
+            isOnSpaceTax(destination, player);
+
+        } else if (destination instanceof SpaceChance) {
+            isOnSpaceChance(destination, player);
+
+        } else if (destination instanceof SpaceToBuy){
+            isOnSpaceCity(destination, player);
+        }
+        System.out.println("\n**********************\n");        
     }
 
     @Override
     protected void isOnSpaceCity(Space destination, Player player) {
-        // TODO Auto-generated method stub
+        SpaceToBuy space = (SpaceToBuy) destination;
+        
+        if (!space.isSpaceOwned()) {
+            player.buyLand(space);           
+        } else if (space.getOwner()!=player){
+            player.payRent(space);
+            System.out.println(player.getName() + " paid " + space.getCurrentRentPrice() + " for " + space.getOwner().getName());
+        }
+        System.out.println(player.getName() + " has now " + player.checkBalance() );
+        player.toStringP();
+        
         
     }
 
     @Override
     protected void isOnSpaceJail(Space destination, Player player) {
-        // TODO Auto-generated method stub
-        
+        SpaceJail space = (SpaceJail) destination;
+        if (space.getType() != 0) { 
+            player.goToJail();
+        }
     }
 
     @Override
     protected void isOnSpaceTax(Space destination, Player player) {
-        // TODO Auto-generated method stub
-        
+        SpaceTax space = (SpaceTax) destination;
+        player.payTax(space);
+        System.out.println(player.getName()+" paid " + space.getTax() +"$ You have "+ player.checkBalance());         
     }
 
     @Override
     protected void isOnSpaceChance(Space destination, Player player) {
-        // TODO Auto-generated method stub
-        
+        SpaceChance space = (SpaceChance) destination;
+        System.out.println(player.getName() + " has a lucky card" );
+        space.imFeelingLucky(player, this);        
+        System.out.println(player.getName() + " has now " + player.checkBalance() ); 
     }
 
     @Override
     protected void checkPlayerInJail(Player p) {
-        // TODO Auto-generated method stub
-        
+        d.rollDices();
+        if(d.isDouble()){
+            p.goOutJail();
+            makeMove(p);
+        }else if(p.getPrisonDuration()==2){
+            p.goOutJail(50);
+            System.out.println(p.getName()+" went out from prison");
+            makeMove(p);
+        }else if(p.getPrisonDuration()<2){
+            p.setPrisonDuration(); 
+            System.out.println(p.getName()+" is still in the prison");
+        }
     }
 
 }

@@ -154,7 +154,7 @@ public class Strategy implements AIStrategy{
             p.getProperty().clear();
             p.getColorsetProperty().clear();
             p.withdrawMoney(100000) ;
-
+            
             return;
         }    
 

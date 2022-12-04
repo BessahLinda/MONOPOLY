@@ -106,6 +106,7 @@ public class Player {
         int rent = s.getCurrentRentPrice();
         if(isAffordable(rent)){
             withdrawMoney(rent);
+            hostFacade.sendGameCommandToPlayer(monopoly, this.getName(),new GameCommand("SEND_MONEY_TO", -rent, s.getOwner));
             s.getOwner().earnMoney(rent);
         }else{
             sellProperty(rent);
@@ -116,24 +117,26 @@ public class Player {
         int tax = s.getTax();
         if(isAffordable(tax)){
             withdrawMoney(tax);
+            hostFacade.sendGameCommandToPlayer(monopoly, this.getName(),new GameCommand("SEND_MONEY", -tax));
         }else{
             sellProperty(tax);
+            hostFacade.sendGameCommandToPlayer(monopoly, this.getName(),new GameCommand("SELL_PROPERTY", tax));
         }
     }
 
     public void payChance(int rndPrice) {
         if(isAffordable(rndPrice)){
             withdrawMoney(rndPrice);
+            hostFacade.sendGameCommandToPlayer(monopoly, this.getName(),new GameCommand("SEND_MONEY", rndPrice));
         }else{
             sellProperty(rndPrice);
+            hostFacade.sendGameCommandToPlayer(monopoly, this.getName(),new GameCommand("SELL_PROPERTY", rndPrice));
         }
 	}
 
     
     public void setRentOfProperties(){
-        for(SpaceToBuy sp : property ){
-            sp.setCurrentRentPrice();
-        }
+        super.setRentOfProperties;
     }
 
     public void sellProperty(int payment) {  
