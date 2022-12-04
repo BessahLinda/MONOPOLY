@@ -33,10 +33,5 @@ public class BadStrategy implements AIStrategy {
         }
         
     }
-
-    @Override
-    public boolean goOutJail(Player p) {
-        return true;
-    }
     
 }

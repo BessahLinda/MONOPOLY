@@ -77,7 +77,7 @@ public class Player {
 
     public void buyLand(SpaceToBuy s){
         //I'd like to put condition if a player already has one of  blueclaire or marron, I dont want to buy the others
-        if (money-s.getPrice() >100){
+        if (money-s.getPrice() > 300){
             withdrawMoney(s.getPrice());
             s.setOwner(this);
             property.add(s);
@@ -232,34 +232,7 @@ public class Player {
         System.out.println(string);
     }
 
-    public void have2CityColor(){
-        for(SpaceToBuy sp : property ){
-            int cpt = 0;
-            if (sp instanceof SpaceCity){
-                SpaceCity sc = (SpaceCity)sp;
-                for(SpaceCity city : sc.getColor().getSpaces() ){
-                    
-                    Player p;
-                    if(city.getOwner() == this){
-                        cpt++;
-                    }else{
-                        p = city.getOwner(); 
-                    }
-                    if(cpt==2){
-
-                        city.getOwner().sellLand(this,city);
-                    }
-                }
-            }
-        }
-    }
-
-    private void sellLand(Player player, SpaceCity city) {
-        int price = (int) (city.getPrice() +  0.120);
-        player.buyLand(city);
-        this.earnMoney(price);
-
-    }
+    
 }
 
     

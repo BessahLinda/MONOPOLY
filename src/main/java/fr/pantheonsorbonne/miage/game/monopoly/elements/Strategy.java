@@ -214,11 +214,5 @@ public class Strategy implements AIStrategy{
         p.withdrawMoney(payment);
         
     }
-
-    @Override
-    public boolean goOutJail(Player p) {
-        return (p.getColorsetProperty().isEmpty());
-    }
-
     
 }
