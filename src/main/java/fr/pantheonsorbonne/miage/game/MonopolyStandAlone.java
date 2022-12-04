@@ -8,9 +8,8 @@ import fr.pantheonsorbonne.miage.game.monopoly.elements.Spaces.SpaceChance;
 import fr.pantheonsorbonne.miage.game.monopoly.elements.Spaces.SpaceJail;
 import fr.pantheonsorbonne.miage.game.monopoly.elements.Spaces.SpaceTax;
 import fr.pantheonsorbonne.miage.game.monopoly.elements.Spaces.SpaceToBuy;
-import fr.pantheonsorbonne.miage.game.monopoly.elements.Strategy.BadStrategy;
 import fr.pantheonsorbonne.miage.game.monopoly.elements.Strategy.Strategy;
-import fr.pantheonsorbonne.miage.game.monopoly.elements.Strategy.Strategy;
+
 
 
 

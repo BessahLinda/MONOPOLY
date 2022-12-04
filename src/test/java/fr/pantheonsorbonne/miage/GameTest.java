@@ -8,11 +8,10 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
-import fr.pantheonsorbonne.miage.game.GameLogic;
 import fr.pantheonsorbonne.miage.game.MonopolyStandAlone;
 import fr.pantheonsorbonne.miage.game.monopoly.elements.Player;
 import fr.pantheonsorbonne.miage.game.monopoly.elements.Strategy.Strategy;
-import fr.pantheonsorbonne.miage.game.monopoly.elements.Strategy.Strategy;
+
 
 class GameTest {
     
