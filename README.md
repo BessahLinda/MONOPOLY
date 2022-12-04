@@ -18,7 +18,7 @@ Case appartenant au joueur : Le joueur tombe sur un terrain, une gare ou un serv
 
 Case Aller en Prison : Le pion du joueur est placé sur la case Prison.
 
-Case Chance : Le joueur obtient un malus (exemple : payer 2000€ à la banque) ou un bonus (exemple : obtenir 2000€ de la part de la banque, avancer jusqu'à la case Départ) décidé aléatoirement.
+Case Chance : Le joueur obtient un malus (exemple : - 80) ou un bonus (exemple : + 80) décidé aléatoirement ou nouvelle postion.
 
 Case Départ : Si le joueur passe ou s'arrête sur cette case, il obtient 200€ de la banque.
 
