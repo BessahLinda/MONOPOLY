@@ -4,8 +4,9 @@ import fr.pantheonsorbonne.miage.Facade;
 import fr.pantheonsorbonne.miage.PlayerFacade;
 import fr.pantheonsorbonne.miage.game.monopoly.elements.Board;
 import fr.pantheonsorbonne.miage.game.monopoly.elements.Player;
-import fr.pantheonsorbonne.miage.game.monopoly.elements.SpaceToBuy;
-import fr.pantheonsorbonne.miage.game.monopoly.elements.Strategy;
+import fr.pantheonsorbonne.miage.game.monopoly.elements.Spaces.SpaceToBuy;
+import fr.pantheonsorbonne.miage.game.monopoly.elements.Strategy.GoodStrategy;
+import fr.pantheonsorbonne.miage.game.monopoly.elements.Strategy.Strategy;
 import fr.pantheonsorbonne.miage.model.Game;
 import fr.pantheonsorbonne.miage.model.GameCommand;
 
@@ -22,7 +23,7 @@ public class MonopolyGuest {
     public static void main(String[] args) throws Exception {
         playerFacade.waitReady();
         playerFacade.createNewPlayer(playerId);
-        p = new Player(playerId, new Strategy());
+        p = new Player(playerId, new GoodStrategy());
         monopoly = playerFacade.autoJoinGame("monopoly");
         Board board = new Board();
 

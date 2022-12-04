@@ -1,15 +1,22 @@
-package fr.pantheonsorbonne.miage.game.monopoly.elements;
+package fr.pantheonsorbonne.miage.game.monopoly.elements.Strategy;
+
 
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class Strategy implements AIStrategy{
+import fr.pantheonsorbonne.miage.game.monopoly.elements.Player;
+import fr.pantheonsorbonne.miage.game.monopoly.elements.Spaces.SpaceCity;
+import fr.pantheonsorbonne.miage.game.monopoly.elements.Spaces.SpacePublicService;
+import fr.pantheonsorbonne.miage.game.monopoly.elements.Spaces.SpaceToBuy;
+
+public class GoodStrategy extends Strategy{
 
     @Override
     public void buyHouse(Player p) {
         if(!everyCityHas2House(p)){
             for(int i =0; i<p.getColorsetProperty().size();++i){
-                while(p.checkBalance()>500 &&  p.getColorsetProperty().get(i).getNbHouse() < 2 && p.getColorsetProperty().get(i).getColor().getValue()<6){
+                int a = p.checkBalance() - p.getColorsetProperty().get(i).getColor().getHousePrice() ; 
+                while( a>500 &&  p.getColorsetProperty().get(i).getNbHouse() < 2 && p.getColorsetProperty().get(i).getColor().getValue()<7){
                     
                     p.getColorsetProperty().get(i).buildHouse(1);
                     p.withdrawMoney(p.getColorsetProperty().get(i).getColor().getHousePrice()); 
@@ -18,7 +25,6 @@ public class Strategy implements AIStrategy{
             }
         }
         while(p.checkBalance()>500 && !allCitiesHave4Houses(p)){ 
-            System.out.println(p.getName() +"pppppppppppppppppppppppppppppppppp");
             for(int i =0; i<p.getColorsetProperty().size();++i){
                 if(ownOnlyBadColors(p)){
                     buyTwoHouses(p, i);
@@ -26,14 +32,14 @@ public class Strategy implements AIStrategy{
                 }else{
                     if(p.getColorsetProperty().get(i).getColor().getValue()>6 && everyCityHas4House(p)){
                         buyTwoHouses(p,i);
-                    }else if(p.getColorsetProperty().get(i).getNbHouse() < 2 && p.getColorsetProperty().get(i).getColor().getValue()<6){
+                    }else if(p.getColorsetProperty().get(i).getNbHouse() < 2 && p.getColorsetProperty().get(i).getColor().getValue()<7){
                         while(p.checkBalance()>500 && p.getColorsetProperty().get(i).getNbHouse() < 2 ){
                             p.getColorsetProperty().get(i).buildHouse(1);
                             p.withdrawMoney(p.getColorsetProperty().get(i).getColor().getHousePrice());
                            
                         }
                     }
-                    else if(p.getColorsetProperty().get(i).getColor().getValue()<6){
+                    else if(p.getColorsetProperty().get(i).getColor().getValue()<7){
                         buyTwoHouses(p,i);
                     }                    
                 }
@@ -42,7 +48,7 @@ public class Strategy implements AIStrategy{
         }
     }
 
-    public void buyTwoHouses(Player p,int i){
+    private void buyTwoHouses(Player p,int i){
         int cpt=0;
 
         while(p.checkBalance()>500 && cpt < 2 && p.getColorsetProperty().get(i).getNbHouse() < 4){
@@ -54,7 +60,7 @@ public class Strategy implements AIStrategy{
     }
 
     //check if colorset property spaces have at least 4 houses except color blueclaire & marron 
-    public boolean everyCityHas4House(Player p){
+    private boolean everyCityHas4House(Player p){
         for(SpaceCity city: p.getColorsetProperty()){
             if(city.getNbHouse() != 4 && city.getColor().getValue() < 7){
                 return false;
@@ -65,7 +71,7 @@ public class Strategy implements AIStrategy{
 
     
     //check if colorset property spaces have at least 2 houses except color blueclaire & marron 
-    public boolean everyCityHas2House(Player p){
+    private boolean everyCityHas2House(Player p){
         for(SpaceCity city: p.getColorsetProperty()){  
             if(city.getNbHouse() < 3 && city.getColor().getValue() < 7 ){
                 return false;
@@ -76,7 +82,7 @@ public class Strategy implements AIStrategy{
 
     
 
-    public boolean allCitiesHave4Houses(Player p){
+    private boolean allCitiesHave4Houses(Player p){
         for(SpaceCity city: p.getColorsetProperty()){
             if(city.getNbHouse() != 4 ){
                 return false;
@@ -87,7 +93,7 @@ public class Strategy implements AIStrategy{
 
 
     //player only has colorset of less valued color (blueclaire,marron)
-    public boolean ownOnlyBadColors(Player p){
+    private boolean ownOnlyBadColors(Player p){
 
         for(SpaceCity city: p.getColorsetProperty()){
             if(city.getColor().getValue() < 7 ){
@@ -196,7 +202,7 @@ public class Strategy implements AIStrategy{
                     for(SpaceToBuy s : priority){
                         if(s instanceof SpaceCity){
                             SpaceCity currentCity = (SpaceCity) s;
-                            if(currentCity.owner == p){
+                            if(currentCity.getOwner() == p){
                                 System.out.println(p.getName()+" sold " + currentCity.getName());
                                 p.earnMoney((int)(currentCity.getPrice()*0.75));
                                 s.setOwner(null);

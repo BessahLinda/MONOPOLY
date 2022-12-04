@@ -11,9 +11,10 @@ import org.junit.jupiter.api.Test;
 
 import fr.pantheonsorbonne.miage.game.monopoly.elements.Color;
 import fr.pantheonsorbonne.miage.game.monopoly.elements.Player;
-import fr.pantheonsorbonne.miage.game.monopoly.elements.SpaceCity;
-import fr.pantheonsorbonne.miage.game.monopoly.elements.SpaceToBuy;
-import fr.pantheonsorbonne.miage.game.monopoly.elements.Strategy;
+import fr.pantheonsorbonne.miage.game.monopoly.elements.Spaces.SpaceCity;
+import fr.pantheonsorbonne.miage.game.monopoly.elements.Spaces.SpaceToBuy;
+import fr.pantheonsorbonne.miage.game.monopoly.elements.Strategy.GoodStrategy;
+import fr.pantheonsorbonne.miage.game.monopoly.elements.Strategy.Strategy;
 
 class ColorTest {
     
@@ -27,7 +28,7 @@ class ColorTest {
 
     @Test
     public void isColorMonoplistTest(){
-        Player p = new Player("Linda", new Strategy());
+        Player p = new Player("Linda", new GoodStrategy());
         Color bleuClair = new Color("bleuClair",50);
         SpaceCity s = new SpaceCity("Rue de Vaugirard",6,100,bleuClair,new int[] {6,30,90,270,400,550});
         SpaceCity s1 =new SpaceCity("Rue de Courcelles",8,100,bleuClair, new int[] {6,30,90,270,400,550});
@@ -44,8 +45,8 @@ class ColorTest {
         SpaceCity s1 = new SpaceCity("Boulevard de la Villette",11,140,rose,new int[] {10,50,150,450,625,750});
         SpaceCity s2 = new SpaceCity("Avenue de Neuilly",13,140,rose,new int[] {10,50,150,450,625,750});
         SpaceCity s3 = new SpaceCity("Rue de Paradis",14,160,rose,new int[] {12,60,180,500,700,900});
-        Player p = new Player("Linda", new Strategy());
-        Player y = new Player("Yewon", new Strategy());
+        Player p = new Player("Linda", new GoodStrategy());
+        Player y = new Player("Yewon", new GoodStrategy());
         p.buyLand(s3);
         p.buyLand(s2);
         y.buyLand(s1);
@@ -56,7 +57,7 @@ class ColorTest {
     @Test
     public void setColorMonopolist(){
 
-        Player p = new Player("Linda", new Strategy());
+        Player p = new Player("Linda", new GoodStrategy());
 
 
         Color marron = new Color("marron",50);

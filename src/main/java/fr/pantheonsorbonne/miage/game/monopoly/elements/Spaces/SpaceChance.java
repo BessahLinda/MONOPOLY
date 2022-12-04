@@ -1,7 +1,8 @@
-package fr.pantheonsorbonne.miage.game.monopoly.elements;
+package fr.pantheonsorbonne.miage.game.monopoly.elements.Spaces;
 
 import java.util.Random;
 import fr.pantheonsorbonne.miage.game.GameLogic;
+import fr.pantheonsorbonne.miage.game.monopoly.elements.Player;
 
 public class SpaceChance extends Space{
     private final int[] prices = {-100,-90,-80,-70,-60,-50,-40,-30,30,40,50,60,70,80,90,100};

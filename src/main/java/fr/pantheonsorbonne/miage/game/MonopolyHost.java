@@ -22,12 +22,13 @@ import fr.pantheonsorbonne.miage.HostFacade;
 import fr.pantheonsorbonne.miage.PlayerFacade;
 import fr.pantheonsorbonne.miage.game.monopoly.elements.Dice;
 import fr.pantheonsorbonne.miage.game.monopoly.elements.Player;
-import fr.pantheonsorbonne.miage.game.monopoly.elements.Space;
-import fr.pantheonsorbonne.miage.game.monopoly.elements.SpaceChance;
-import fr.pantheonsorbonne.miage.game.monopoly.elements.SpaceJail;
-import fr.pantheonsorbonne.miage.game.monopoly.elements.SpaceTax;
-import fr.pantheonsorbonne.miage.game.monopoly.elements.SpaceToBuy;
-import fr.pantheonsorbonne.miage.game.monopoly.elements.Strategy;
+import fr.pantheonsorbonne.miage.game.monopoly.elements.Spaces.Space;
+import fr.pantheonsorbonne.miage.game.monopoly.elements.Spaces.SpaceChance;
+import fr.pantheonsorbonne.miage.game.monopoly.elements.Spaces.SpaceJail;
+import fr.pantheonsorbonne.miage.game.monopoly.elements.Spaces.SpaceTax;
+import fr.pantheonsorbonne.miage.game.monopoly.elements.Spaces.SpaceToBuy;
+import fr.pantheonsorbonne.miage.game.monopoly.elements.Strategy.GoodStrategy;
+import fr.pantheonsorbonne.miage.game.monopoly.elements.Strategy.Strategy;
 import fr.pantheonsorbonne.miage.model.Game;
 import fr.pantheonsorbonne.miage.model.GameCommand;
 
@@ -73,7 +74,7 @@ public final class MonopolyHost extends GameLogic{
         List<Player> players = new ArrayList<>(); 
         Iterator names = this.players.iterator();
         while(names.hasNext()){
-            players.add(new Player((String)names.next(), new Strategy()));
+            players.add(new Player((String)names.next(), new GoodStrategy()));
         }
         setBoardPlayer(players);
         System.out.println("New round:");

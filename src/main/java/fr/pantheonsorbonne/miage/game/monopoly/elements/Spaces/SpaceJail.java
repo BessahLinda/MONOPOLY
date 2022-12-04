@@ -1,4 +1,4 @@
-package fr.pantheonsorbonne.miage.game.monopoly.elements;
+package fr.pantheonsorbonne.miage.game.monopoly.elements.Spaces;
 
 public class SpaceJail extends Space {
 

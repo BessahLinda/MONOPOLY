@@ -3,6 +3,14 @@ package fr.pantheonsorbonne.miage.game.monopoly.elements;
 import java.util.ArrayList;
 import java.util.List;
 
+import fr.pantheonsorbonne.miage.game.monopoly.elements.Spaces.Space;
+import fr.pantheonsorbonne.miage.game.monopoly.elements.Spaces.SpaceChance;
+import fr.pantheonsorbonne.miage.game.monopoly.elements.Spaces.SpaceCity;
+import fr.pantheonsorbonne.miage.game.monopoly.elements.Spaces.SpaceJail;
+import fr.pantheonsorbonne.miage.game.monopoly.elements.Spaces.SpacePublicService;
+import fr.pantheonsorbonne.miage.game.monopoly.elements.Spaces.SpaceStation;
+import fr.pantheonsorbonne.miage.game.monopoly.elements.Spaces.SpaceTax;
+
 public class Board {
     private List<Space> board = new ArrayList<>();
     public Board(){

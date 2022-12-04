@@ -1,7 +1,12 @@
-package fr.pantheonsorbonne.miage.game.monopoly.elements;
+package fr.pantheonsorbonne.miage.game.monopoly.elements.Strategy;
 
+import fr.pantheonsorbonne.miage.game.monopoly.elements.Player;
+import fr.pantheonsorbonne.miage.game.monopoly.elements.Spaces.SpaceCity;
+import fr.pantheonsorbonne.miage.game.monopoly.elements.Spaces.SpaceToBuy;
 
-public class BadStrategy implements AIStrategy {
+//pour affronter la GoodStrategy
+public class BadStrategy extends Strategy {
+
 
     @Override
     public void buyHouse(Player p) {
@@ -11,6 +16,7 @@ public class BadStrategy implements AIStrategy {
         }
     }
 
+    //probleme non resolu
     @Override
     public void sellProperty(Player p, int payment) {
         for(SpaceToBuy s : p.getProperty()){

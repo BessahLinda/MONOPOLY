@@ -3,6 +3,13 @@ package fr.pantheonsorbonne.miage.game.monopoly.elements;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import fr.pantheonsorbonne.miage.game.monopoly.elements.Spaces.SpaceCity;
+import fr.pantheonsorbonne.miage.game.monopoly.elements.Spaces.SpacePublicService;
+import fr.pantheonsorbonne.miage.game.monopoly.elements.Spaces.SpaceStation;
+import fr.pantheonsorbonne.miage.game.monopoly.elements.Spaces.SpaceTax;
+import fr.pantheonsorbonne.miage.game.monopoly.elements.Spaces.SpaceToBuy;
+import fr.pantheonsorbonne.miage.game.monopoly.elements.Strategy.Strategy;
+
 
 public class Player {
 
@@ -232,6 +239,44 @@ public class Player {
         System.out.println(string);
     }
 
+
+    public void forceToSellSpace(){
+        for(int i=0; i<property.size();++i){
+            Player p = null ;
+            if (property.get(i) instanceof SpaceCity){
+                SpaceCity sc = (SpaceCity)property.get(i);
+                if(sc.getColor().getSpaces().size()==2){
+                    break;
+                }
+                for(SpaceCity city : sc.getColor().getSpaces() ){                   
+                    if(city.getOwner() == this){
+                        p =city.getColor().getPlayerhasTwoSpaces();
+                        if(city.getColor().hasPlayerTwoSpaces(p) && p!=null && p!=this){
+                            this.sellLand(p,city);
+                            break;
+                        }
+                    } 
+                }
+            }
+        }
+    }
+
+    private void sellLand(Player player, SpaceCity city) {
+        int price = (int) (city.getPrice() *  1.20);
+        if (money-city.getPrice() > 300){
+            player.withdrawMoney(city.getPrice()+price);
+            city.setOwner(player);
+            player.property.add(city);
+            System.out.println(player.getName()+" bought land at "+ city.getName() +"was at"+ this.getName());
+            if(city.getColor().isColorMonopolist(player)){
+                city.getColor().setColorMonopolist(player);
+            }
+            
+            player.setRentOfProperties();
+            this.property.remove(city);
+            this.earnMoney(city.getPrice()+price);
+        }
+    }
     
 }
 

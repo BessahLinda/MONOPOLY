@@ -1,4 +1,6 @@
-package fr.pantheonsorbonne.miage.game.monopoly.elements;
+package fr.pantheonsorbonne.miage.game.monopoly.elements.Spaces;
+
+import fr.pantheonsorbonne.miage.game.monopoly.elements.Color;
 
 public class SpaceCity extends SpaceToBuy implements Comparable{
 

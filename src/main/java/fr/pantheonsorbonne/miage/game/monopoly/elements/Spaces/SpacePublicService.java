@@ -1,5 +1,6 @@
-package fr.pantheonsorbonne.miage.game.monopoly.elements;
+package fr.pantheonsorbonne.miage.game.monopoly.elements.Spaces;
 
+import fr.pantheonsorbonne.miage.game.monopoly.elements.Dice;
 
 public class SpacePublicService extends SpaceToBuy {
     

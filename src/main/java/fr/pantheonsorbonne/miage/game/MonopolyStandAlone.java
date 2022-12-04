@@ -3,12 +3,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import fr.pantheonsorbonne.miage.game.monopoly.elements.Player;
-import fr.pantheonsorbonne.miage.game.monopoly.elements.Space;
-import fr.pantheonsorbonne.miage.game.monopoly.elements.SpaceChance;
-import fr.pantheonsorbonne.miage.game.monopoly.elements.SpaceJail;
-import fr.pantheonsorbonne.miage.game.monopoly.elements.SpaceTax;
-import fr.pantheonsorbonne.miage.game.monopoly.elements.SpaceToBuy;
-import fr.pantheonsorbonne.miage.game.monopoly.elements.Strategy;
+import fr.pantheonsorbonne.miage.game.monopoly.elements.Spaces.Space;
+import fr.pantheonsorbonne.miage.game.monopoly.elements.Spaces.SpaceChance;
+import fr.pantheonsorbonne.miage.game.monopoly.elements.Spaces.SpaceJail;
+import fr.pantheonsorbonne.miage.game.monopoly.elements.Spaces.SpaceTax;
+import fr.pantheonsorbonne.miage.game.monopoly.elements.Spaces.SpaceToBuy;
+import fr.pantheonsorbonne.miage.game.monopoly.elements.Strategy.BadStrategy;
+import fr.pantheonsorbonne.miage.game.monopoly.elements.Strategy.GoodStrategy;
+import fr.pantheonsorbonne.miage.game.monopoly.elements.Strategy.Strategy;
 
 
 
@@ -18,14 +20,15 @@ public class MonopolyStandAlone extends GameLogic {
     }
 
     public static void main(String[] args){
-        List<Player> players = new ArrayList<>(); players.add(new Player("Linda", new Strategy())); players.add(new Player("Yewon",new Strategy()));
+        List<Player> players = new ArrayList<>(); players.add(new Player("Linda", new BadStrategy())); players.add(new Player("Yewon",new GoodStrategy())); players.add(new Player("Imane",new GoodStrategy())); players.add(new Player("Syna",new GoodStrategy()));
         MonopolyStandAlone game = new MonopolyStandAlone(players);
         game.setBoardPlayer(players);
-
+        int cpt =0;
         do{
             for(int i = 0; i<players.size();++i){ 
 
                 players.get(i).buyHouse();
+                players.get(i).forceToSellSpace();
                 
                 if(players.get(i).isInJail()){
                     game.checkPlayerInJail(players.get(i));
@@ -39,11 +42,11 @@ public class MonopolyStandAlone extends GameLogic {
                     break;
                 }
             }
-            
+            ++cpt;
         }while (players.size()> 1);
         System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
         System.out.println("$$$$$$$$$$ player "+ players.get(0).getName() + " won the game $$$$$$$$$$$");
-        System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
+        System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$"+ cpt);
     }
 
     @Override
