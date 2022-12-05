@@ -17,7 +17,7 @@ import java.util.Random;
  * this is an example for the Guest in the monopoly game
  */
 public class MonopolyGuest {
-    static final String playerId = "YEWON-" + new Random().nextInt(10);
+    static final String playerId = "Yewon-" + new Random().nextInt(10);
     static final PlayerFacade playerFacade = Facade.getFacade();
     static Player p;
     static Game monopoly;

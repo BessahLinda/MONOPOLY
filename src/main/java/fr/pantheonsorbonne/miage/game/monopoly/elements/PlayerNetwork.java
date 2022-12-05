@@ -12,7 +12,7 @@ public class PlayerNetwork extends Player {
 
     protected StrategyNetwork strategy;
     private String name;
-    private int money = 0; 
+    private int money = 1500; 
     private int position = 0;   
     private int prisonDuration; 
     private boolean isInJail = false;
@@ -29,17 +29,31 @@ public class PlayerNetwork extends Player {
     }
 
     public void advance(int diceResult){
-        super.advance(diceResult);
+        if ((this.position + diceResult) >= 40){
+            this.position = (this.position +diceResult) % 40;
+            money += 200;
+        }else
+            this.position += diceResult;      
     }
 
 
     public int getAsset(){ //game over condtion : asset < 0
-        return super.getAsset();
-     }
+        int asset = money;
+        for(SpaceToBuy s : property ){
+            if(s instanceof SpaceCity){
+                SpaceCity spaceCity = (SpaceCity)s;
+                asset += spaceCity.getColor().getHousePrice()*spaceCity.getNbHouse()*0.75 + spaceCity.getPrice()*0.75;
+            }
+            else{
+                asset += s.getPrice()*0.75;
+            }
+        }
+        return asset;
+    }
 
     // check if I can pay the toll fee
     public boolean hasEnoughAsset(int payment){
-        return super.hasEnoughAsset(payment);
+        return getAsset()<payment;
     }
 
     // check if I can buy 
@@ -75,7 +89,6 @@ public class PlayerNetwork extends Player {
             s.setOwner(this);
             property.add(s);
             hostFacade.sendGameCommandToPlayer(monopoly, this.getName(),new GameCommand("BUY_CELL", Integer.toString(this.getPosition())));
-            System.out.println(this.getName()+" bought land at "+ s.getName());
             if(s instanceof SpaceCity){
                SpaceCity sc = (SpaceCity)s;
                 if(sc.getColor().isColorMonopolist(this)){
