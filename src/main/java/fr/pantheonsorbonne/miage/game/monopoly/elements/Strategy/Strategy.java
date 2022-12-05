@@ -159,7 +159,7 @@ public class Strategy implements AIStrategy{
         if(p.getAsset() < payment){
             p.getProperty().clear();
             p.getColorsetProperty().clear();
-            p.withdrawMoney(10000) ;
+            p.withdrawMoney(100000) ;
             
             return;
         }    

@@ -43,7 +43,7 @@ public class MonopolyStandAlone extends GameLogic {
         }while (players.size()> 1);
         System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
         System.out.println("$$$$$$$$$$ player "+ players.get(0).getName() + " won the game $$$$$$$$$$$");
-        System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$"+ cpt);
+        System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
     }
 
     @Override
@@ -77,8 +77,15 @@ public class MonopolyStandAlone extends GameLogic {
             player.payRent(space);
             System.out.println(player.getName() + " paid " + space.getCurrentRentPrice() + " for " + space.getOwner().getName());
         }
-        System.out.println(player.getName() + " has now " + player.checkBalance() );
-        player.toStringP();
+        
+        if(player.checkBalance()<10000){
+            System.out.println(player.getName() + " ran out of money ");
+            System.out.println(player.getName() + " lost the game");
+        }
+        else{
+            System.out.println(player.getName() + " has now " + player.checkBalance());
+            player.toStringP();
+        }
         
     }
 

@@ -71,4 +71,9 @@ public class Board {
     public Space getSpaceByIndex(int index){
         return board.get(index);
     }
+
+    public List<Space> getBoard(){
+        return board;
+    }
+    
 }

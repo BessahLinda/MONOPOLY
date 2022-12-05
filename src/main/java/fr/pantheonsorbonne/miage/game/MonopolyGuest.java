@@ -6,17 +6,18 @@ import fr.pantheonsorbonne.miage.game.monopoly.elements.Board;
 import fr.pantheonsorbonne.miage.game.monopoly.elements.Player;
 import fr.pantheonsorbonne.miage.game.monopoly.elements.Spaces.SpaceToBuy;
 import fr.pantheonsorbonne.miage.game.monopoly.elements.Strategy.Strategy;
-import fr.pantheonsorbonne.miage.game.monopoly.elements.Strategy.Strategy;
 import fr.pantheonsorbonne.miage.model.Game;
 import fr.pantheonsorbonne.miage.model.GameCommand;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
 
 /**
  * this is an example for the Guest in the monopoly game
  */
 public class MonopolyGuest {
-    static final String playerId = "Player-" + new Random().nextInt();
+    static final String playerId = "Yewon-" + new Random().nextInt(10);
     static final PlayerFacade playerFacade = Facade.getFacade();
     static Player p;
     static Game monopoly;
@@ -34,7 +35,6 @@ public class MonopolyGuest {
                 switch (command.name()) {
                     case "MOVE_PAWN_TO":
                         p.advance(Integer.parseInt(command.body())-p.getPosition());
-                        // System.out.println(p.getName()+" has arrived to " + p.getPosition());
                         break;
                     case "BUY_CELL":
                         p.buyLand((SpaceToBuy)board.getSpaceByIndex(Integer.parseInt(command.body())));
@@ -46,8 +46,9 @@ public class MonopolyGuest {
                         p.buyHouse();
                         break;
                     case "SEND_MONEY_TO": // withdraw money for another player 
-                        p.withdrawMoney(Integer.parseInt(command.body())); ///??
-                        playerFacade.sendGameCommandToPlayer(monopoly, command.body(),new GameCommand("SEND_MONEY", command.body()));
+                        List<String> commands = Arrays.asList(command.body().split(","));
+                        p.withdrawMoney(Integer.parseInt(commands.get(0))); 
+                        playerFacade.sendGameCommandToPlayer(monopoly, commands.get(1),new GameCommand("SEND_MONEY", commands.get(0)));  
                         break;
                     case "SEND_MONEY": // earn money
                         p.earnMoney(Integer.parseInt(command.body()));
@@ -57,13 +58,17 @@ public class MonopolyGuest {
                         System.out.println(command.body());
                         break;
                     case "GAME_OVER":
-                        System.out.println("$$$$$$$$$$$$$ player won the game $$$$$$$$$$$$$$");
+                        if(command.body()=="LOSE"){
+                            System.out.println("YOU JUST LOST THE GAME");
+                        }
+                        else{
+                            System.out.println("$$$$$$$$$$$$$$$$$$$$ YOU WON THE GAME $$$$$$$$$$$$$$$$$$$$");
+                        }
                         break gameloop;
                 }
             } 
     }       
 }
-
 
 
 
