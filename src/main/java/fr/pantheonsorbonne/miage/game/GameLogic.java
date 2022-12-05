@@ -5,7 +5,6 @@ import java.util.List;
 import fr.pantheonsorbonne.miage.game.monopoly.elements.Board;
 import fr.pantheonsorbonne.miage.game.monopoly.elements.Dice;
 import fr.pantheonsorbonne.miage.game.monopoly.elements.Player;
-import fr.pantheonsorbonne.miage.game.monopoly.elements.PlayerNetwork;
 import fr.pantheonsorbonne.miage.game.monopoly.elements.Spaces.Space;
 
 

@@ -8,7 +8,7 @@ import fr.pantheonsorbonne.miage.game.monopoly.elements.Player;
 import fr.pantheonsorbonne.miage.game.monopoly.elements.Spaces.SpaceStation;
 import fr.pantheonsorbonne.miage.game.monopoly.elements.Spaces.SpaceToBuy;
 import fr.pantheonsorbonne.miage.game.monopoly.elements.Strategy.Strategy;
-import fr.pantheonsorbonne.miage.game.monopoly.elements.Strategy.Strategy;
+
 
 class SpaceStationTest {
     

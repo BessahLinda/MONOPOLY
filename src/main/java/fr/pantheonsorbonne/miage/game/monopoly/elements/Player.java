@@ -2,6 +2,7 @@ package fr.pantheonsorbonne.miage.game.monopoly.elements;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 import fr.pantheonsorbonne.miage.game.monopoly.elements.Spaces.SpaceCity;
 import fr.pantheonsorbonne.miage.game.monopoly.elements.Spaces.SpacePublicService;
@@ -213,16 +214,16 @@ public class Player {
         return nb;
     }
 
-    public void sortColorsetProperty(ArrayList<SpaceCity> colorset){
+    public void sortColorsetProperty(List<SpaceCity> colorset){
         colorsetProperty.addAll(colorset);
         Collections.sort(colorsetProperty);
     }
 
-    public ArrayList<SpaceCity> getColorsetProperty(){
+    public List<SpaceCity> getColorsetProperty(){
         return this.colorsetProperty;
     }
 
-    public ArrayList<SpaceToBuy> getProperty(){
+    public List<SpaceToBuy> getProperty(){
         return this.property;
     }
 

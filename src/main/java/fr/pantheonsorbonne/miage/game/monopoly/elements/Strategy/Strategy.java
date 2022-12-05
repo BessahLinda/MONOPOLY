@@ -11,6 +11,7 @@ import fr.pantheonsorbonne.miage.game.monopoly.elements.Spaces.SpaceToBuy;
 
 public class Strategy implements AIStrategy{
 
+    // strat : acheter des maisons deux par deux dans l'ordre des meuilleures cases (marron et bleu apres que les autres ont 4 maisons)
     @Override
     public void buyHouse(Player p) {
         if(!everyCityHas2House(p)){
@@ -107,7 +108,7 @@ public class Strategy implements AIStrategy{
     //sorting player's properties by its value and color
     public static ArrayList<SpaceToBuy> arrangePriority(Player p){
         ArrayList<SpaceToBuy> priority = new ArrayList<>();
-        ArrayList<SpaceCity> priorityColor = p.getColorsetProperty();
+        ArrayList<SpaceCity> priorityColor = (ArrayList<SpaceCity>) p.getColorsetProperty();
         Collections.sort(priorityColor,Collections.reverseOrder());
         ArrayList<SpaceToBuy> prioritySpecial = new ArrayList<>();
 

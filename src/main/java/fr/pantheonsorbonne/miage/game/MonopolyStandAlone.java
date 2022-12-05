@@ -64,6 +64,7 @@ public class MonopolyStandAlone extends GameLogic {
         } else if (destination instanceof SpaceToBuy){
             isOnSpaceCity(destination, player);
         }
+
         System.out.println("\n**********************\n");        
     }
 
@@ -77,15 +78,8 @@ public class MonopolyStandAlone extends GameLogic {
             player.payRent(space);
             System.out.println(player.getName() + " paid " + space.getCurrentRentPrice() + " for " + space.getOwner().getName());
         }
-        
-        if(player.checkBalance()<10000){
-            System.out.println(player.getName() + " ran out of money ");
-            System.out.println(player.getName() + " lost the game");
-        }
-        else{
-            System.out.println(player.getName() + " has now " + player.checkBalance());
-            player.toStringP();
-        }
+        System.out.println(player.getName() + " has now " + player.checkBalance() );
+        player.toStringP();
         
     }
 

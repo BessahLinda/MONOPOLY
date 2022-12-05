@@ -10,7 +10,6 @@ import fr.pantheonsorbonne.miage.game.monopoly.elements.Spaces.SpaceStation;
 import fr.pantheonsorbonne.miage.game.monopoly.elements.Spaces.SpaceTax;
 import fr.pantheonsorbonne.miage.game.monopoly.elements.Spaces.SpaceToBuy;
 import fr.pantheonsorbonne.miage.game.monopoly.elements.Strategy.Strategy;
-import fr.pantheonsorbonne.miage.game.monopoly.elements.Strategy.Strategy;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -309,8 +308,8 @@ class PlayerTest {
         SpaceCity r2 = new SpaceCity("Avenue de Neuilly",13,140,rose,new int[] {10,50,150,450,625,750});
         SpaceCity r3 = new SpaceCity("Rue de Paradis",14,160,rose,new int[] {12,60,180,500,700,900});
         SpaceStation st = new SpaceStation("Gare Saint-Lazare", 35,200);
-        SpaceStation st2 = new SpaceStation("Gare du Nord", 35,200);
-        p2.buyLand(r3);p2.buyLand(r1);p2.buyLand(r2);
+        
+        p2.buyLand(r3);p2.buyLand(r1);p2.buyLand(r2);p2.buyLand(st);
         p2.buyLand(s);p2.buyLand(s1);p2.buyLand(s2);
         p2.earnMoney(1000);
 
@@ -329,7 +328,6 @@ class PlayerTest {
         Color bleuClair = new Color("bleuClair",50);
         Color rose = new Color("rose", 100);
         Color orange = new Color("orange",100);
-        Color rouge = new Color("rouge",150);
         Color jaune = new Color("jaune",150);
         
 
@@ -337,24 +335,20 @@ class PlayerTest {
         
 
         SpaceCity s3 = new SpaceCity("Avenue de la République",9,120,bleuClair,new int[] {8,40,100,300,450,600});
-        SpaceCity s4 = new SpaceCity("Rue de Vaugirard",6,100,bleuClair,new int[] {6,30,90,270,400,550});
-        SpaceCity s5 = new SpaceCity("Rue de Courcelles",8,100,bleuClair, new int[] {6,30,90,270,400,550});
+        new SpaceCity("Rue de Vaugirard",6,100,bleuClair,new int[] {6,30,90,270,400,550});
+        new SpaceCity("Rue de Courcelles",8,100,bleuClair, new int[] {6,30,90,270,400,550});
         
         SpaceCity s6 = new SpaceCity("Rue de Paradis",14,160,rose,new int[] {12,60,180,500,700,900});
         SpaceCity s7 = new SpaceCity("Boulevard de la Villette",11,140,rose,new int[] {10,50,150,450,625,750});
         SpaceCity s8 = new SpaceCity("Avenue de Neuilly",13,140,rose,new int[] {10,50,150,450,625,750});
         
-        SpaceCity s9 = new SpaceCity("Place Pigalle",19,200,orange,new int[] {16,80,220,600,800,1000});
+        new SpaceCity("Place Pigalle",19,200,orange,new int[] {16,80,220,600,800,1000});
         SpaceCity s10 = new SpaceCity("Avenue de Mozart",16,180,orange, new int[] {14,70,200,550,750,950});
-        SpaceCity s11 = new SpaceCity("Boulevard Saint-Michel",18,180,orange, new int[] {14,70,200,550,750,950});
-
-        SpaceCity s12 = new SpaceCity("Avenue Henri-Martin",24,240,rouge,new int[] {20,100,300,750,925,1100});
-        SpaceCity s13 = new SpaceCity("Avenue Matignon",21,220,rouge,new int[] {18,90,250,700,875,1050});
-        SpaceCity s14 = new SpaceCity("Boulevard Malesherbes",23,220,rouge,new int[] {18,90,250,700,875,1050});
+        new SpaceCity("Boulevard Saint-Michel",18,180,orange, new int[] {14,70,200,550,750,950});
 
         SpaceCity s15 = new SpaceCity("Rue de la Fayette",29,280,jaune,new int[] {22,120,360,850,1025,1200});
         SpaceCity s16 = new SpaceCity("Faubourg Saint-Honoré",26,260,jaune,new int[] {22,110,330,800,975,1150});
-        SpaceCity s17 = new SpaceCity("Place de la Bourse",27,260,jaune,new int[] {22,110,330,800,975,1150});
+        
         
         SpaceStation st = new SpaceStation("Gare Saint-Lazare", 35,200);
         SpaceStation st2 = new SpaceStation("Gare du Nord", 35,200);
