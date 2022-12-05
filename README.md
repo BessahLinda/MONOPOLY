@@ -49,6 +49,6 @@ La partie s'arrête lorsque le dernier joueur est en situation de monopole, c'es
 
 > Le protocole réseau définit les séquences des commandes échangées entre les différentes parties prenantes. Il doit contenir, pour chaque commande, l'expéditeur, le destinataire, le nom de la commande et le contenu du corps de la commande.
 
-![protocole tictactoe](doc/protocole.png)
+![protocole monopoly](doc/protocole.png)
 
 
