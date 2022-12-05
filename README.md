@@ -33,7 +33,7 @@ Payer une amende de 50€ au début du tour suivant. Le joueur peut alors lancer
 
 Chaque maison ajoutée sur le terrain augmente sa valeur immobilière et donc le prix du loyer pour les autres joueurs. Le fait de construire une maison ne termine pas le tour du joueur.
 
-Pour éviter les parties infinies ( aucun joueur n'arrive à avoir toutes les cases d'une couleur, donc pas de construction de maisons -> Loyer très faible), nous avons fait en sorte que si un joueur X a une case d'une couleur et que un autre joueur Y en a deux,  X vend forcément sa case 120% plus cher à Y.
+Pour éviter les parties infinies ( aucun joueur n'arrive à avoir toutes les cases d'une couleur, donc pas de construction de maisons -> Loyers très faible), nous avons fait en sorte que si un joueur X a une case d'une couleur et que un autre joueur Y en a deux,  X vend forcément sa case 120% plus cher à Y.
 
 ## Fin de la partie
 
