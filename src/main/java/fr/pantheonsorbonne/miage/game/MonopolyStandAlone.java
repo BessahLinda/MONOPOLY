@@ -22,7 +22,6 @@ public class MonopolyStandAlone extends GameLogic {
         List<Player> players = new ArrayList<>(); players.add(new Player("Linda", new Strategy())); players.add(new Player("Yewon",new Strategy())); players.add(new Player("Imane",new Strategy())); players.add(new Player("Syna",new Strategy()));
         MonopolyStandAlone game = new MonopolyStandAlone(players);
         game.setBoardPlayer(players);
-        int cpt =0;
         do{
             for(int i = 0; i<players.size();++i){ 
 
@@ -41,7 +40,6 @@ public class MonopolyStandAlone extends GameLogic {
                     break;
                 }
             }
-            ++cpt;
         }while (players.size()> 1);
         System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
         System.out.println("$$$$$$$$$$ player "+ players.get(0).getName() + " won the game $$$$$$$$$$$");
